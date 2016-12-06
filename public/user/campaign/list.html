@@ -222,7 +222,7 @@ function enableScroll() {
                                                             <div class="col-md-7 col-sm-7">
                                                                <div class="off-percentage">
                                                                 <span class="savings">
-                                                                  <span ng-if="allOfferList[key].value_calculate == 1">${{ allOfferList[key].discountvalue}}</span>
+                                                                  <span ng-if="allOfferList[key].value_calculate == 1">{{currcy_symbol}}{{ allOfferList[key].discountvalue}}</span>
                                                                   <span ng-if="allOfferList[key].value_calculate == 2"> {{ allOfferList[key].discountvalue}}%</span>
                                                                   <span ng-if="allOfferList[key].value_text == 1">Off</span>
                                                                   <span ng-if="allOfferList[key].value_text == 2">Discount</span>
@@ -235,8 +235,8 @@ function enableScroll() {
                                                               </div>
                                                             </div>
                                                             <div class="col-md-5 col-sm-5 no-padding-left">
-                                                               <div class="before-price">${{allOfferList[key].retails_value}}</div>
-                                                               <div class="after-price">${{allOfferList[key].pay_value}}</div>
+                                                               <div class="before-price">{{currcy_symbol}}{{allOfferList[key].retails_value}}</div>
+                                                               <div class="after-price">{{currcy_symbol}}{{allOfferList[key].pay_value}}</div>
                                                             </div>
                                                   </div>
                                                   <div class="blacky-glass">
@@ -373,7 +373,7 @@ function enableScroll() {
               <tr>
                 <td><span class="green-txt">Profit</span></td>
                 <td>:</td>
-                <td>${{statOffer.totalProfit}}</td>
+                <td>{{currcy_symbol}}{{statOffer.totalProfit}}</td>
               </tr>
               <tr>
                 <td><span class="green-txt">Total offer</span></td>
@@ -392,7 +392,7 @@ function enableScroll() {
               <tr>
                 <td><span class="green-txt">Total Value</span></td>
                 <td>:</td>
-                <td>${{statOffer.totalPayValue}}</td>
+                <td>{{currcy_symbol}}{{statOffer.totalPayValue}}</td>
               </tr>
               <tr>
                 <td><span class="green-txt">Scans</span></td>

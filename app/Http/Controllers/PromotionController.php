@@ -155,14 +155,14 @@ class PromotionController extends Controller {
 				$offerProduct->cost   				= $product['productData'][0]['cost'];
 				$offerProduct->sell_price  			= $product['productData'][0]['sell_price'];
 				$offerProduct->retail_price  		= $product['productData'][0]['retail_price'];
-				$offerProduct->image_path 			= str_replace('uploads/','filemanager/userfiles/',ltrim($product['productData'][0]['product_image'],'././'));
+				$offerProduct->image_path 			= str_replace('uploads','filemanager/userfiles/',ltrim($product['productData'][0]['product_image'],'././'));
 				$offerProduct->selectedImage 		= $product['selectedImage'];
 				$offerProduct->save();
 				if($product['selectedImage']){
 					
 					if(isset($product['productData'][0]['product_image']) && isset($product['productData'][0]['is_file_exist']) && $product['productData'][0]['product_image'] && $product['productData'][0]['is_file_exist']){
 						
-						$offerSelectedImgPath = str_replace('uploads/','filemanager/userfiles/', ltrim($product['productData'][0]['product_image'],'././'));
+						$offerSelectedImgPath = str_replace('uploads','filemanager/userfiles/', ltrim($product['productData'][0]['product_image'],'././'));
 		
 					}//isset
 					
@@ -181,13 +181,13 @@ class PromotionController extends Controller {
 				$offerInventory->cost   			= $inventory['InventoryData'][0]['cost'];
 				$offerInventory->sell_price  		= $inventory['InventoryData'][0]['sell_price'];
 				$offerInventory->retail_price  		= $inventory['InventoryData'][0]['retail_price'];
-				$offerInventory->image_path   		= str_replace('uploads/','filemanager/userfiles/',ltrim($inventory['InventoryData'][0]['inventory_image'],'././'));
+				$offerInventory->image_path   		= str_replace('uploads','filemanager/userfiles/',ltrim($inventory['InventoryData'][0]['inventory_image'],'././'));
 				$offerInventory->selectedImage 		= $inventory['selectedImage'];
 				$offerInventory->save();
 				if($inventory['selectedImage']){
 					if(isset($inventory['InventoryData'][0]['inventory_image']) && isset($inventory['InventoryData'][0]['is_file_exist']) && $inventory['InventoryData'][0]['inventory_image'] && $inventory['InventoryData'][0]['is_file_exist']){
 							
-						$offerSelectedImgPath = str_replace('uploads/','filemanager/userfiles/', ltrim($inventory['InventoryData'][0]['inventory_image'],'././'));
+						$offerSelectedImgPath = str_replace('uploads','filemanager/userfiles/', ltrim($inventory['InventoryData'][0]['inventory_image'],'././'));
 		
 					}//isset
 				}
@@ -206,12 +206,12 @@ class PromotionController extends Controller {
 		$offer->offer_medium_image_path = 'filemanager/userfiles/'. $user->id .'/offer_medium_image/'. $newFilename;
 		$offer->offer_large_image_path  = 'filemanager/userfiles/'. $user->id .'/offer_large_image/'. $newFilename;
 		
-		$uploadSmallSoucePath = base_path().'/'.str_replace('filemanager/userfiles/','uploads/', $offerSelectedImgPath);
+		$uploadSmallSoucePath = base_path().'/'.str_replace('filemanager/userfiles','uploads', $offerSelectedImgPath);
 		$uploadLargeSoucePath = str_replace('/small_image/','/large_image/', $uploadSmallSoucePath);
 		$uploadMediumSoucePath= str_replace('/small_image/','/medium_image/', $uploadSmallSoucePath);
 	
 		//copy image
-		$fileMngrBasePath = rtrim(base_path(),'admin/') . '/filemanager/userfiles/'. $user->id;
+		$fileMngrBasePath = rtrim(base_path(),'admin') . '/filemanager/userfiles/'. $user->id;
 		$uploadsBasePath = base_path() . '/uploads/'. $user->id;
 		
 		if(!is_dir($fileMngrBasePath)){

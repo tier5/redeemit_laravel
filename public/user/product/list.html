@@ -69,13 +69,13 @@ input[type="text"] {
             <div class="form-group">
               <div class="row">
               <div class="col-md-4 col-sm-4">
-              <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.cost" class="mdl-textfield__input" type="text" id="cost" placeholder="Cost($)" />
+              <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.cost" class="mdl-textfield__input" type="text" id="cost" placeholder="Cost({{currcy_symbol}})" />
               </div>
               <div class="col-md-4 col-sm-4">
-               <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.sell_price" class="mdl-textfield__input" type="text" id="sell_price" placeholder="Sell Price($)" />
+               <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.sell_price" class="mdl-textfield__input" type="text" id="sell_price" placeholder="Sell Price({{currcy_symbol}})" />
               </div>
               <div class="col-md-4 col-sm-4">
-              <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.retail_price" class="mdl-textfield__input" type="text" id="retail_price" placeholder="Retail Price($)" />
+              <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.retail_price" class="mdl-textfield__input" type="text" id="retail_price" placeholder="Retail Price({{currcy_symbol}})" />
               </div>
               </div>
             </div>
@@ -145,9 +145,9 @@ input[type="text"] {
                 <tr>
                 <td>Product Name</td>
                 <td>Image</td>
-                <td>Cost($)</td>
-                <td>Sell Price($)</td>
-                <td>Retail Price($)</td>
+                <td>Cost({{currcy_symbol}})</td>
+                <td>Sell Price({{currcy_symbol}})</td>
+                <td>Retail Price({{currcy_symbol}})</td>
                 <td>Action</td>
                 </tr>
                 </thead>
@@ -248,15 +248,15 @@ input[type="text"] {
                         <div class="row">
                           <div class="col-md-4 col-sm-4">
                             <input allowpattern="[^0-9.]" type="text" placeholder="" class="form-control ng-pristine ng-untouched ng-valid" id="cost" ng-model="Product.cost">
-                            <label>Cost($)</label>
+                            <label>Cost({{currcy_symbol}})</label>
                           </div>
                           <div class="col-md-4 col-sm-4">
                             <input allowpattern="[^0-9.]" type="text" placeholder="" id="sell_price" class="form-control ng-pristine ng-untouched ng-valid" ng-model="Product.sell_price">
-                            <label>Selling Price($)</label>
+                            <label>Selling Price({{currcy_symbol}})</label>
                           </div>
                           <div class="col-md-4 col-sm-4">
                             <input allowpattern="[^0-9.]" type="text" placeholder="" id="retail_price" class="form-control ng-pristine ng-untouched ng-valid" ng-model="Product.retail_price">
-                            <label>Retail Price($)</label>
+                            <label>Retail Price({{currcy_symbol}})</label>
                           </div>
                         </div>  
                       </div> 

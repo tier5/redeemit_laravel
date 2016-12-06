@@ -324,17 +324,17 @@
                           <input class="form-control" allowpattern="[^0-9]" type="text" min="1" ng-change="productnochanged(choice)" ng-model="choice.noofproduct" ng-disabled="disableIt">
                         </div>
                         <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
-                          <span class="green-big-txt" name="product_cost">${{choice.total_cost}}</span>
+                          <span class="green-big-txt" name="product_cost">{{currcy_symbol}}{{choice.total_cost}}</span>
                           <span class="small-txt">Cost</span>
                           <input type="hidden" name="one_product_cost{{choice.choiceid}}" id="one_product_cost{{choice.choiceid}}"  ng-disabled="disableIt"/>
                         </div>
                         <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
-                          <span class="green-big-txt" name="product_selling_price">${{choice.total_selling_price}}</span>
+                          <span class="green-big-txt" name="product_selling_price">{{currcy_symbol}}{{choice.total_selling_price}}</span>
                           <span class="small-txt">Seling Price</span>
                           <input type="hidden" name="one_product_selling_price{{choice.choiceid}}" id="one_product_selling_price{{choice.choiceid}}" ng-disabled="disableIt" />
                         </div>
                         <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
-                           <span class="green-big-txt" name="product_retail_value">${{choice.total_retail_price}}</span> 
+                           <span class="green-big-txt" name="product_retail_value">{{currcy_symbol}}{{choice.total_retail_price}}</span> 
                           <span class="small-txt">Retail Value</span>
                           <input type="hidden" name="one_product_retail_price{{choice.choiceid}}" id="one_product_retail_price{{choice.choiceid}}"  ng-disabled="disableIt"/>
                         </div>
@@ -409,7 +409,7 @@
                   Markup {{markup}}%
                 </div>
                 <div class="col-md-6 col-sm-6 align-left">
-                    Gross Margin ${{grossMargin}}
+                    Gross Margin {{currcy_symbol}}{{grossMargin}}
                 </div>
               </div>
               <div class="row add_more">
@@ -457,15 +457,15 @@
                           <input class="form-control" allowpattern="[^0-9]" type="text" min="1" ng-change="inventorynochanged(inventorychoice)" ng-model="inventorychoice.noofinventory" ng-disabled="disableIt">
                         </div>
                         <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
-                          <span class="green-big-txt" name="inventory_cost">${{inventorychoice.total_cost}}</span>
+                          <span class="green-big-txt" name="inventory_cost">{{currcy_symbol}}{{inventorychoice.total_cost}}</span>
                           <span class="small-txt">Cost</span>
                         </div>
                         <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
-                          <span class="green-big-txt" name="product_selling_price">${{inventorychoice.total_selling_price}}</span>
+                          <span class="green-big-txt" name="product_selling_price">{{currcy_symbol}}{{inventorychoice.total_selling_price}}</span>
                           <span class="small-txt">Seling Price</span>
                         </div>
                         <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
-                           <span class="green-big-txt" name="product_retail_value">${{inventorychoice.total_retail_price}}</span> 
+                           <span class="green-big-txt" name="product_retail_value">{{currcy_symbol}}{{inventorychoice.total_retail_price}}</span> 
                           <span class="small-txt">Retail Value</span>
                         </div>
 
@@ -537,7 +537,7 @@
                   Markup {{inventorymarkup}}%
                 </div>
                 <div class="col-md-6 col-sm-6 align-left">
-                  Gross Margin ${{inventorygrossMargin}}
+                  Gross Margin {{currcy_symbol}}{{inventorygrossMargin}}
                 </div>
               </div>
               <div class="row add_more">
@@ -561,14 +561,14 @@
 
     <div class="row">
     <div class="col-md-12 col-sm-12 align-center total-retail">
-    <h4>Total Retail Value:</h4> <span class="green-txt">${{totalRetailPrice}}</span>
+    <h4>Total Retail Value:</h4> <span class="green-txt">{{currcy_symbol}}{{totalRetailPrice}}</span>
     </div>
     <div class="col-md-12 col-sm-12 align-center total-retail">
     <span class="offer-total-cost">  
-    <h4>Total Cost:</h4> <span class="green-txt">${{tpaic}}</span> 
+    <h4>Total Cost:</h4> <span class="green-txt">{{currcy_symbol}}{{tpaic}}</span> 
     </span>
     <span class="offer-total-cost">
-    <h4>Selling price:</h4> <span class="green-txt">${{tpaisellingprice}}</span> 
+    <h4>Selling price:</h4> <span class="green-txt">{{currcy_symbol}}{{tpaisellingprice}}</span> 
     </span>
     <br> <br>
     </div>
@@ -601,7 +601,7 @@
           <input class="form-control" type="text" ng-model="discount" ng-blur='changeOnDiscountvalue()' ng-disabled="disableIt">
           <div class="row paddig-top10">
             <div class="col-md-6 col-sm-6 no-padding-right">
-              $ <input type="radio" value="1" name="selectedDiscount" ng-change='changeOnDiscount(1)' ng-model="selectedDiscount" ng-disabled="disableIt">
+              {{currcy_symbol}} <input type="radio" value="1" name="selectedDiscount" ng-change='changeOnDiscount(1)' ng-model="selectedDiscount" ng-disabled="disableIt">
             </div>
             <div class="col-md-6 col-sm-6 no-padding-left">
               % <input type="radio" value="2" name="selectedDiscount" ng-change='changeOnDiscount(2)' ng-model="selectedDiscount" ng-disabled="disableIt">
@@ -647,7 +647,7 @@
       <div class="col-md-4 col-sm-4">
         <div class="row">
           <div class="col-md-6 col-sm-6 col-xs-6">
-           <span class="last-green">${{opMargin}}</span> 
+           <span class="last-green">{{currcy_symbol}}{{opMargin}}</span> 
           <span class="last-offer">Profit</span>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-6">
@@ -677,15 +677,15 @@
       <div class="col-md-8 col-sm-8 align-center col-sm-offset-2">
       <div class="row consumer-deal">
           <div class="col-md-3 col-sm-3 col-xs-4 no-padding">
-            <span>${{consumerPay}}</span>
+            <span>{{currcy_symbol}}{{consumerPay}}</span>
             <span>Pay</span>
           </div>
           <div class="col-md-3 col-sm-3 col-xs-4 no-padding">
-            <span>${{OffValue}}</span>
+            <span>{{currcy_symbol}}{{OffValue}}</span>
             <span>Save</span>
           </div>
           <!-- <div class="col-md-3 col-sm-3 no-padding">
-            <span>${{SaveValue}}</span>
+            <span>{{currcy_symbol}}{{SaveValue}}</span>
             <span>Save</span>
           </div> -->
           <div class="col-md-3 col-sm-3 col-xs-4 no-padding">
@@ -726,8 +726,8 @@
         </div>
         <div class="col-md-5 col-sm-5 value-txt" ng-if="productAvailable || inventoryAvailable">
           <div class="offer-off">{{DiscountValueText}}</div>
-          <div class="prev-price">${{totalRetailPrice}}</div>
-          <div ng-class="largeText?'present-price1' : 'present-price1-small'">${{consumerPay}}</div>
+          <div class="prev-price">{{currcy_symbol}}{{totalRetailPrice}}</div>
+          <div ng-class="largeText?'present-price1' : 'present-price1-small'">{{currcy_symbol}}{{consumerPay}}</div>
         </div>
       </div>
     </div>
@@ -757,8 +757,8 @@
             <div class="col-md-6 col-sm-6 custom-padding1 align-center relative">
               <!-- Modified by Tania -->
               <div class="">
-                <div class="prev-price">${{totalRetailPrice}}</div>
-                <div ng-class="largeText?'present-price' : 'present-price-small'">${{consumerPay}}</div>
+                <div class="prev-price">{{currcy_symbol}}{{totalRetailPrice}}</div>
+                <div ng-class="largeText?'present-price' : 'present-price-small'">{{currcy_symbol}}{{consumerPay}}</div>
               </div>
             </div>
           </div>
@@ -784,15 +784,15 @@
           <div class="row">
           <div class="col-md-4 col-sm-4 col-xs-4">
             <div class="vps">Value</div>
-            <div class="vps-amount"> ${{totalRetailPrice}} </div>
+            <div class="vps-amount"> {{currcy_symbol}}{{totalRetailPrice}} </div>
           </div>
           <div class="col-md-4 col-sm-4 col-xs-4">
             <div class="vps">Pay</div>
-            <div class="vps-amount">${{consumerPay}} </div>
+            <div class="vps-amount">{{currcy_symbol}}{{consumerPay}} </div>
           </div>
           <div class="col-md-4 col-sm-4 col-xs-4">
             <div class="vps">Savings</div>
-            <div class="vps-amount">${{OffValue}} </div>
+            <div class="vps-amount">{{currcy_symbol}}{{OffValue}} </div>
           </div>
 
           </div>
@@ -834,8 +834,8 @@
           <div class="location location-new"><i class="fa fa-map-marker" aria-hidden="true"></i> {{loggedUser.location}}</div>
           </div>
           <div class="col-md-4 col-sm-4">
-            <div class="previous-price">${{totalRetailPrice}}</div>
-            <div ng-class="largeText?'present-price' : 'present-price-small'">${{consumerPay}}</div>
+            <div class="previous-price">{{currcy_symbol}}{{totalRetailPrice}}</div>
+            <div ng-class="largeText?'present-price' : 'present-price-small'">{{currcy_symbol}}{{consumerPay}}</div>
           </div>
         </div>
           

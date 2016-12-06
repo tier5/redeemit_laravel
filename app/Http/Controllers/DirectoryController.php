@@ -412,7 +412,7 @@ class DirectoryController extends Controller {
 		
 		$upldBasePath = base_path('uploads/' . $directory['created_by'] . '/' . $directory['original_name']);
 		$this->removeDirectory($upldBasePath);
-		$filMngrBasePath = rtrim(base_path(),'admin/') . '/filemanager/userfiles/' . $directory['created_by'] . '/' . $directory['original_name'];
+		$filMngrBasePath = rtrim(base_path(),'admin') . 'filemanager/userfiles/' . $directory['created_by'] . '/' . $directory['original_name'];
 		$this->removeDirectory($filMngrBasePath);
 		
 		// delete all child rec
@@ -438,7 +438,7 @@ class DirectoryController extends Controller {
 		}
 		
 		$upldBasePath = base_path('uploads/' . $repo['created_by'] . '/' . $dirName);
-		$filMngrBasePath = rtrim(base_path(),'admin/') . '/filemanager/userfiles/' . $repo['created_by'] . '/' . $dirName;
+		$filMngrBasePath = rtrim(base_path(),'admin') . '/filemanager/userfiles/' . $repo['created_by'] . '/' . $dirName;
 			
 		//delete from upload dir
 		$upldDealImg = $upldBasePath.'large_image/'.$repo['original_name'];
@@ -514,7 +514,7 @@ class DirectoryController extends Controller {
 			}
 			
 			$upldBasePath = base_path('uploads/' . $dir['created_by'] . '/' );
-			$filMngrBasePath = rtrim(base_path(),'admin/') . '/filemanager/userfiles/' . $dir['created_by'] . '/' ;
+			$filMngrBasePath = rtrim(base_path(),'admin') . '/filemanager/userfiles/' . $dir['created_by'] . '/' ;
 			
 			rename($upldBasePath.$oldname,$upldBasePath.$dir->original_name);
 			rename($filMngrBasePath.$oldname,$filMngrBasePath.$dir->original_name);
@@ -556,8 +556,8 @@ class DirectoryController extends Controller {
 		$oldupldBasePath = base_path('uploads/' . $repo['created_by'] .'/' .$oldDirName );
 		$newupldBasePath = base_path('uploads/' . $repo['created_by'] .'/' .$newdirName );
 		
-		$oldFileMngrBasePath = rtrim(base_path(),'admin/') . '/filemanager/userfiles/'. $repo['created_by'] .'/' .$oldDirName ;
-		$newFileMngrBasePath = rtrim(base_path(),'admin/') . '/filemanager/userfiles/' . $repo['created_by'] .'/' .$newdirName ;
+		$oldFileMngrBasePath = rtrim(base_path(),'admin') . '/filemanager/userfiles/'. $repo['created_by'] .'/' .$oldDirName ;
+		$newFileMngrBasePath = rtrim(base_path(),'admin') . '/filemanager/userfiles/' . $repo['created_by'] .'/' .$newdirName ;
 		
 		$repo->directory_base_path = '../uploads/' .$repo['created_by']. '/' .$newdirName. 'small_image/' . $repo->original_name;
 		$repo->directory_id = $newDirId;

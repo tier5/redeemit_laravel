@@ -305,7 +305,7 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
     a.getUserinfo = function(){
       x.get('../user/userinfo').success(function(res){
           a.loggedUser = res;
-          a.mapurl = s.trustAsResourceUrl("https://www.google.com/maps/embed/v1/view?key=AIzaSyD9rE_nl_8CFAePVBMDI2djUHtRNDkHYD0&zoom=12&center="+a.loggedUser.lat+","+a.loggedUser.lng);
+          a.mapurl = s.trustAsResourceUrl("https://www.google.com/maps/embed/v1/view?key=AIzaSyD64Y-QDJdKxaRw1rs1rGJrkx7klW5B2Hs&zoom=12&center="+a.loggedUser.lat+","+a.loggedUser.lng);
       });
     };
    
@@ -1070,11 +1070,11 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
       if(a.DiscountValue != "00"){
         if(a.selectedDiscount == 1){
           if(a.selectedDiscountText == 1){
-            a.DiscountValueText = "$"+a.OffValue+" OFF";
+            a.DiscountValueText = a.currcy_symbol+a.OffValue+" OFF";
           } else if(a.selectedDiscountText == 2){
-            a.DiscountValueText = "$"+a.OffValue+" Discount";
+            a.DiscountValueText = a.currcy_symbol+a.OffValue+" Discount";
           } else if(a.selectedDiscountText == 3){
-            a.DiscountValueText = "$"+a.OffValue+" Savings";
+            a.DiscountValueText = a.currcy_symbol+a.OffValue+" Savings";
           }
         } else {
           if(a.selectedDiscountText == 1){

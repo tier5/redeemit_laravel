@@ -139,17 +139,17 @@ function enableScroll() {
 
               <div class="col-md-3 col-sm-3">
                 <div class="form-group">
-                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.cost" class="mdl-textfield__input" type="text" id="cost" placeholder="Cost($)" />
+                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.cost" class="mdl-textfield__input" type="text" id="cost" placeholder="Cost({{currcy_symbol}})" />
                 </div>
               </div>
               <div class="col-md-3 col-sm-3">
                 <div class="form-group">
-                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.sell_price" type="text" id="sell_price" placeholder="Sell Price($)" />
+                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.sell_price" type="text" id="sell_price" placeholder="Sell Price({{currcy_symbol}})" />
                 </div>
               </div>
               <div class="col-md-3 col-sm-3">
                 <div class="form-group">
-                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.retail_price" type="text" id="retail_price" placeholder="Retail Price($)" />
+                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.retail_price" type="text" id="retail_price" placeholder="Retail Price({{currcy_symbol}})" />
                 </div>
               </div>
               <div class="col-md-3 col-sm-3">
@@ -198,9 +198,9 @@ function enableScroll() {
                 <tr>
                   <th class="mdl-data-table__cell--non-numeric">Inventory Name</th>
                   <th class="mdl-data-table__cell--non-numeric">Image</th>
-                  <th class="mdl-data-table__cell--non-numeric">Cost($)</th>
-                  <th class="mdl-data-table__cell--non-numeric">Sell Price($)</th>
-                  <th class="mdl-data-table__cell--non-numeric">Retail Price($)</th>
+                  <th class="mdl-data-table__cell--non-numeric">Cost({{currcy_symbol}})</th>
+                  <th class="mdl-data-table__cell--non-numeric">Sell Price({{currcy_symbol}})</th>
+                  <th class="mdl-data-table__cell--non-numeric">Retail Price({{currcy_symbol}})</th>
                   <th class="mdl-data-table__cell--non-numeric">SKU</th>
                   <th class="mdl-data-table__cell--non-numeric">Action</th>
                 </tr>
@@ -279,15 +279,15 @@ function enableScroll() {
                             <div class="row">
                               <div class="col-md-3 col-sm-3">
                               <input allowpattern="[^0-9.]" ng-model="Inventory.cost" id="cost" class="form-control" type="text" placeholder="">
-                              <label>Cost($)</label>
+                              <label>Cost({{currcy_symbol}})</label>
                               </div>
                               <div class="col-md-3 col-sm-3">
                                 <input allowpattern="[^0-9.]" ng-model="Inventory.sell_price" class="form-control" type="text" id="sell_price" placeholder="">
-                                <label>Selling Price($)</label>
+                                <label>Selling Price({{currcy_symbol}})</label>
                               </div>
                               <div class="col-md-3 col-sm-3">
                                 <input allowpattern="[^0-9.]" ng-model="Inventory.retail_price" class="form-control" type="text" id="retail_price"  placeholder="" >
-                                <label>Retail Price($)</label>
+                                <label>Retail Price({{currcy_symbol}})</label>
                               </div>
                               <div class="col-md-3 col-sm-3">
                                 <input ng-model="Inventory.sku_number" id="sku_number" class="form-control" type="text" placeholder="">

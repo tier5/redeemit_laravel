@@ -62,6 +62,8 @@ function() {
                 var c = new Event("input");
                 a._o.field.dispatchEvent(c)
             }
+            
+            a.currcy_symbol = '₹';
              
            // h.post("../admin/dashboard/checklogin").success(function(login_response){
               //alert(login_response);
