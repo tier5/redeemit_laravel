@@ -1,0 +1,79 @@
+<div class="demo-drawer mdl-layout__drawer mdl-color-text--blue-grey-50 mdl-color--grey-900">
+  <header class="mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+
+    <div class="brand-logo">
+      <div class="logo">
+        <img ng-src="{{site_path}}../uploads/original/{{default_logo_image}}" class="demo-avatar img-responsive"  />
+      </div>
+    </div>
+
+    <!-- <div class="clear center">       -->
+      <!-- <div class="f-left m-l-30 m-r-10">&nbsp;</div> -->
+      <!-- <h4 class="mdl-color-text--white m-t-5 no-m-b">{{ ReedemerDetails.company_name }}</h4 -->
+      <!-- <div class="f-left">
+               
+      </div> -->
+    <!-- </div> -->
+    <div class="demo-avatar-dropdown">
+      <span>{{ ReedemerDetails.email }}</span>
+      <div class="mdl-layout-spacer"></div>
+      <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons f14">menu</i>
+      </button>
+      <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+      <li class="mdl-menu__item" ng-click="changepage('settings')">Settings</li>
+      <li class="mdl-menu__item" onclick="window.location.href='../auth/logout'">
+         Logout</li>
+    </ul> 
+    </div>
+  </header>
+
+  <ul ml-menu close-others="false" class="demo-navigation mdl-navigation">
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/dashboard"><i class="mdl-color-text--blue-grey-400 material-icons">dashboard</i>Dashboard</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/tables/trigger"><i class="mdl-color-text--blue-grey-400 material-icons">photo</i>Trigger Logo</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/tables/beacons"><i class="mdl-color-text--blue-grey-400 material-icons">photo</i>Trigger Beacon</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/video/list"><i class="mdl-color-text--blue-grey-400 material-icons">video_library</i>Video</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/repository/list"><i class="mdl-color-text--blue-grey-400 material-icons">photo_library</i>Image Repository</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/product/list"><i class="mdl-color-text--blue-grey-400 material-icons">view_headline</i>Product</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/inventory/list"><i class="mdl-color-text--blue-grey-400 material-icons">view_headline</i>Inventory</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/campaign/list"><i class="mdl-color-text--blue-grey-400 material-icons">list</i>Campaign</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/promotion/create"><i class="mdl-color-text--blue-grey-400 material-icons">photo_library</i>Offer</a>
+    </ml-menu-item>
+
+    <!-- <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/settings/list"><i class="mdl-color-text--blue-grey-400 material-icons">photo_library</i>Settings</a>
+    </ml-menu-item> -->
+
+    <!-- <ml-menu-group path="tables">
+      <ml-menu-group-heading>
+        <i class="material-icons f-left">video_library</i>Video
+      </ml-menu-group-heading>        
+        <ml-menu-item><a class="mdl-navigation__link" href="#/video/list">List</a></ml-menu-item>        
+    </ml-menu-group> -->
+  </ul>
+</div>

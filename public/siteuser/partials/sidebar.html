@@ -1,0 +1,39 @@
+<div class="demo-drawer mdl-layout__drawer mdl-color-text--blue-grey-50 mdl-color--grey-900">
+  <header class="mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+
+    <div class="brand-logo">
+      <div class="logo">
+        <img ng-src="{{site_path}}../uploads/original/{{ReedemerDetails.logo_image}}" class="demo-avatar img-responsive"  />
+      </div>
+    </div>
+
+    <div class="clear">      
+      <div class="f-left m-l-30 m-r-10">&nbsp;</div>
+      <div class="f-left">
+        <h4 class="mdl-color-text--white m-t-5 no-m-b">{{ ReedemerDetails.company_name }}</h4>       
+      </div>
+    </div>
+    <div class="demo-avatar-dropdown">
+      <span>{{ ReedemerDetails.email }}</span>
+      <div class="mdl-layout-spacer"></div>
+      <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons f14">menu</i>
+      </button>
+      <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn"> 
+        <li class="mdl-menu__item" onclick="window.location.href='../auth/logout'">
+         Logout</li>
+      </ul>
+    </div>
+  </header>
+
+  <ul ml-menu close-others="false" class="demo-navigation mdl-navigation">
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/dashboard"><i class="mdl-color-text--blue-grey-400 material-icons">dashboard</i>Dashboard</a>
+    </ml-menu-item>
+
+    <ml-menu-item>
+      <a class="mdl-navigation__link" href="#/myoffer/list"><i class="mdl-color-text--blue-grey-400 material-icons">list</i>My Offer</a>
+    </ml-menu-item>
+    
+  </ul>
+</div>

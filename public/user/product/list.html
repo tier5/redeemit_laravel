@@ -1,0 +1,405 @@
+<style>
+  .relative{position: relative;}
+  .product-page .e-campaingn{top: 169px;}
+  .product-page .top-arrow{right: 5%;}
+  .product-page .hide-cross{z-index: 99999; font-size: 13px;}
+  a.done-btn{color: #fff !important;}
+
+
+.default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 166px; width: 426px;
+position: fixed; margin: 0 auto; top: 35%; left: 0; right: 0; 
+bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+
+
+.video-pop{background: #fff;  max-height: 350px; width: 600px;
+position: absolute; margin: 0 auto; top: 15%; left: 0; right: 0; 
+bottom: 0; z-index: 9999; border: 1px solid #ccc;}
+
+
+.black-bg{background: rgba(0,0,0,0.7); position: fixed; width: 100%; height: 100% !important; display: block; z-index: 9999; overflow-x: none;}
+
+input[type="text"] {
+  border: 1px solid #595959;
+  border-radius: 0;
+  width: 100%;
+
+}
+
+
+.green-btn {
+  background: #73bf21 none repeat scroll 0 0;
+  border: medium none;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px 25px;
+
+}
+
+  .cross-default-pop{/*float: right; */cursor: pointer;}
+  .import-img-popup .container{width: 100%;}
+  /*.import-img-popup {padding: 40px 0; position: relative;}*/
+  .offermaker-pop{background: rgba(0,0,0,0.7); position: fixed; width: 100%; height: 100% !important; display: block; z-index: 9999; overflow-x: none; top: 0}
+  .offermaker-main{background: #fff; /*width: calc(100% - 350px);*/ max-height: 395px;position: fixed; margin: 0 auto; top: 30%; left: 10%; right: 0;
+  bottom: 0; z-index: 9999; border: 1px solid #ccc; max-width: 666px;}
+
+  .import-img-popup{height: 150px;}
+  
+</style>
+
+<section ng-controller="ProductController">
+
+<div class="black-bg" ng-if="showProductEditPopup">
+  <div class="default-pop">
+      <span class="cross-default-pop" id="hide" data-ng-click="redirect_edit(product.id);">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+
+      <div class="import-img-popup">
+        <div class="container">
+            <div id="popup_success_div" style="display:none" class="alert alert-success" ng-if=""></div>
+            <div id="popup_error_div" style="display:none" class="alert alert-danger"></div>
+            <div class="form-group">
+            
+              <div class="row">
+              <div class="col-md-12 col-sm-12">
+                 <input allowpattern="[^a-zA-Z0-9-' -]" class="form-control" ng-model="edit_product_details.product_name" type="text" id="product_name" placeholder="Name"  />
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+              <div class="col-md-4 col-sm-4">
+              <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.cost" class="mdl-textfield__input" type="text" id="cost" placeholder="Cost($)" />
+              </div>
+              <div class="col-md-4 col-sm-4">
+               <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.sell_price" class="mdl-textfield__input" type="text" id="sell_price" placeholder="Sell Price($)" />
+              </div>
+              <div class="col-md-4 col-sm-4">
+              <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_product_details.retail_price" class="mdl-textfield__input" type="text" id="retail_price" placeholder="Retail Price($)" />
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="green-btn" ng-click = "updateProduct()">Done</button>
+              
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+  <div class="mdl-grid mdl-grid--no-spacing product-page"> 
+    <div class="p-20 ml-card-holder ">
+      <div class="page-heading">
+          <h3>Product List</h3>
+      </div>
+
+    </div> 
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="top-header">
+                
+                <div id="myCarousel" data-interval="false" data-type="multi" class="carousel slide product-group-slider" >
+                 <!-- <span class="lft-arrow "><img ng-src="{{file_path}}images/lft-arrow.jpg" alt="img" /></span>-->
+                 <div ng-if="product_group.length>6">
+                 <a class="left carousel-control" data-target="#myCarousel" role="button" ng-non-bindable data-slide="prev">
+                    <span  class="lft-arrow" aria-hidden="true">
+                        <i  class="fa fa-angle-left" aria-hidden="true"></i>
+                      </span>
+                  </a>
+                 </div>
+                 
+                  <ul class="carousel-inner nav nav-pills pull-left">
+                    <li class="item {{$first?'active':''}}" ng-repeat="group in product_group track by $index" ng-if="$index % 6 == 0"  ng-init="minIndex=$index">
+                     
+                     <div class="sub-item" data-ng-repeat="i in [0,1,2,3,4,5]" ng-init="key=minIndex+i">
+                        <a data-ng-if="product_group[key]" ng-click="setGroup(product_group[key].id)" data-group="grp-{{product_group[key].id}}" class="grp-{{group.id}} grp {{(groupId==product_group[key].id) || (!groupId && product_group[key].id == 1)?'active':''}}"  href="javascript:void(0);" >
+                          {{ product_group[key].group_name }}                        
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                  <div ng-if="product_group.length>6">
+                    <a class="right carousel-control" data-target="#myCarousel" role="button" ng-non-bindable  data-slide="next">
+                      <span class="rht-arrow" aria-hidden="true">
+                        <!--<img ng-src="{{file_path}}images/rht-arrow.jpg" alt="img" />-->
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                      </span>
+                    </a>
+                  </div>
+                  <!--<span class=" rht-arrow"><img ng-src="{{file_path}}images/rht-arrow.jpg" alt="img" /></span>-->
+                </div>
+                
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+            <div class="m-b-30 table-responsive">
+              <table class="table">
+                <thead>
+                <tr>
+                <td>Product Name</td>
+                <td>Image</td>
+                <td>Cost($)</td>
+                <td>Sell Price($)</td>
+                <td>Retail Price($)</td>
+                <td>Action</td>
+                </tr>
+                </thead>
+                <tbody ng-if="product_details.length">
+                  <tr dir-paginate="product in product_details|itemsPerPage:10  track by $index">
+                    <td>{{product.product_name}}</td>
+                    <td>                
+                      <img ng-if="product.is_file_exist" ng-src="{{file_path}}{{product.product_image}}" width="80"  title="Change This Image"/>
+                      <img data-ng-if="!product.is_file_exist" alt="img" src="{{file_path}}images/no-image.png">
+                    </td>
+                    <td>
+                      {{product.cost}}
+                    </td>
+                    <td>
+                      {{product.sell_price}}
+                    </td>
+                    <td>
+                      {{product.retail_price}}
+                    </td>
+                    <td>
+
+                      <img ng-src="{{file_path}}images/add_Image_icon.png" width="20" style="cursor:pointer"  style="cursor:pointer" ng-click="showRepoModal(product.id)" title="Change This Image" />
+
+                      <img width="20" ng-src="{{file_path}}images/remove-group.jpg" alt="img" ng-if="product.product_group != 1" ng-click="makeDefaultGroup(product.id)" style="cursor:pointer" title="Ungroup Product" >
+                      
+                      <img class="delete_row" ng-src="{{file_path}}images/edit.png" width="20" style="cursor:pointer" data-ng-click="redirect_edit(product.id);" title="Edit Product" />
+
+                      <img class="delete_row" ng-src="{{file_path}}images/delete.png" width="20" style="cursor:pointer" data-ng-click="delete_product(product.id);" title="Delete Product"/>
+
+                      <span ng-if="product.product_group == 1" style="display:inline-block;">&nbsp;</span>
+                    </td>               
+                  </tr>
+                    
+
+                  <tr ng-if="product_details.length > 10">
+                    <td colspan="6" class="text-center">
+                      <dir-pagination-controls
+                        max-size="7"
+                        direction-links="true"
+                        boundary-links="true" >
+                      </dir-pagination-controls>
+                    </td>
+                  </tr>      
+                </tbody>    
+                <tbody ng-if="!product_details.length">
+                  <tr>
+                    <td class="center" colspan="12">No data present</td>                
+                  </tr>  
+                </tbody>  
+              </table>
+            </div>    
+            </div>
+            <div id="menu1" class="tab-pane fade">
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+            </div>
+            <div id="menu3" class="tab-pane fade">
+              <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+            <div id="menu4" class="tab-pane fade">
+            hI
+
+            </div>
+            <div id="menu5" class="tab-pane fade">
+            bYE
+
+            </div>
+
+          </div>
+        </div>
+      </div>  
+    </div>
+    <div class="tags m-t-20 ">
+             
+      <a href="" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn ref" ng-click="showOrHideAddProductDiv()">
+      Add Product</a>
+    </div>
+
+    <div class="container">
+      <div class="bottom-div">
+        <div class="">
+          <div class=" ml-card-holder " ng-if="showOrHideMe">
+
+            <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+              <div id="success_div" class="alert alert-success"></div>
+              <div id="error_div" class="alert alert-danger"></div>
+            </div>
+
+            <div class="inventory-adding">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7">
+                      <div class="form-group">
+                        <input type="text" id="Product_name" placeholder="Product Name" class="form-control ng-pristine ng-untouched ng-valid" ng-model="Product.Product_name" allowpattern="[^a-zA-Z0-9-' -]" />
+                      </div> 
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-4 col-sm-4">
+                            <input allowpattern="[^0-9.]" type="text" placeholder="" class="form-control ng-pristine ng-untouched ng-valid" id="cost" ng-model="Product.cost">
+                            <label>Cost($)</label>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                            <input allowpattern="[^0-9.]" type="text" placeholder="" id="sell_price" class="form-control ng-pristine ng-untouched ng-valid" ng-model="Product.sell_price">
+                            <label>Selling Price($)</label>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                            <input allowpattern="[^0-9.]" type="text" placeholder="" id="retail_price" class="form-control ng-pristine ng-untouched ng-valid" ng-model="Product.retail_price">
+                            <label>Retail Price($)</label>
+                          </div>
+                        </div>  
+                      </div> 
+                      <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                          
+                          <button id="add_Product" ng-click="addProduct()" type="submit" class="green-big p-green-btn ng-binding" value="Save">Save</button>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                          <button ng-click="showOrHideAddProductDiv()" type="button" class="green-big p-green-btn ng-binding" value="Cancel">Cancel</button>
+                        </div>
+                        </div>
+                      </div>
+                      <input type="hidden" id="image_id" value="{{selectedRepo.id}}" name="image_id">
+                  </div>
+                  <div class="col-md-2 col-sm-2">
+                    <!-- <a title="Choose image from your Image Repository. Or upload an Image." href="{{file_path}}index.php/directory/repository" class=" various fancybox.iframe put_href" value="1">
+                      <button value="Import Image" class="green-btn green-import-btn2 margintop25">Import Image</button>
+                    </a> -->
+                    <button value="Import Image" class="green-btn green-import-btn2 margintop25" ng-click="showRepoModal(0)">Import Image</button>
+                  </div>
+                  <div class="col-md-3 col-sm-3">
+                    <div class="inventory-adding-pic">
+                      
+                      <img alt="img" ng-if="!selectedRepoWhenAdding.id" ng-src="{{file_path}}images/no-image.png" class="border_container prod_image">
+                      
+                      <img alt="img" ng-if="selectedRepoWhenAdding.id" ng-src="{{file_path}}{{selectedRepoWhenAdding.directory_base_path}}" class="border_container prod_image">
+                      
+                    </div>
+
+                    <div class="choose-group">
+                      <select  name="product_group" id="product_group" class="form-control">
+                        <!-- <option value="1">Default Group</option> -->
+                        <option ng-repeat="group in product_group track by $index" value="{{ group.id }}">   
+                          {{ group.group_name }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="pull-right relative">
+                    <a class="validate-btn" id="show" ng-click="showOrHideAddProductDivOnCancel()">Add Group</a>
+
+                    <div class="my" ng-if="ShowaddgroupDiv">
+                      <div class="my-main adding-gr">
+                        <span class="hide-cross" ng-click="showOrHideAddProductDivOnCancel()">X</span>
+                        <span class="pop-arrow"><img ng-src="{{file_path}}images/pop-arrow2.png" alt="img"></span>
+                        <input type="text" class="form-control" placeholder="Group Name" ng-model="newGroupName" name="newGroupName" id="newGroupName">
+                        <button class="done-btn pull-right" type="button" value="Done" ng-click="saveNewGroupName('add')">Done</button>
+                        <!-- <button class="done-btn pull-right" type="button" ng-click="showOrHideAddProductDivOnCancel()">Cancel</button> --> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+  
+    <div class="offermaker-pop" ng-if="popupShowing">
+      <input type="hidden" id="product_id" value="{{SelectedEditImagePid}}" name="product_id">
+      <input type="hidden" id="imp_image_type" value="{{SelectedImpType}}" name="imp_image_type">
+      <div class="offermaker-main">
+        <div ng-if="showMessages">
+          <div id="popup_success_div" class="alert alert-success"></div>
+          <div id="popup_error_div" class="alert alert-danger"></div>
+        </div>
+        <div class="relative">
+            <span class="cross-default-pop" style="cursor: pointer;" ng-click="hidePopup()"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+            <div class="offermaker-main-content">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4 col-sm-4 no-padding">
+                    <div class="left-portion">
+                      
+                       <div class="folder-cat"  >
+                        <span  data-ng-click="getRepoImagesbyDirId(0);setleftOpenDir(0)"><img src="{{file_path}}images/small-folder.jpg" alt="img"  >Root Directory</span> 
+                          <div class="sub-folder"  data-ng-if="!lftPnlSelectedDir">
+                            <ul>
+                            <li data-ng-repeat="rootRepo in repoDirTree track by $index"   ng-if="rootRepo.directory==0"><span class="img-icon"><img src="{{file_path}}images/image-icon.jpg" alt="img"></span>{{rootRepo.original_name}}</li>
+                             
+                            </ul> 
+                          </div>
+                       </div>
+                       <div class="folder-cat" data-ng-repeat="dirRepo in repoDirTree track by $index" ng-if="dirRepo.directory==1">
+                          <span data-ng-click="getRepoImagesbyDirId(dirRepo.id);setleftOpenDir(dirRepo.id);" ><img src="{{file_path}}images/small-folder.jpg" alt="img"> {{dirRepo.original_name}} </span>
+                          <div class="sub-folder" ng-if="lftPnlSelectedDir==dirRepo.id  && dirRepo.files.length">
+                          <ul>
+                            <li data-ng-repeat="file in dirRepo.files"><span class="img-icon"><img src="{{file_path}}images/image-icon.jpg" alt="img"></span>{{file.original_name}}</li>
+                          </ul> 
+                          </div>
+                       </div>
+                       
+                    </div>   
+                  </div>
+                  <div class="col-md-8 col-sm-8">
+                    <div class="bigfolder-main">
+                      <div class="row">
+                        
+                        <div class="col-md-4 col-sm-4 big-folder-padding {{selectedRepo.id==file.id?'selected':''}}" dir-paginate="file in repos |itemsPerPage:10" >
+                        <div class="big-folder" style="cursor: pointer;" ng-click="doSelectedRepo(file) ">
+                          <img src="{{file_path}}{{file.directory_base_path}}" alt="img">
+                        </div> 
+                        <div class="big-folder-txt">
+                          {{file.original_name}}
+                        </div> 
+                        </div>
+                        
+                        
+                         <center data-ng-if="repos.length==0">
+                            <h2 class="add_image-repo">
+                              Empty
+                            </h2>
+                        </center>
+                        
+
+                    </div>  
+                  </div>
+                
+                </div>
+                <div class="row">
+                      <div class="col-md-7 col-sm-7 col-sm-offset-4">
+                        <div class="off-pagination">
+                           <dir-pagination-controls ng-if="repos.length > 1"
+                              max-size="1"
+                              direction-links="true"
+                              boundary-links="true" >
+                            </dir-pagination-controls>
+                        </div>
+                      </div>
+                    </div>  
+              </div>
+            </div> 
+            <div class="">
+            <button class="done-btn" data-ng-click="hidePopup()" ng-if="!SelectedEditImagePid">Done</button>
+            <button class="done-btn" data-ng-click="editImagePopup()" ng-if="SelectedEditImagePid">{{dtext}}</button>
+
+            </div> 
+        </div>
+      </div>  
+    </div>
+  </div>
+
+</section>

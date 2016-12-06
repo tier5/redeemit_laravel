@@ -1,0 +1,414 @@
+<style type="text/css">
+  
+  .default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 166px; width: 344px;
+position: fixed; margin: 0 auto; top: 35%; left: 0; right: 0; 
+bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+.black-bg{position: fixed; display: block;}
+.addnew-pop{background: #fff; max-height: 290px;
+position: absolute; margin: 0 auto; top: 5%; left: 0; right: 0; 
+bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 426px;}
+.cross-default-pop{/*float: right; */cursor: pointer;}
+
+
+.logo-pop .blue-btn{margin-top: 0;}
+.logo-pop select{margin-bottom: 5px;}
+.logo-pop .blue-btn{margin-left: 0;}
+.tbl td { cursor: pointer;}
+.logo-pop h2 {
+  border-bottom: 1px solid rgb(27, 248, 1);
+  font-size: 21px;
+  padding-bottom: 5px;
+}
+</style>
+
+
+<section ng-controller="BeaconController">
+  <div class="black-bg" ng-if="changeActionPopShow">
+    <div class="addnew-pop with-extra-height">
+      <span class="cross-default-pop" ng-click="HideActionPopup()">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+      <div class="invent-pop">
+      <div class="container logo-pop">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <h2>Update Beacon Trigger For {{SelectedBeacon.name}}</h2>
+          </div>  
+        </div>
+        <div class="form-group">
+          <h4>{{changefor == 'proximity'? 'Proximity Action' : 'Interactive Action' }}</h4>
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <select class="form-control" ng-model="SelectedAction" ng-change="getList()" id="SelectedAction">
+                <option value="">Select Action</option>
+                <option value="{{actions.id}}"  ng-repeat="actions in actionDetails track by $index" ng-selected="{{actions.id == PreviouslySelectedAction ? 'selected' :''}}">{{actions.action_name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 col-sm-6" ng-if="ShowcampaignList && SelectedAction == 2">
+              <select id="SelectedCampaignTrigger" class="form-control" ng-model="SelectedCampaignTrigger">
+                <option value="">Select Triger</option>
+                <option value="{{trigger.id}}" ng-repeat="trigger in triggerDetails track by $index" >{{trigger.campaign_name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 col-sm-6" ng-if="ShowcampaignList && SelectedAction == 3">
+              <select id="SelectedCampaignTrigger" class="form-control" ng-model="SelectedCampaignTrigger" ng-change="getOfferList(SelectedCampaignTrigger)">
+                <option value="">Select Triger</option>
+                <option value="{{trigger.id}}" ng-repeat="trigger in triggerDetails track by $index" >{{trigger.campaign_name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 col-sm-6 col-sm-offset-6" ng-if="ShowofferList">
+              <select id="SelectedOfferTrigger" class="form-control" ng-model="SelectedOfferTrigger">
+                <option value="">Select Triger</option>
+                <option value="{{triggers.id}}"  ng-repeat="triggers in triggersInDetails track by $index" >{{triggers.offer_description}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 col-sm-6" ng-if="ShowNone">
+              <select class="form-control">
+                <option value="">Select Action First</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <button class="blue-btn" ng-click="updateBeaconTrigger(SelectedBeacon, changefor)">Update Trigger</button>
+            </div>
+          </div>  
+        </div> 
+
+      </div> 
+      </div> 
+    </div>  
+  </div>
+
+  <div class="black-bg" ng-if="showRequestPopup">
+    <div class="default-pop">
+      <span class="cross-default-pop" ng-click="HideRequestPopup()">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+      <div class="invent-pop">
+        <div class="container logo-pop">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <h2>Request For Beacon</h2>
+            </div>  
+          </div>
+          <div class="form-group" style="margin-top:10px;">
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <input type="number" ng-model="requesting_beacon.no_of_beacons" placeholder="Enter how many beacon you want" class="form-control" />
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <select id="SelectedBeaconType" class="form-control" ng-model="requesting_beacon.beacon_type" ng-init="requesting_beacon.beacon_type = 'proximity'">
+                  <option value="proximity">Proximity</option>
+                  <option value="interactive">Interactive</option>
+                </select>
+              </div>
+            </div> 
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <button class="blue-btn" ng-disabled="!requesting_beacon.no_of_beacons" ng-click="RequestForBeacon()">Request Now</button>
+              </div>
+            </div>  
+          </div> 
+
+        </div> 
+      </div> 
+    </div>  
+  </div>
+
+  <div class="black-bg" ng-if="viewBeaconPopShowing">
+    <div class="addnew-pop">
+      <span class="cross-default-pop" ng-click="hideViewBeaconDiv()" style="cursor: pointer;"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+      <div class="invent-pop">
+        <div class="container">
+          <div class=""> 
+            <div class="form-group">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    Beacon Type : {{beacon_Details_view.beacon_type.toUpperCase()}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+               <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                    Beacon Name : {{beacon_Details_view.name}}
+                  </div>
+               </div>
+            </div> 
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'proximity'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon UUID : {{beacon_Details_view.uuid}}
+                </div>
+              </div>
+            </div> 
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'proximity'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon Major Value : {{beacon_Details_view.major}}
+                </div>
+              </div>
+            </div> 
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'proximity'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon Minor Value : {{beacon_Details_view.minor}}
+                </div>
+              </div>
+            </div> 
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'proximity'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon Color : {{beacon_Details_view.color}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'interactive'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon UUID : {{beacon_Details_view.identifier}}
+                </div>
+              </div>
+            </div> 
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'interactive'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon Major Value : {{beacon_Details_view.category}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'proximity'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon Action : {{beacon_Details_view.action.action_name}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'interactive'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon Proximity Action : {{beacon_Details_view.action.proximity_action_name}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-if="beacon_Details_view.beacon_type == 'interactive'">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  Beacon Interactive Action : {{beacon_Details_view.action.interactive_action_name}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing logo-page">
+
+    <div class="mdl-grid mdl-grid--no-spacing inventory-page">
+
+      <div class="mdl-cell mdl-cell--6-col  mdl-cell--12-col-tablet mdl-cell--6-col-phone">
+
+        <div class="p-20 ml-card-holder">
+          <div class="page-heading">
+            <h3>Proximity Beacons List</h3>
+          </div>
+
+          <div class="mdl-card mdl-shadow--1dp m-b-30">
+            <div class="table-responsive video-table">
+              <table class="tbl">
+                <colgroup>
+                  <col class="auto-cell-size p-r-20">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>UUID</th>
+                    <th>Major</th>
+                    <th>Minor</th>
+                    <th>Actions</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody ng-if="proximiti_beacon_list.length">
+                  <tr dir-paginate="beacon in proximiti_beacon_list|itemsPerPage:10" pagination-id="firstPegi">
+                    <td ng-click="view_detials(beacon)">{{beacon.uuid}}</td>
+                    <td ng-click="view_detials(beacon)">{{beacon.major}}</td>
+                    <td ng-click="view_detials(beacon)">{{beacon.minor}}</td>
+                    <td title="Change Beacon Action" style="cursor:pointer"><a  ng-click="change_beacon_action(beacon, 'proximity')">{{beacon.action.action_name}}</a></td>
+                    <td style="cursor:pointer">
+                      <img class="delete_row" width="20" ng-src="{{file_path}}images/active.png" title="Change Beacon Status" data-ng-click="change_beacon_status(beacon.id)"  style="cursor:pointer" ng-if="beacon.active == '1'">
+                      <img class="delete_row" width="20" ng-src="{{file_path}}images/block.png" title="Change Beacon Status" data-ng-click="change_beacon_status(beacon.id)"  style="cursor:pointer" ng-if="beacon.active == '0'">
+                    </td>
+                    <td>
+
+                      <img id="beacon-deleting-{{beacon.id}}" title="Delete Beacon Details" class="delete_row" ng-src="{{file_path}}images/delete.png" width="15" style="cursor:pointer" data-ng-click="delete_beacon_details(beacon.id)" style="display:block"/>
+
+                      <img id="beacon-{{beacon.id}}" src="{{file_path}}images/spinner.gif" style="display:none">
+                    </td>
+                  </tr> 
+
+                   <tr ng-if="proximiti_beacon_list.length > 10">
+                    <td colspan="5" class="text-center">
+                      <dir-pagination-controls pagination-id="firstPegi" 
+                        max-size="7"
+                        direction-links="true"
+                        boundary-links="true" >
+                      </dir-pagination-controls>
+                    </td>
+                  </tr>
+                      
+                </tbody>
+                <tbody ng-if="!proximiti_beacon_list.length">
+                  <tr>
+                    <td class="center" colspan="12">No data present</td>
+                  </tr>
+                </tbody>       
+              </table>
+            </div>  
+          </div>
+        </div>
+      </div>
+
+      <div class="mdl-cell mdl-cell--6-col  mdl-cell--12-col-tablet mdl-cell--6-col-phone">
+
+        <div class="p-20 ml-card-holder">
+          <div class="page-heading">
+            <h3>Interactive Beacons List</h3>
+          </div>
+
+          <div class="mdl-card mdl-shadow--1dp m-b-30">
+            <div class="table-responsive video-table">
+              <table class="tbl">
+                <colgroup>
+                  <col class="auto-cell-size p-r-20">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>Identifier</th>
+                    <th>category</th>
+                    <th>Proximity Action</th>
+                    <th>Interactive Action</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody ng-if="interactive_beacon_list.length">
+                  <tr dir-paginate="beacon in interactive_beacon_list|itemsPerPage:10" pagination-id="firstPegi">
+                    <td ng-click="view_detials(beacon)">{{beacon.identifier}}</td>
+                    <td ng-click="view_detials(beacon)">{{beacon.category}}</td>
+                    <td title="Change Beacon Action"><a  ng-click="change_beacon_action(beacon, 'proximity')">{{beacon.action.proximity_action_name}}</a></td>
+                    <td title="Change Beacon Action"><a  ng-click="change_beacon_action(beacon, 'interactive')">{{beacon.action.interactive_action_name}}</a></td>
+                    <td style="cursor:pointer">
+                      <img class="delete_row" width="20" ng-src="{{file_path}}images/active.png" title="Change Beacon Status" data-ng-click="change_beacon_status(beacon.id)" ng-if="beacon.active == '1'">
+                      <img class="delete_row" width="20" ng-src="{{file_path}}images/block.png" title="Change Beacon Status" data-ng-click="change_beacon_status(beacon.id)" ng-if="beacon.active == '0'">
+
+                      <img id="beacon-deleting-{{beacon.id}}" title="Delete Beacon Details" class="delete_row" ng-src="{{file_path}}images/delete.png" width="15" data-ng-click="delete_beacon_details(beacon.id)"/>
+
+                      <img id="beacon-{{beacon.id}}" src="{{file_path}}images/spinner.gif" style="display:none">
+                    </td>
+                  </tr> 
+
+                   <tr ng-if="interactive_beacon_list.length > 10">
+                    <td colspan="5" class="text-center">
+                      <dir-pagination-controls pagination-id="firstPegi" 
+                        max-size="7"
+                        direction-links="true"
+                        boundary-links="true" >
+                      </dir-pagination-controls>
+                    </td>
+                  </tr>
+                      
+                </tbody>
+                <tbody ng-if="!interactive_beacon_list.length">
+                  <tr>
+                    <td class="center" colspan="12">No data present</td>                
+                  </tr>
+                </tbody>       
+              </table>
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing logo-page">
+
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+
+      <div class="p-20 ml-card-holder">
+          <div class="page-heading">
+            <h3>All Beacon Request list</h3>
+          </div>
+
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+        <div class="table-responsive video-table">
+          <table class="table">
+            <colgroup>
+              <col class="auto-cell-size p-r-20">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Requested Date</th>
+                <th>Beacon Type</th>
+                <th>No. of Beacon Requested</th>
+                <th>No. of Assigned Beacon</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody ng-if="request_list.length">
+              <tr dir-paginate="request in request_list|itemsPerPage:10">
+                <td>{{request.creation_date}}</td>
+                <td>{{request.beacon_type}}</td>
+                <td>{{request.no_of_beacons}}</td>
+                <td>{{request.assigned_count}}</td>
+                <td>{{request.status}}</td>
+                <td>
+                  <img id="beacon-request-deleting-{{request.id}}" title="Delete Beacon Details" class="delete_row" ng-src="{{file_path}}images/delete.png" width="15" style="cursor:pointer" data-ng-click="delete_beacon_request(request.id)" style="display:block"/>
+
+                  <img id="beacon-request-{{request.id}}" src="{{file_path}}images/spinner.gif" style="display:none">
+                </td>
+              </tr> 
+
+               <tr ng-if="request_list.length > 10">
+                <td colspan="5" class="text-center">
+                  <dir-pagination-controls
+                    max-size="7"
+                    direction-links="true"
+                    boundary-links="true" >
+                  </dir-pagination-controls>
+                </td>
+              </tr>
+                  
+            </tbody>
+                  <tbody ng-if="!request_list.length">
+              <tr>
+                <td class="center" colspan="12">No data present</td>                
+              </tr>
+            </tbody>       
+          </table>
+        </div>  
+        </div>
+        <div class="tags m-t-20">
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn" ng-click="applyforbeacon()">Request for Beacon</a>
+        </div>
+
+        <div class="p-l-20 p-r-20 p-b-20" ng-if="show_message">
+          <div ng-if="success_div" class="alert alert-success">Successfully request done for Beacon</div>
+          <div ng-if="error_div" class="alert alert-danger">Could not make request for Beacon</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

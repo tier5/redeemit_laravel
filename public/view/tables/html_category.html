@@ -1,0 +1,639 @@
+<style>
+.no-border{border:none !important;}
+.f-plus{color: #73BF21;}
+.f-minus{color: #73BF21;}
+.mdl-data-table tbody tr .inner-table table thead tr:hover{background: #73BF21 !important;}
+/*.inner-table table{width: 90%; float: right;}*/
+.inner-table table{width: 100%;}
+.inner-table table tr{height: 16px !important;}
+.inner-table table tr th{height: 16px !important;}
+.inner-table table tbody tr{border: 2px dashed #ccc;}
+.inner-table .pagination{margin:4px 0;}
+.mdl-data-table{width: 100%; display: table;}
+
+</style>
+
+<section ng-controller="PartnerListController">
+  <!-- <div class="mdl-color--blue-grey ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Redeemar Partner</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div> -->
+
+  <div class="mdl-grid mdl-grid--no-spacing inventory-page">
+
+    <!-- <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div> -->
+
+    <div class=" mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone"> <!-- mdl-cell -->
+      <div class="p-20 ml-card-holder"> <!-- ml-card-holder-first -->
+      <div class="page-heading"> <h3>Redeemar Partner List</h3></div>
+
+
+      <div class="table-responsive">
+          <table class="mdl-data-table ml-table-bordered mdl-js-data-table is-upgraded" width="100%;">
+            <thead>
+              <tr>
+                <th>Comapny Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Approve</th>
+                <th>Action</th>
+              </tr>
+            </thead>  
+            <tbody>
+            <tr>
+              <td colspan="5">
+                <table class="table">
+                  <tr class="no-border">
+                    <td>Adidas <img width="13" alt="img" src="../images/up-angle.png"></td>
+                    <td>c2@a.com</td>
+                    <td>123456</td>
+                    <td><img src="../images/active.png" alt="img"></td>
+                    <td>
+                        <span>
+                        <img width="20" src="../images/edit.png" alt="Edit">
+                        </span>
+                        <span><img width="20" src="../images/delete.png" alt="Delete"></span>
+                        <span><img width="20" src="../images/add_new.png" alt="Add"></span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="5">
+                      
+                      <div class="inner-table">
+                        <table class="table">
+                        <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                       
+                        <tr>
+
+
+
+                          <td>Tier51 <img width="13" src="../images/up-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/active.png" alt="img"></td>
+                          <td>
+                            <span>
+                            <img width="15" alt="Edit" src="../images/edit.png">
+                            </span>
+                            <span>
+                            <img width="15" alt="Delete" src="../images/delete.png">
+                            </span>
+                            <span>
+                            <img width="15" alt="Add" src="../images/add_new.png">
+                            </span>
+                          </td>
+
+
+
+
+                        </tr>
+
+
+
+                        <tr>
+                          <td colspan="3">
+                              <div class="inner-table">
+                                <table>
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Status</th>
+                                      <th>Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>Tier6</td>
+                                        <td><img width="15" src="../images/active.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Tier6 </td>
+                                        
+                                        <td><img width="15" src="../images/block.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Tier6
+                                        </td>
+                                        <td><img width="15" src="../images/active.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="3">
+                                          <ul class="pagination">
+                                          <li><a href="#">1</a></li>
+                                          <li><a href="#">2</a></li>
+                                          <li><a href="#">3</a></li>
+                                          <li><a href="#">4</a></li>
+                                          </ul>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                                </table>  
+                              </div>
+                          </td>  
+                        </tr>
+                        <tr>
+                          <td>Tier5 <img width="13" src="../images/down-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/block.png" alt="img"></td>
+                          <td>
+                          <span>
+                          <img width="15" alt="Edit" src="../images/edit.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Delete" src="../images/delete.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Add" src="../images/add_new.png">
+                          </span>
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tier5 <img width="13" src="../images/down-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/active.png" alt="img"></td>
+                          <td>
+                          <span>
+                          <img width="15" alt="Edit" src="../images/edit.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Delete" src="../images/delete.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Add" src="../images/add_new.png">
+                          </span>
+
+                          </td>
+                        </tr> 
+                        <tr>
+                          <td colspan="3">
+                            <ul class="pagination">
+                              <li><a href="#">1</a></li>
+                              <li><a href="#">2</a></li>
+                              <li><a href="#">3</a></li>
+                              <li><a href="#">4</a></li>
+                            </ul>
+                          </td>
+                        </tr>
+                         </tbody>
+                       </table>
+                      </div>
+
+                    </td>
+                  </tr>  
+
+
+
+                  <tr>
+                    <td colspan="5">
+                      <!-- <div class="inner-table">
+                      <table class="table">
+                        <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                          <td>Tier51 <img width="13" src="../images/up-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/active.png" alt="img"></td>
+                          <td>
+                            <span>
+                            <img width="15" alt="Edit" src="../images/edit.png">
+                            </span>
+                            <span>
+                            <img width="15" alt="Delete" src="../images/delete.png">
+                            </span>
+                            <span>
+                            <img width="15" alt="Add" src="../images/add_new.png">
+                            </span>
+                          </td>
+
+                        </tr>
+
+
+
+                        <tr>
+                          <td colspan="3">
+                              <div class="inner-table">
+                                <table>
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Status</th>
+                                      <th>Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>Tier6</td>
+                                        <td><img width="15" src="../images/active.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Tier6 </td>
+                                        
+                                        <td><img width="15" src="../images/block.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Tier6
+                                        </td>
+                                        <td><img width="15" src="../images/active.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="3">
+                                          <ul class="pagination">
+                                          <li><a href="#">1</a></li>
+                                          <li><a href="#">2</a></li>
+                                          <li><a href="#">3</a></li>
+                                          <li><a href="#">4</a></li>
+                                          </ul>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                                </table>  
+                              </div>
+                          </td>  
+                        </tr>
+                        <tr>
+                          <td>Tier5 <img width="13" src="../images/down-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/block.png" alt="img"></td>
+                          <td>
+                          <span>
+                          <img width="15" alt="Edit" src="../images/edit.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Delete" src="../images/delete.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Add" src="../images/add_new.png">
+                          </span>
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tier5 <img width="13" src="../images/down-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/active.png" alt="img"></td>
+                          <td>
+                          <span>
+                          <img width="15" alt="Edit" src="../images/edit.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Delete" src="../images/delete.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Add" src="../images/add_new.png">
+                          </span>
+
+                          </td>
+                        </tr> 
+                        <tr>
+                          <td colspan="3">
+                            <ul class="pagination">
+                              <li><a href="#">1</a></li>
+                              <li><a href="#">2</a></li>
+                              <li><a href="#">3</a></li>
+                              <li><a href="#">4</a></li>
+                            </ul>
+                          </td>
+                        </tr>
+                         </tbody>
+                       </table>
+                      </div> -->
+
+                    </td>  
+                  </tr>  
+                  </table>  
+              </td>
+            </tr>  
+             <!--  <tr>
+                <td colspan="5">
+                  <div class="inner-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Tier5 <img width="13" src="../images/up-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/active.png" alt="img"></td>
+                          <td>
+                            <span>
+                            <img width="15" alt="Edit" src="../images/edit.png">
+                            </span>
+                            <span>
+                            <img width="15" alt="Delete" src="../images/delete.png">
+                            </span>
+                            <span>
+                            <img width="15" alt="Add" src="../images/add_new.png">
+                            </span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                              <div class="inner-table">
+                                <table>
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Status</th>
+                                      <th>Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                        <td>Tier6</td>
+                                        <td><img width="15" src="../images/active.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Tier6 </td>
+                                        
+                                        <td><img width="15" src="../images/block.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Tier6
+                                        </td>
+                                        <td><img width="15" src="../images/active.png" alt="img">
+                                        </td>
+                                        <td>
+                                        <span>
+                                        <img width="15" alt="Edit" src="../images/edit.png">
+                                        </span>
+                                        <span>
+                                        <img width="15" alt="Delete" src="../images/delete.png">
+                                        </span>
+                                        
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="3">
+                                          <ul class="pagination">
+                                          <li><a href="#">1</a></li>
+                                          <li><a href="#">2</a></li>
+                                          <li><a href="#">3</a></li>
+                                          <li><a href="#">4</a></li>
+                                          </ul>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                                </table>  
+                              </div>
+                          </td>  
+                        </tr>
+                        <tr>
+                          <td>Tier5 <img width="13" src="../images/down-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/block.png" alt="img"></td>
+                          <td>
+                          <span>
+                          <img width="15" alt="Edit" src="../images/edit.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Delete" src="../images/delete.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Add" src="../images/add_new.png">
+                          </span>
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tier5 <img width="13" src="../images/down-angle.png" alt="img"></td>
+                          <td><img width="15" src="../images/active.png" alt="img"></td>
+                          <td>
+                          <span>
+                          <img width="15" alt="Edit" src="../images/edit.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Delete" src="../images/delete.png">
+                          </span>
+                          <span>
+                          <img width="15" alt="Add" src="../images/add_new.png">
+                          </span>
+
+                          </td>
+                        </tr> 
+                        <tr>
+                          <td colspan="3">
+                            <ul class="pagination">
+                              <li><a href="#">1</a></li>
+                              <li><a href="#">2</a></li>
+                              <li><a href="#">3</a></li>
+                              <li><a href="#">4</a></li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>  
+                </td>
+              </tr> --> 
+              <tr>
+                <td>Adidas <img width="13" alt="img" src="../images/down-angle.png"></td>
+                <td>c2@a.com</td>
+                <td>123456</td>
+                <td><img src="../images/active.png" alt="img"></td>
+                <td>
+                    <span>
+                    <img width="20" src="../images/edit.png" alt="Edit">
+                    </span>
+                    <span><img width="20" src="../images/delete.png" alt="Delete"></span>
+                    <span><img width="20" src="../images/add_new.png" alt="Add"></span>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="5">
+                  <ul class="pagination">
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                  </ul>
+                </td>
+              </tr> 
+            </tbody>  
+          </table>  
+          </div>
+
+          <br><br><br>
+
+
+
+
+
+
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+          <!-- <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Redeemar Partner List</h2>
+          </div> -->
+
+
+
+
+
+
+
+
+
+          <table class="mdl-data-table ml-table-bordered mdl-js-data-table ">
+            <colgroup>
+              <col class="auto-cell-size p-r-20">
+            </colgroup>
+            <thead>
+            <tr class="mdl-data-table__cell--non-numeric">
+              <th class="mdl-data-table__cell--non-numeric">Comapny Name</th>
+              <th class="mdl-data-table__cell--non-numeric">Email</th>
+              <th class="mdl-data-table__cell--non-numeric">Password</th>
+              <th class="mdl-data-table__cell--non-numeric">Approve</th>
+              <th class="mdl-data-table__cell--non-numeric">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="reedemar_details.length > 0"  dir-paginate="item in reedemar_details|itemsPerPage:10">
+                <td>{{item.company_name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.original_pass}}</td>
+                <td> 
+                   <img id="row_{{ item.id }}" style="cursor:pointer" ng-if="item.approve == '1'" ng-src="{{img_file_path}}images/active.png" width="20" data-ng-click="update_status(item.id,item.approve);" />
+
+                   <img id="row_{{ item.id }}" style="cursor:pointer" ng-if="item.approve != '1'" ng-src="{{img_file_path}}images/block.png" width="20" data-ng-click="update_status(item.id,item.approve);" />
+                </td>
+                <td id="row_{{item.id}}">
+                  <img class="delete_row" ng-src="{{file_path}}images/edit.png" width="20" style="cursor:pointer" data-ng-click="redirect_edit(item.id);" />
+                  
+                  <img class="delete_row" ng-src="{{file_path}}images/delete.png" width="20" style="cursor:pointer" data-ng-click="delete_reedemer(item.id);" />
+                </td>
+              </tr> 
+              <tr>
+                <td colspan="4" class="text-center">
+                  <dir-pagination-controls
+                    max-size="7"
+                    direction-links="true"
+                    boundary-links="true" >
+                  </dir-pagination-controls>
+                </td>
+              </tr>
+              <tr ng-if="reedemar_details.length == 0">
+                <td class="center" colspan="5">No data present</td>                
+              </tr> 
+            </tbody>
+            <!-- <tfoot>
+              <tr>
+                <td colspan="4">
+                  
+                </td>
+              <tr>
+            </tfoot> -->
+          </table>
+        </div>
+        <div class="tags m-t-20">          
+          <!-- <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/tables/add">Add</a> -->
+           <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn" href="#/tables/add">Add</a>
+
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

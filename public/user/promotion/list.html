@@ -1,0 +1,617 @@
+<style>
+  .m-l {
+    margin-left: 5px;
+  }
+
+</style>
+
+
+
+
+<section ng-controller="CampaignAddController">
+  <div class="campaign-page">
+  <div class="container">
+  <div class="row">
+  <div class="col-md-12 col-sm-12">
+  <!-- <div class="mdl-color--blue-grey ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">User Campaign List</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div> -->
+
+  <!-- <table class="mdl-data-table ml-table-bordered mdl-js-data-table pointer-table" > -->
+
+
+  <div class="container list mdl-data-table" id="table">
+  <!-- <a value="1" class=" various fancybox.iframe put_href" href="{{file_path}}../../filemanager/index2.html" title="Choose image from your Image Repository. Or upload an Image."> 
+              <button  type="button" class="green-btn green-import-btn2">Import Product</button>
+              </a> -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <div class="row row-style">
+                <div class="col-xs-3 col-sm-3">
+                    Offer Image
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    Offer Name
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    End date
+                </div>
+                <div class="col-xs-3 col-sm-3">
+                    Campaign Offers
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    Action
+                </div>
+            </div>
+            <div>
+            <div class="row main-row accordion">
+                <div class="col-xs-3 col-sm-3 camp-tr">
+                    <span>Another tesing text</span>
+                </div>
+                <div class="col-xs-2 col-sm-2 camp-tr">
+                    <span>11/02/16</span>
+                </div>
+                <div class="col-xs-2 col-sm-2 camp-tr">
+                    <span>27/02/16</span>
+                </div>
+                <div class="col-xs-3 col-sm-3 camp-tr">
+                    <span>3</span>
+                </div>
+                <div class="col-xs-2 col-sm-2 camp-tr">
+                    <img class="delete_row" width="20" src="../images/edit.png" title="Edit Campaign" ng-src="../images/edit.png" style="cursor:pointer" data-ng-click="redirect_edit(campaign.id, currentPageChanged);">
+
+                    <img class="delete_row" width="20" src="../images/delete.png" title="Delete Campaign" ng-src="../images/delete.png" style="cursor:pointer" data-ng-click="delete_campaign(campaign.id);">
+                </div>
+            </div>
+
+
+
+
+            <div class="row details-info">
+                <div class="col-xs-12 col-sm-12 camp-tr">
+                  <div class="row">
+
+
+                  <div class="col-md-9 col-sm-9">  
+                  <div class="regular slider">
+                  <div>
+
+
+<!-- <a value="1" class=" various fancybox.iframe put_href" href="{{file_path}}../../filemanager/index2.html" title="Choose image from your Image Repository. Or upload an Image."> 
+              <button  type="button" class="green-btn green-import-btn2">Import Product</button>
+              </a> -->
+
+                    <a value="1" class=" various fancybox.iframe put_href" href="#" title="Choose image from your Image Repository. Or upload an Image.">
+                    <img src="../images/pic2.jpg" alt="img">Testing
+
+                    </a>
+
+
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  </div>  
+                  </div>
+                  <div class="col-md-3 col-sm-3">  
+                    <div class="add-new-offer">
+                    Add New Offer To The Campaign
+                    </div>  
+                  </div>
+                  </div>
+                </div>  
+            </div>
+
+
+            </div>
+
+            <div>
+            <div class="row main-row accordion">
+                <div class="col-xs-3 col-sm-3 camp-tr">
+                    <span>Another tesing text</span>
+                </div>
+                <div class="col-xs-2 col-sm-2 camp-tr">
+                    <span>11/02/16</span>
+                </div>
+                <div class="col-xs-2 col-sm-2 camp-tr">
+                    <span>27/02/16</span>
+                </div>
+                <div class="col-xs-3 col-sm-3 camp-tr">
+                    <span>3</span>
+                </div>
+                <div class="col-xs-2 col-sm-2 camp-tr">
+                    <img class="delete_row" width="20" src="../images/edit.png" title="Edit Campaign" ng-src="../images/edit.png" style="cursor:pointer" data-ng-click="redirect_edit(campaign.id, currentPageChanged);">
+
+                    <img class="delete_row" width="20" src="../images/delete.png" title="Delete Campaign" ng-src="../images/delete.png" style="cursor:pointer" data-ng-click="delete_campaign(campaign.id);">
+                </div>
+            </div>
+            
+            <div class="row details-info">
+                <div class="col-xs-12 col-sm-12 camp-tr">
+                  <div class="row">
+
+
+                  <div class="col-md-9 col-sm-9">  
+                  <div class="regular slider">
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  <div>
+                    <img src="../images/pic2.jpg" alt="img">
+                    <div class="campaign-heading">
+                    Famiglia’s Famous Dinner for 2 with welcome drinks
+                    </div>
+                    <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <div class="off-percentage">53% OFF</div>
+                      <div class="camp-location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+ FBBC Hillcrest (1.8 miles)
+                      </div>  
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <div class="before-price">$750</div>
+                      <div class="after-price">$349</div>
+                    </div>
+
+                    </div>
+                  </div>
+                  </div>  
+                  </div>
+                  <div class="col-md-3 col-sm-3">  
+                    <div class="add-new-offer">
+                    Add New Offer To The Campaign
+                    </div>  
+                  </div>
+                  </div>
+                </div>  
+            </div>
+
+
+            </div>
+
+
+        </div>
+     
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!--  <table class="table table1 list mdl-data-table" id="table1">
+
+    <colgroup>
+        <col class="auto-cell-size p-r-20">
+    </colgroup>
+    <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">Campaign Name</th>
+          <th class="mdl-data-table__cell--non-numeric">Start date</th>
+          <th class="mdl-data-table__cell--non-numeric">End date</th>
+          <th class="mdl-data-table__cell--non-numeric">Campaign Offers</th>
+          <th class="mdl-data-table__cell--non-numeric">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr class="accordion">
+      <td>Summer Campaign</td>
+      <td>07/01/2016 </td>
+      <td>07/27/2016 </td>
+      <td>0</td>
+      <td>
+        <img width="20" data-ng-click="redirect_edit(campaign.id, currentPageChanged);" style="cursor:pointer" ng-src="../images/edit.png" class="delete_row" title="Edit Campaign" src="../images/edit.png">
+
+        <img width="20" data-ng-click="delete_campaign(campaign.id);" style="cursor:pointer" ng-src="../images/delete.png" class="delete_row" title="Delete Campaign" src="../images/delete.png">
+      </td>
+      </tr>
+      <tr class="">
+      <td colspan="5">
+          
+
+
+
+
+      <div class="details-info">
+           
+          sad
+
+
+
+
+      </div>
+
+
+
+
+      </td>  
+      </tr>
+     </tbody>
+      <tbody>
+      <tr class="accordion">
+      <td>Summer Campaign</td>
+      <td>07/01/2016 </td>
+      <td>07/27/2016 </td>
+      <td>0</td>
+      <td>
+        <img width="20" data-ng-click="redirect_edit(campaign.id, currentPageChanged);" style="cursor:pointer" ng-src="../images/edit.png" class="delete_row" title="Edit Campaign" src="../images/edit.png">
+
+        <img width="20" data-ng-click="delete_campaign(campaign.id);" style="cursor:pointer" ng-src="../images/delete.png" class="delete_row" title="Delete Campaign" src="../images/delete.png">
+      </td>
+      </tr>
+      <tr class="">
+      <td colspan="5">
+        <div class="details-info">
+          Hello
+        </div>
+      </td>  
+      </tr>
+      </tbody>
+      <tbody>
+      <tr class="accordion">
+      <td>Summer Campaign</td>
+      <td>07/01/2016 </td>
+      <td>07/27/2016 </td>
+      <td>0</td>
+      <td>
+        <img width="20" data-ng-click="redirect_edit(campaign.id, currentPageChanged);" style="cursor:pointer" ng-src="../images/edit.png" class="delete_row" title="Edit Campaign" src="../images/edit.png">
+
+        <img width="20" data-ng-click="delete_campaign(campaign.id);" style="cursor:pointer" ng-src="../images/delete.png" class="delete_row" title="Delete Campaign" src="../images/delete.png">
+      </td>
+      </tr>
+      <tr class="">
+      <td colspan="5">
+        <div class="details-info">
+        Hello
+        </div>
+      </td>  
+      </tr>
+      </tbody>
+
+
+
+     
+  
+  </table> --> 
+
+  <div class="tags m-t-20 ">
+  <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn" href="#/campaign/add" >Add Campaign</a> 
+
+  </div>
+
+  <div class="campaign-adding">
+  <div class="row">
+    <div class="col-md-6 col-sm-6">
+      <input class="form-control" type="text" placeholder="Campaign Name">
+    </div>
+    <div class="col-md-3 col-sm-3">
+      <input type="text" ng-model="promotion.c_s_date" class="mdl-textfield__input cal ng-pristine ng-valid hasDatepicker ng-touched" id="c_s_date" placeholder="Start Date" style="">
+    </div>
+    <div class="col-md-3 col-sm-3">
+      <input type="text" ng-model="promotion.c_s_date" class="mdl-textfield__input cal ng-pristine ng-valid hasDatepicker ng-touched" id="c_s_date" placeholder="End Date" style="">
+    </div>
+
+  </div>
+
+<div class="tags m-t-20 ">
+  <a class="done-btn" href="">Done</a>  
+
+</div>  
+</div>
+
+  </div>
+  </div>
+  </div>
+  </div>
+  <!-- div class="details-info">
+
+          <div class="regular slider">
+        <div>
+          <img src="http://placehold.it/350x300?text=1">
+        </div>
+        <div>
+          <img src="http://placehold.it/350x300?text=2">
+        </div>
+        <div>
+          <img src="http://placehold.it/350x300?text=3">
+        </div>
+        <div>
+          <img src="http://placehold.it/350x300?text=4">
+        </div>
+        <div>
+          <img src="http://placehold.it/350x300?text=5">
+        </div>
+        <div>
+          <img src="http://placehold.it/350x300?text=6">
+        </div>
+      </div>   
+
+  </div> -->
+</section>
+
+
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+
+
+
+
+<script type="text/javascript">
+
+    // $(function() {
+    //     var $list = $('.list');    
+    //     $list.find("tr").not('.accordion').hide();
+    //     $list.find("tr").eq(0).show();
+    //     $list.find(".accordion").click(function(){ 
+    //     $(this).fadeTo("fast", 1) ;    
+    //     $list.find('.accordion').not(this).siblings().fadeOut(500);
+    //     $(this).siblings().fadeToggle(500);
+    //     $(this).addClass('active');
+    //     $list.find('.accordion').not(this).removeClass('active');
+    //     $list.find('.accordion').not(this).addClass('no-opacity');
+    //         $list.find('.accordion').not(this).hover(function(){
+    //             $(this).fadeTo("fast", 1);}, function(){$(this).fadeTo("fast", 1);
+    //         });
+    //     });    
+    // });
+
+   
+
+    $(function() {
+        var $list = $('.list');    
+        $list.find(".main-row").not('.accordion').hide();
+        $list.find(".main-row").eq(0).show();
+        $list.find(".accordion").click(function(){ 
+        $(this).fadeTo("fast", 1) ;    
+        $list.find('.accordion').not(this).siblings().fadeOut(500);
+        $(this).siblings().fadeToggle(500);
+        $(this).addClass('active');
+        $list.find('.accordion').not(this).removeClass('active');
+        $list.find('.accordion').not(this).addClass('no-opacity');
+            $list.find('.accordion').not(this).hover(function(){
+                $(this).fadeTo("fast", 1);}, function(){$(this).fadeTo("fast", 1);
+            });
+        });    
+    });
+</script>
+
+
+
+
+<!-- <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script> -->
+
+   
+
+  
+
+
+  

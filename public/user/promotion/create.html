@@ -1,0 +1,1004 @@
+<style type="text/css">
+  .publish-btn .bgn-disable{
+    background: #ccc;
+  }
+  .relative{position: relative;}
+  .help{position: absolute; right: 10px; top: 0}
+  #accordion.ui-accordion .ui-accordion-content{width: 100%;}
+  #accordion h3{padding-left: 25px;}
+  .default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 325px;
+  position: fixed; margin: 0 auto; top: 35%; left: 0; right: 0; 
+  bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 607px;}
+  .black-bg{background: rgba(0,0,0,0.7); position: absolute; width: 100%; height: 100% !important; display: block; z-index: 9999; overflow-x: none;}
+
+  .red-txt {text-align: center;}
+
+  .cross-default-pop{/*float: right; */cursor: pointer;}
+  .import-img-popup .container{width: 100%;}
+  .import-img-single img {border: 1px solid #b7b7b7; max-width: 100%;}
+  .sigle-row {padding-bottom: 25px;}
+  .floate-btn {background: #fff none repeat scroll 0 0; bottom: 0;
+  width: 100%;}
+  /*.import-img-popup {padding: 40px 0; position: relative;}*/
+
+  .import-img-single img{border:1px solid #B7B7B7;}
+  .import-img-single img:hover{border:1px solid #73BF21;}
+  .import-img-single img:focus{border:1px solid #73BF21;}
+  .import-img-single img.active{border:1px solid #73BF21;}
+  .off-build-page .container{max-width: 901px;}
+
+
+  .addnew-pop{background: #fff; max-height: 166px;
+  position: absolute; margin: 0 auto; top: 5%; left: 0; right: 0; 
+  bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 426px;}
+
+
+  .cross-default-pop{/*float: right; */cursor: pointer;}
+  .import-img-popup .container{width: 100%;}
+  /*.import-img-popup {padding: 40px 0; position: relative;}*/
+
+  /* Modified by Tania*/
+  .offermaker-pop{
+    background: rgba(0,0,0,0.7);
+    position: fixed;
+    width: 100%;
+    height: 100% !important;
+    display: block;
+    z-index: 9999;
+    overflow-x: none;
+    top: 0;
+  }
+  .offermaker-main{
+    background: #fff;
+    max-height: 395px;
+    position: fixed;
+    margin: 0 auto;
+    top: 30%;
+    left: 10%;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    border: 1px solid #ccc;
+    max-width: 666px;
+  }
+  /*****/
+
+
+</style>
+
+<section class="text-fields off-page" ng-controller="PromotionController" >
+
+  <div class="addnew-bg" ng-if="showAddCampaignDiv">
+    <div class="addnew-pop">
+      <span class="cross-default-pop" ng-click="hideAddCampaignDiv()" style="cursor: pointer;"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+        <div class="invent-pop">
+        <div class="container">
+          <div id="camp_popup_error_div"></div>
+          <div class="">
+          <div class="form-group">
+             <div class="row">
+                <div class="col-md-12 col-sm-12">
+                   <input class="form-control" type="text" placeholder="Campaign Name" ng-model="Campaign.c_name" id="a_c_name"ng-disabled="disableIt">
+                </div>
+             </div>
+          </div> 
+            <div class="form-group">  
+             <div class="row">   
+                <div class="col-md-6 col-sm-6" >
+                   <input ng-model="Campaign.a_c_s_date" class="form-control cal" type="text" id="popup_c_s_date" placeholder="Start Date" ng-disabled="disableIt"/>
+
+                  <!-- <input type="text" id="datepicker"> --> 
+
+
+                </div>
+                <div class="col-md-6 col-sm-6">
+                   <input ng-model="Campaign.a_c_e_date"  class="form-control cal" type="text" id="popup_c_e_date" placeholder="End Date" ng-disabled="disableIt"/>
+                </div>
+             </div>
+            </div> 
+             <div class=""><!-- tags m-t-20 --> 
+                <a class="done-btn" href="" ng-model="add_campaign_btn"  ng-click = "addCampaign()" ng-disabled="add_campaign_disable  && disableIt">Done</a>
+                <!-- <a class="done-btn" href="" ng-click = "hideAddCampaignDiv()">Cancel</a> -->
+             </div>
+          </div>
+        </div>
+        </div>
+    </div>  
+  </div>
+
+  <div class="black-bg" ng-if="showproductorinventory">
+    <div class="default-pop">
+      <span class="cross-default-pop" id="hide" ng-click="hideMe()" style="cursor: pointer;"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+      
+      <div class="import-img-popup">
+        <div class="container" ng-if="AllData.length">
+          <div class="col-md-3 col-sm-3 import-img-single" data-ng-repeat="data in AllData track by $index" ng-click="usethisProduct(data.id, data.choiceid)">
+            
+            <img data-ng-if="data.is_file_exist" alt="img" src="{{file_path}}{{data.product_image}}">
+            <img data-ng-if="!data.is_file_exist"
+                 alt="img" src="{{file_path}}images/no-image.png">
+            <div class="import-img-single-txt">{{data.product_name}}</div>
+          </div>
+        </div>
+        <div class="container" ng-if="AllInventoryData.length">
+            <div class="col-md-3 col-sm-3 import-img-single" data-ng-repeat="inventorydata in AllInventoryData track by $index" ng-click="usethisInventory(inventorydata.id, inventorydata.inventorychoiceid)">
+              <img alt="img" data-ng-if="inventorydata.is_file_exist" src="{{file_path}}{{inventorydata.inventory_image}}">
+              
+              <img alt="img" data-ng-if="!inventorydata.is_file_exist" src="{{file_path}}images/no-image.png">
+              <div class="import-img-single-txt">{{inventorydata.inventory_name}}</div>
+            </div>
+        </div>
+
+      </div>
+      <div class="floate-btn">
+            <button class="green-btn" ng-click="hideMe()">Done</button>
+          </div>
+    </div>
+  </div>
+
+  <div class="off-build-page"> 
+    <div class="container">
+      <div class="row">
+        <div class="">
+          <div class="row">
+            <div class="col-md-7 col-sm-7">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">STEP 1 : Design</h2>
+              </div>
+              <div class="box-sec">
+                <h2> Offer Details</h2>
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+
+                      <select class="form-control" ng-model="campaign_id" ng-options="camp.id as camp.campaign_name for camp in campaign_list" id="campaign_id" ng-change="get_campaign_details()" ng-blur="offerValidate('campaign_id')" ng-selected="selectedCampaign == campaign_id" ng-disabled="disableIt"/>
+                      
+                    </div>
+                    <div class="form-group">
+                      
+                      <div class="selectbox">
+                        <span data-ng-repeat="cat in categorryList| filter:id track by $index ">                      
+                        {{cat.cat_name?cat.cat_name:'Select Sub Category'}}</span><i class="fa fa-caret-down caret-down " aria-hidden="true">
+                        
+                        </i><i class="fa fa-caret-up caret-up" aria-hidden="true"></i>
+                      </div>
+                      
+                      
+                      <div class="selectbox-option">
+                        <div id="accordion1">
+                          
+                          <div class="" data-ng-repeat="cat in categorryList track by $index" >
+                            <div>
+                              <ul>
+                                <li data-ng-repeat="subc in cat.children">{{subc.cat_name}}
+                                <input type="checkbox" ng-blur="offerValidate('subcat')" ng-click="getSelected()" data-subcatname="{{subc.cat_name}}" value="{{subc.id}}" class="check_class" ng-checked="subc.checkedMe" ng-disabled="disableIt"></li>
+                               
+                              </ul>
+                            </div>
+                          </div>
+                          
+                        </div>
+                        
+                      </div>
+                      <div class="selected-value">
+                        
+                      </div>
+                    </div>
+                    <div class="form-group custom-margin">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                          <div class="form-group custom-margin">
+                            <input type="text" placeholder="Start Date" id="c_s_date" class="mdl-textfield__input cal ng-pristine ng-untouched ng-valid " ng-model="promotion.c_s_date" ng-disabled="disableIt">
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                          <div class="form-group custom-margin">
+                            <input type="text" placeholder="End Date" id="c_e_date" class="mdl-textfield__input cal ng-pristine ng-untouched ng-valid " ng-model="promotion.c_e_date" ng-disabled="disableIt">
+                            <span class="red-txt" >{{validate_hour_txt}}</span>
+                          </div>
+                        </div>
+
+                      </div> 
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                          <input type="text" value="1" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" placeholder="No. redeemars" ng-blur="offerValidate('total_redeemar')" id="total_redeemar" ng-init="promotion.total_redeemar = promotion.total_redeemar?promotion.total_redeemar:1" ng-model="promotion.total_redeemar" required="" ng-disabled="disableIt" allowpattern="[^0-9]">
+                          <input type="hidden" ng-init="promotion.start_hour=24" ng-model="promotion.start_hour"  ng-disabled="disableIt"/>
+                        </div>
+                      <div class="col-md-6 col-sm-6 offer-full">
+                        <a href="" class="offer-val-btn"  ng-click="showMyDiv()">Offer Validation</a>
+                        <div class="on-demand">
+                          <input type="checkbox" data-ng-model="promotion.on_demand" data-ng-click="ondemand(promotion.on_demand);" ng-disabled="disableIt"> Offer On Demand 
+                        </div>
+                        <div class="my" ng-if="showOfferValidationTimeDiv">
+                          <div class="my-main">
+                            <p>Validate After <input type="text" ng-model="selected_validate_after_Hour" id="selected_validate_after_Hour" placeholder="Hour" ng-change="promotion.start_hour=selected_validate_after_Hour"  title="Set after how many hours, this offer will be valid."  ng-disabled="disableIt"> Hour </p>
+
+                            <span class="pop-arrow"><img src="{{file_path}}images/pop-arrow.jpg" alt="img"></span>
+
+                            <div class="rz-slide">
+                              <!-- <article class="val-slide"> -->
+                                <rzslider
+                                  rz-slider-model="validate_after_hour.value"
+                                  rz-slider-options="validate_after_hour.options"
+                                ></rzslider>
+                              <!-- </article> -->
+                            </div>
+
+                            <div class="pull-left">Select Hour</div>
+                            <div class="pull-right"><a class="validate-btn" ng-click="hourValidate(selected_validate_after_Hour)" href="javascript:;">Validate</a></div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>  
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Meta tags by using comma" data-ng-model="promotion.tags" class="form-control" allowpattern="[^a-zA-Z0-9,. -]" name="tags">
+                    <!-- <input name="tags" class="form-control" id="more_information" value=""> -->
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                  <div class="row">
+                    <div class="col-md-4 col-sm-4 no-right-padding">
+                      <div title="Add a new campaign" class="form-group">
+                        <!-- <a href="" class=" various fancybox.iframe put_href" value="1">  -->
+
+                         <!--  <span class="choose choose-btn choose-btn-new" ng-click="showAddCampaignForm()">Add new</span> -->
+
+                          <span class="choose choose-btn choose-btn-new" ng-click="showAddCampaignForm()"ng-disabled="disableIt">Add new</span>
+
+
+                          
+                        <!-- </a> -->
+                      </div>
+                    </div> 
+                    <div class="col-md-7 col-sm-7 no-padding">
+                      <div class="camp-date green" ng-model="show_camp_date"><!-- MM/DD/YY - MM/DD/YY --> {{show_camp_date}}</div>
+                      <div class="camp-date">Campaign Date</div>
+                    </div>
+                  </div>
+
+
+                  <div title="Write Offer Description in short." class="form-group off-descrip"> 
+                    <label>Offer Description</label>                   
+                    <textarea allowpattern="[^0-9a-zA-Z-_.%$#!'@()= &quot;-]" ng-trim="false" maxlength="65" id="offer_description" ng-blur="offerValidate('offer_description')" rows="2" placeholder="Offer Description" ng-model="offer_description" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" required="" title="Here you can put some text"></textarea>
+                    
+                  </div>
+                  <div title="Write brief description of your current offer." class="form-group">  
+                    <label>Full Description</label>                  
+                    <textarea allowpattern="[^0-9a-zA-Z-_.%$#!'@()= &quot;-]" ng-trim="false" ng-blur="offerValidate('what_you_get')"  id="what_you_get" rows="2" placeholder="What You Get" ng-model="what_you_get" class="form-control full-descrip ng-pristine ng-untouched ng-valid ng-valid-maxlength"></textarea>
+                  </div>
+
+                </div>
+
+               
+              </div> 
+            </div>
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">STEP 2 : Financing</h2>
+          </div>
+
+          <input type="hidden" id="inventory_or_product_image_id" name="inventory_or_product_image_id">
+
+          <div class="box-sec">
+            <h2>Product Offers</h2>
+            <div class="relative">
+              <span class="red-info">* Match your offer product with the correct image</span>
+            </div>
+            <div class="single-product single-product-first">
+              <div class="container">
+               
+                <div class="row only-single" data-ng-repeat="choice in choices track by $index">
+                  <div class="col-md-3 col-sm-3">
+                    <a ng-click="fetchAllProduct(choice.choiceid)"> 
+                      <button  type="button" class="green-btn green-import-btn2" ng-disabled="disableIt">Import Product</button>
+                    </a>
+                    <!-- <a value="1" class=" various fancybox.iframe put_href" href="{{site_path}}index.php/product/showlist?choiceid={{choice.choiceid}}"> 
+                    <button  type="button" class="green-btn green-import-btn2">Import Product</button>
+                    </a> -->
+
+                    <a class="red-btn" ng-click="removeChoice(choice)">Remove Product</a>
+                  </div>
+                  <div class="col-md-6 col-sm-6" ng-if="choice.productData.length">
+                    <div class="row row-custom">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" readonly ng-model="choice.productData[0].product_name" ng-disabled="disableIt">
+                          </div>
+                          <div class="col-md-4 col-sm-4 no-padding-left">
+                            
+                              <button class="green-btn green-import-btn2" value="Import Image" ng-click="showRepoModal(choice); getRepoImagesbyDirId(lftPnlSelectedDir);" ng-disabled="disableIt">
+                                Import Image
+                              </button>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row row-custom">
+                        <div class="col-md-3 col-sm-3 no-padding">
+                          <input class="form-control" allowpattern="[^0-9]" type="text" min="1" ng-change="productnochanged(choice)" ng-model="choice.noofproduct" ng-disabled="disableIt">
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_cost">${{choice.total_cost}}</span>
+                          <span class="small-txt">Cost</span>
+                          <input type="hidden" name="one_product_cost{{choice.choiceid}}" id="one_product_cost{{choice.choiceid}}"  ng-disabled="disableIt"/>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_selling_price">${{choice.total_selling_price}}</span>
+                          <span class="small-txt">Seling Price</span>
+                          <input type="hidden" name="one_product_selling_price{{choice.choiceid}}" id="one_product_selling_price{{choice.choiceid}}" ng-disabled="disableIt" />
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                           <span class="green-big-txt" name="product_retail_value">${{choice.total_retail_price}}</span> 
+                          <span class="small-txt">Retail Value</span>
+                          <input type="hidden" name="one_product_retail_price{{choice.choiceid}}" id="one_product_retail_price{{choice.choiceid}}"  ng-disabled="disableIt"/>
+                        </div>
+                        <div class="col-md-1 col-sm-1">
+                          <!-- <input type="radio" ng-model="selectedImage" ng-value="choice.productData[0].product_image" ng-init="$index==0?(selectedImage=choice.productData[0].product_image):''"> -->
+                          <input type="radio" id="choiceRadio-{{choice.choiceid}}" class="choiceRadio" value="" name="selectedImage" ng-model="choice.selectedImage" ng-value="true" ng-disabled="disableIt">
+                        </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6 col-sm-6" ng-if="!choice.productData.length">
+                    <div class="row">
+                      <div class="form-group">
+                        <div class="row row-custom">
+                          <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" id="product_name{{choice.choiceid}}" readonly>
+                          </div>
+                          <div class="col-md-4 col-sm-4 no-padding-left">
+                            
+                              <button class="green-btn green-import-btn2" value="Import Image" ng-click="showRepoModal(choice); getRepoImagesbyDirId(lftPnlSelectedDir);">
+                                Import Image
+                              </button>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row row-custom">
+                        <div class="col-md-3 col-sm-3 no-padding">
+                          <input ng-init="product.noofproduct = product.noofproduct?product.noofproduct:1" class="form-control" allowpattern="[^0-9]" type="text" min="1" value="1" ng-change="productnochanged(choice.choiceid)" ng-model="product.noofproduct">
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_cost" id="product_cost{{choice.choiceid}}"></span>
+                          <span class="small-txt">Cost</span>
+                          <input type="hidden" name="one_product_cost{{choice.choiceid}}" id="one_product_cost{{choice.choiceid}}" ng-disabled="disableIt"/>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_selling_price" id="product_selling_price{{choice.choiceid}}"></span>
+                          <span class="small-txt">Seling Price</span>
+                          <input type="hidden" name="one_product_selling_price{{choice.choiceid}}" id="one_product_selling_price{{choice.choiceid}}" ng-disabled="disableIt" />
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                           <span class="green-big-txt" id="product_retail_value{{choice.choiceid}}" name="product_retail_value"></span> 
+                          <span class="small-txt">Retail Value</span>
+                          <input type="hidden" name="one_product_retail_price{{choice.choiceid}}" id="one_product_retail_price{{choice.choiceid}}" ng-disabled="disableIt" />
+                        </div>
+                        
+                        <div class="col-md-1 col-sm-1 offer-align">
+                          <input type="radio" value="" id="choiceRdo-{{choice.choiceid}}" name="selectedImage" class="choiceRadio" ng-model="choice.selectedImage" ng-value="true" ng-disabled="disableIt">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-3" ng-if="choice.productData.length">
+                    <div class="off-page-pic">                     
+                      <img alt="img" ng-if="choice.productData[0].is_file_exist" ng-src="{{file_path}}{{choice.productData[0].product_image}}"  class="border_container prod_image" id="product_image_id{{choice.choiceid}}">
+                     
+                      <img alt="img" ng-if="!choice.productData[0].is_file_exist" ng-src="{{file_path}}images/no-image.png"  class="border_container prod_image" id="product_image_id{{choice.choiceid}}">
+                    </div>
+                    <div class="off-page-pic-info">{{choice.productData[0].image_name.replace('.jpg','')}}</div>
+                  </div>
+                  <div class="col-md-3 col-sm-3" ng-if="!choice.productData.length">
+                    <div class="off-page-pic">
+                      <img alt="img" ng-src="{{file_path}}images/no-image.png" class="border_container prod_image"  id="product_image_id{{choice.choiceid}}">
+                      <span class="default-img">Default Image</span>
+                    </div>
+                    <div class="off-page-pic-info"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row off-total">
+                <div class="col-md-6 col-sm-6 align-right">
+                  Markup {{markup}}%
+                </div>
+                <div class="col-md-6 col-sm-6 align-left">
+                    Gross Margin ${{grossMargin}}
+                </div>
+              </div>
+              <div class="row add_more">
+                <!-- <a href="#">  
+                Add More Product
+                </a> -->
+                <input class="choose-btn" type='button' ng-click="addNewChoice()" value='Add More Product' id='saddButton' title="Add another option to select Product" ng-disabled="disableIt">
+              </div>
+            </div>
+            <h2>Inventory Items</h2>
+            <div class="relative">
+              <span class="red-info">* Match your offer inventory with the correct image</span>
+            </div>
+
+            <div class="single-product">
+              <div class="container">
+               <!--  {{choices}} -->
+                <div class="row only-single" data-ng-repeat="inventorychoice in inventorychoices track by $index">
+                  <div class="col-md-3 col-sm-3">
+                    <a ng-click="fetchAllInventory(inventorychoice.inventorychoiceid)"> 
+                      <button  type="button" class="green-btn green-import-btn2" ng-disabled="disableIt">Import Inventory</button>
+                    </a>
+
+                    <a class="red-btn" ng-click="removeInventoryChoice(inventorychoice)">Remove Inventory</a>
+                  </div>
+                  <div class="col-md-6 col-sm-6" ng-if="inventorychoice.InventoryData.length">
+                    <div class="row row-custom">
+                      <div class="form-group">
+                        <div class="row ">
+                          <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" readonly ng-model="inventorychoice.InventoryData[0].inventory_name" ng-disabled="disableIt">
+                          </div>
+                          <div class="col-md-4 col-sm-4 no-padding-left">
+                            
+                              <button class="green-btn green-import-btn2" value="Import Image"  ng-click="showRepoModal(inventorychoice)" ng-disabled="disableIt">
+                                Import Image
+                              </button>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row row-custom">
+                        <div class="col-md-3 col-sm-3 no-padding">
+                          <input class="form-control" allowpattern="[^0-9]" type="text" min="1" ng-change="inventorynochanged(inventorychoice)" ng-model="inventorychoice.noofinventory" ng-disabled="disableIt">
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="inventory_cost">${{inventorychoice.total_cost}}</span>
+                          <span class="small-txt">Cost</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_selling_price">${{inventorychoice.total_selling_price}}</span>
+                          <span class="small-txt">Seling Price</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                           <span class="green-big-txt" name="product_retail_value">${{inventorychoice.total_retail_price}}</span> 
+                          <span class="small-txt">Retail Value</span>
+                        </div>
+
+                        <div class="col-md-1 col-sm-1 offer-align">
+                          <input type="radio" id="inventoryRadio-{{inventorychoice.inventorychoiceid}}" class="inventoryRadio" value="" name="selectedImage" ng-model="inventorychoice.selectedImage" ng-value="true" ng-disabled="disableIt">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6" ng-if="!inventorychoice.InventoryData.length">
+                    <div class="row">
+                      <div class="form-group">
+                        <div class="row row-custom">
+                          <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" readonly ng-disabled="disableIt">
+                          </div>
+                          <div class="col-md-4 col-sm-4 no-padding-left">
+                            
+                              <button class="green-btn green-import-btn2" value="Import Image" ng-click="showRepoModal(inventorychoice);getRepoImagesbyDirId(lftPnlSelectedDir);" ng-disabled="disableIt">
+                                
+                                Import Image
+                              </button>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row row-custom">
+                        <div class="col-md-3 col-sm-3 no-padding">
+                          <input class="form-control" ng-init="invqty=invqty?invqty:1" ng-model="invqty" allowpattern="[^0-9]" type="text" min="1" value="1" ng-disabled="disableIt">
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_cost"></span>
+                          <span class="small-txt">Cost</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_selling_price"></span>
+                          <span class="small-txt">Seling Price</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                           <span class="green-big-txt" name="product_retail_value"></span> 
+                          <span class="small-txt">Retail Value</span>
+                        </div>
+
+                        <div class="col-md-1 col-sm-1 offer-align">
+                          <input type="radio" value="" id="inventoryRadio-{{inventorychoice.inventorychoiceid}}" name="selectedImage" class="inventoryRadio" ng-model="inventorychoice.selectedImage" ng-value="true" ng-disabled="disableIt">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-3" ng-if="inventorychoice.InventoryData.length">
+                    <div class="off-page-pic">
+                      <img data-ids="{{inventorychoice.InventoryData[0].id}}" alt="img" ng-if="inventorychoice.InventoryData[0].is_file_exist" ng-src="{{file_path}}{{inventorychoice.InventoryData[0].inventory_image}}"
+                           class="border_container" id="inventory_image_id{{inventorychoice.inventorychoiceid}}">
+                      
+                       <img alt="img" ng-if="!inventorychoice.InventoryData[0].is_file_exist" ng-src="{{file_path}}images/no-image.png"
+                           class="border_container" id="inventory_image_id{{inventorychoice.inventorychoiceid}}">
+                    </div>
+                    <div class="off-page-pic-info">{{inventorychoice.InventoryData[0].image_name.replace('.jpg','')}}</div>
+                  </div>
+                  <div class="col-md-3 col-sm-3" ng-if="!inventorychoice.InventoryData.length">
+                    <div class="off-page-pic">
+                      <img alt="img" ng-src="{{file_path}}images/no-image.png" class="border_container" id="inventory_image_id{{inventorychoice.inventorychoiceid}}">
+                    </div>
+                    <div class="off-page-pic-info"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row off-total">
+                <div class="col-md-6 col-sm-6 align-right">
+                  Markup {{inventorymarkup}}%
+                </div>
+                <div class="col-md-6 col-sm-6 align-left">
+                  Gross Margin ${{inventorygrossMargin}}
+                </div>
+              </div>
+              <div class="row add_more">
+                <!-- <a href="#">  
+                Add More Product
+                </a> -->
+                <input class="choose-btn" type='button' ng-click="addNewInventoryChoice()" value='Add More Inventory' id='saddButton' title="Add another Inventory" ng-disabled="disableIt">
+              </div>
+            </div>
+
+          </div>
+
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">STEP 3 : Installation</h2>
+    </div>
+    <div class="box-sec">
+    <h2>Offer Calculator</h2>
+    <!-- <div class="relative">
+        <span class="red-info">* Calculation includes Redeemar cost</span>
+    </div> -->
+
+    <div class="row">
+    <div class="col-md-12 col-sm-12 align-center total-retail">
+    <h4>Total Retail Value:</h4> <span class="green-txt">${{totalRetailPrice}}</span>
+    </div>
+    <div class="col-md-12 col-sm-12 align-center total-retail">
+    <span class="offer-total-cost">  
+    <h4>Total Cost:</h4> <span class="green-txt">${{tpaic}}</span> 
+    </span>
+    <span class="offer-total-cost">
+    <h4>Selling price:</h4> <span class="green-txt">${{tpaisellingprice}}</span> 
+    </span>
+    <br> <br>
+    </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      <!-- <span class="red">Optional</span> Choose a minimum profit margin ratio <input class="form-control width46 percentage" type="text" ng-model="opMarginProfit" ng-change="consumerPayValue('margin')"> or mark up <input class="form-control width46 percentage" type="text" ng-model="opMarkupProfit" ng-change="consumerPayValue('markup')"> -->
+      <span class="red">Optional</span> Choose a minimum profit margin ratio <input class="form-control width46 percentage" type="text" ng-model="opMarginProfit" ng-focus="$scope.name1focus=true" ng-blur="$scope.name1focus=false; consumerPayValue('margin');" ng-disabled="($scope.name2focus && disableIt) || disableIt"> or mark up <input class="form-control width46 percentage" type="text" ng-model="opMarkupProfit" ng-focus="$scope.name2focus=true" ng-blur="$scope.name2focus=false; consumerPayValue('markup');" ng-disabled="($scope.name1focus && disableIt) || disableIt" >
+      
+      </div>
+    </div>
+
+    <div class="p-l-20 p-r-20 p-b-20" id="show_error_message" style="display:none">
+      <div id="error_msg_div" class="alert alert-danger"></div>
+    </div>
+
+    
+    <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+        <span class="choose-discount">Choose a discount </span> 
+        <input type="checkbox" ng-model='checkStatus' ng-change='setTotalRetailPrice()' ng-disabled="disableIt"> On Inventory Item Only
+      </div>  
+    </div>
+
+
+
+    <div class="row custom-row">
+      <div class="col-md-4 col-sm-4 col-sm-offset-4 align-center">
+          <input class="form-control" type="text" ng-model="discount" ng-blur='changeOnDiscountvalue()' ng-disabled="disableIt">
+          <div class="row paddig-top10">
+            <div class="col-md-6 col-sm-6 no-padding-right">
+              $ <input type="radio" value="1" name="selectedDiscount" ng-change='changeOnDiscount(1)' ng-model="selectedDiscount" ng-disabled="disableIt">
+            </div>
+            <div class="col-md-6 col-sm-6 no-padding-left">
+              % <input type="radio" value="2" name="selectedDiscount" ng-change='changeOnDiscount(2)' ng-model="selectedDiscount" ng-disabled="disableIt">
+            </div>
+          </div>
+
+      </div>
+    </div>
+
+    <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+      <div id="error_div" class="alert alert-danger"></div>
+    </div> 
+
+
+
+
+    <br>
+    <div class="row align-center">
+      <div class="col-md-12 col-sm-12">
+        <span class="choose-radio"><input type="radio" value="1" name="selectedDiscountText" ng-change="changeOnDiscountText('OFF')" ng-model="selectedDiscountText" ng-disabled="disableIt"> OFF</span>
+        <span class="choose-radio"><input type="radio" value="2" name="selectedDiscountText" ng-change="changeOnDiscountText('DISCOUNT')" ng-model="selectedDiscountText" ng-disabled="disableIt"> DISCOUNT</span>
+        <span class="choose-radio"><input type="radio" value="3" name="selectedDiscountText" ng-change="changeOnDiscountText('SAVINGS')" ng-model="selectedDiscountText" ng-disabled="disableIt"> SAVINGS</span>
+      </div>  
+    </div>
+
+
+    <div class="row last-offer-calc">
+      <div class="col-md-4 col-sm-4">
+        <div class="statement">
+          <ul>
+            <li>
+              <span class="green-point"></span>
+              Good
+            </li>
+            <li>
+              <span class="red-point"></span>
+              Poor
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+           <span class="last-green">${{opMargin}}</span> 
+          <span class="last-offer">Profit</span>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+           <span class="last-green">{{opMarkup}}%</span> 
+          <span class="last-offer">Markup</span> 
+          </div>
+        </div>  
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 align-center" ng-if="margin_markup_above">
+        This offer is above your desired profit
+      </div>
+      <div class="col-md-12 col-sm-12 align-center" ng-if="margin_markup_poor">
+        This offer is below your desired profit
+      </div>
+    </div> 
+     <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+        <span class="good-deal" ng-if="margin_markup_above">This is a Good Deal!</span>
+        <span class="poor-deal" ng-if="margin_markup_poor">This is a Poor Deal!</span>
+      </div>  
+    </div> 
+    </div>
+    <div class="box-sec">
+    <h2>Consumer Deal</h2>
+      <div class="col-md-8 col-sm-8 align-center col-sm-offset-2">
+      <div class="row consumer-deal">
+          <div class="col-md-3 col-sm-3 col-xs-4 no-padding">
+            <span>${{consumerPay}}</span>
+            <span>Pay</span>
+          </div>
+          <div class="col-md-3 col-sm-3 col-xs-4 no-padding">
+            <span>${{OffValue}}</span>
+            <span>Save</span>
+          </div>
+          <!-- <div class="col-md-3 col-sm-3 no-padding">
+            <span>${{SaveValue}}</span>
+            <span>Save</span>
+          </div> -->
+          <div class="col-md-3 col-sm-3 col-xs-4 no-padding">
+            <span class="green-txt" ng-click="modifyInplace(DiscountValue)"  ng-if="!editDiscountValue && !published">{{DiscountValue}}%</span>
+            <span class="green-txt" ng-if="published">{{DiscountValue}}%</span>
+            <input type="text" name="editDiscountValue" ng-model="editedDiscountValue" ng-if="editDiscountValue" ng-blur="saveEditedData(editedDiscountValue)" id="editDiscountValue" ng-disabled="published"/>
+            <span>Discount</span>
+          </div>
+
+      </div>
+      <div class="p-l-20 p-r-20 p-b-20" id="show_discount_message" style="display:none">
+        <div id="error_discount_div" class="alert alert-danger"></div>
+      </div>
+      </div>
+      </div>
+  </div>
+
+
+  <div class="col-md-5 col-sm-5">
+    <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Mobile Views</h2>
+    </div>
+    <div class="grey-box first">
+      <div class="mob-pic-block">
+        
+          <img src="{{file_path}}images/no-preview.jpg" ng-if="!offerSelectedImagePath ||  offerSelectedImagePath == '../images/no-image.png'" alt="img" />
+          <img ng-if="offerSelectedImagePath && offerSelectedImagePath != '../images/no-image.png'" src="{{offerSelectedImagePath.replace('small_image','large_image')}}" alt="" />
+          <span class="float-logo"><img ng-src="{{file_path}}../uploads/original/{{default_logo_image.replace('jpg','png')}}" alt="img">
+          </span>
+          <span class="on-demand-tag" ng-if="promotion.on_demand">On Demand</span>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-7 creat2">
+          <div class="mobile-view-txt">
+            {{offer_description}} 
+          </div>
+          <div class="location" ng-if="productAvailable || inventoryAvailable"><i class="fa fa-map-marker" aria-hidden="true"></i> {{loggedUser.location}}</div>
+        </div>
+        <div class="col-md-5 col-sm-5 value-txt" ng-if="productAvailable || inventoryAvailable">
+          <div class="offer-off">{{DiscountValueText}}</div>
+          <div class="prev-price">${{totalRetailPrice}}</div>
+          <div ng-class="largeText?'present-price1' : 'present-price1-small'">${{consumerPay}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="grey-box second">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 no-padding mob-pic-block">
+          <img src="{{file_path}}images/no-preview.jpg" ng-if="!offerSelectedImagePath ||  offerSelectedImagePath == '../images/no-image.png'" alt="img" />
+          <img ng-if="offerSelectedImagePath && offerSelectedImagePath != '../images/no-image.png'" src="{{offerSelectedImagePath}}" alt="" />
+            <span class="float-logo2">
+              <img ng-src="{{file_path}}../uploads/original/{{default_logo_image.replace('jpg','png')}}" alt="img">
+            </span>
+            <span class="on-demand-tag" ng-if="promotion.on_demand">On Demand</span>
+
+        </div>
+        <div class="col-md-6 col-sm-6 custom-padding1">
+          <div class="mobile-view-txt2">
+            {{offer_description}}
+          </div>
+          <div class="offer-off1" ng-if="productAvailable || inventoryAvailable">{{DiscountValueText}}</div>
+          <div class="row" ng-if="productAvailable || inventoryAvailable">
+            <div class="col-md-6 col-sm-6 custom-padding2">
+              <div class="location">
+                <i class="fa fa-map-marker" aria-hidden="true"></i> 
+                {{loggedUser.location}}
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 custom-padding1 align-center relative">
+              <!-- Modified by Tania -->
+              <div class="">
+                <div class="prev-price">${{totalRetailPrice}}</div>
+                <div ng-class="largeText?'present-price' : 'present-price-small'">${{consumerPay}}</div>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>  
+    </div>
+    <div class="grey-box third">
+      <div class="mob-pic-block">
+        <img src="{{file_path}}images/no-preview.jpg" ng-if="!offerSelectedImagePath ||  offerSelectedImagePath == '../images/no-image.png'" alt="img" />
+        <img ng-if="offerSelectedImagePath && offerSelectedImagePath != '../images/no-image.png'" src="{{offerSelectedImagePath.replace('small_image','large_image')}}" alt="" />
+        <span class="float-logo"><img ng-src="{{file_path}}../uploads/original/{{default_logo_image.replace('jpg','png')}}" alt="img"></span>
+        <span class="pic-caption">{{loggedUser.address}}</span>
+      </div>
+      <div class="partner-offer">
+        {{offer_description}}  
+      </div>
+      <div class="partner-description">
+         {{what_you_get}}
+      </div> 
+
+      <div class="row vps-whole">
+        <div class="col-md-8 col-sm-8 col-sm-offset-2">
+          <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="vps">Value</div>
+            <div class="vps-amount"> ${{totalRetailPrice}} </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="vps">Pay</div>
+            <div class="vps-amount">${{consumerPay}} </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="vps">Savings</div>
+            <div class="vps-amount">${{OffValue}} </div>
+          </div>
+
+          </div>
+        </div>  
+      </div>
+      <div class="row vps-btns">
+        <div class="col-md-6 col-sm-6 no-padding">
+          <a class="pass-btn" href="#">PASS OFFER</a>
+        </div>
+        <div class="col-md-6 col-sm-6 no-padding">
+          <a class="bank-btn" href="#">BANK OFFER</a>
+        </div>
+      </div>
+
+     
+        <div class="vps-map">
+          <!--<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d58947.62605460876!2d88.39903685000002!3d22.570625649999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1467788277845" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+          <iframe id="offerMap" ng-src="{{mapurl}}" frameborder="0" style="border:0" allowfullscreen></iframe> 
+
+        </div>
+     
+    </div>
+
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Web View</h2>
+    </div>
+    <div class="grey-box forth">
+      <div class="mob-pic-block">
+        <img src="{{file_path}}images/no-preview.jpg" ng-if="!offerSelectedImagePath ||  offerSelectedImagePath == '../images/no-image.png'" alt="img" />
+        <img ng-if="offerSelectedImagePath && offerSelectedImagePath != '../images/no-image.png'" src="{{offerSelectedImagePath.replace('small_image','large_image')}}" alt="" />
+        <span class="float-logo2"><img ng-src="{{file_path}}../uploads/original/{{default_logo_image.replace('jpg','png')}}" alt="img"></span>
+        <!-- <span class="pic-caption">{{loggedUser.address}}</span> -->
+      </div>
+      <div class="forth-main">
+        {{offer_description}}
+        <div class="row" ng-if="productAvailable || inventoryAvailable">
+          <div class="col-md-8 col-sm-8">
+          <div class="green-txt">{{DiscountValueText}}</div>
+          <div class="location location-new"><i class="fa fa-map-marker" aria-hidden="true"></i> {{loggedUser.location}}</div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="previous-price">${{totalRetailPrice}}</div>
+            <div ng-class="largeText?'present-price' : 'present-price-small'">${{consumerPay}}</div>
+          </div>
+        </div>
+          
+      </div>
+        
+    </div>
+    <div class="publish-btn">
+      <a ng-click="publishOffer(this, 'save')" class="{{ !savePossible?'bgn-disable':'bgn-enable'}}"  ng-if="!disableIt">{{offerSaving?'Saving Offer...':'Save Offer'}}</a>
+      <a ng-click="publishOffer(this, 'publish')" class="{{(publishPossible && offerValidated) && !offerSaving?'btn-enable':'bgn-disable'}}">{{offerPublishing?'Publishing Offer...':'Publish Offer'}}</a>
+      <span class="green-txt" ng-if="publishPossible">You can publish this deal!</span>
+      <span class="red-txt" ng-if="!publishPossible">You can not publish this deal!</span>
+
+    </div>
+    
+    <div class="message-board" ng-if="offerResponse.status">
+        <div class="alert {{offerResponse.status=='success'?'alert-success':'alert-danger'}}">
+          <p>{{offerResponse.msg}}</p>
+        </div>
+    </div>
+
+      
+  </div>
+
+
+  
+  </div>  
+  </div>  
+  </div> 
+  </div>
+  </div>
+  
+  
+  
+  <!-- Image repo popup -->
+  
+      <div class="offermaker-pop" ng-if="popupShowing">
+      <div class="offermaker-main">
+        <div class="relative">
+            <span class="cross-default-pop" style="cursor: pointer;" ng-click="hidePopup()"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+            <div class="offermaker-main-content">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4 col-sm-4 no-padding">
+                    <div class="left-portion">
+                      
+                       <div class="folder-cat"  >
+                        <span  data-ng-click="getRepoImagesbyDirId(0);setleftOpenDir(0)"><img src="{{file_path}}images/small-folder.jpg" alt="img"  >Root Directory</span> 
+                          <div class="sub-folder"  data-ng-if="!lftPnlSelectedDir">
+                            <ul>
+                            <li data-ng-repeat="rootRepo in repoDirTree track by $index"   ng-if="rootRepo.directory==0"><span class="img-icon"><img src="{{file_path}}images/image-icon.jpg" alt="img"></span>{{rootRepo.original_name}}</li>
+                             
+                            </ul> 
+                          </div>
+                       </div>
+                       <div class="folder-cat" data-ng-repeat="dirRepo in repoDirTree track by $index" ng-if="dirRepo.directory==1">
+                          <span data-ng-click="getRepoImagesbyDirId(dirRepo.id);setleftOpenDir(dirRepo.id);" ><img src="{{file_path}}images/small-folder.jpg" alt="img"> {{dirRepo.original_name}} </span>
+                          <div class="sub-folder" ng-if="lftPnlSelectedDir==dirRepo.id && dirRepo.files.length">
+                          <ul>
+                            <li data-ng-repeat="file in dirRepo.files track by $index"><span class="img-icon"><img src="{{file_path}}images/image-icon.jpg" alt="img"></span>{{file.original_name}}</li>
+                          </ul> 
+                          </div>
+                       </div>
+                       
+                    </div>   
+                  </div>
+                  <div class="col-md-8 col-sm-8">
+                    <div class="bigfolder-main">
+                      <div class="row">
+                        
+                        <div class="col-md-4 col-sm-4 big-folder-padding {{selectedRepo.id==file.id?'selected':''}}" dir-paginate="file in repos |itemsPerPage:10" >
+                        <div class="big-folder" style="cursor: pointer;" ng-click="doSelectedRepo(file) ">
+                          <img data-ng-if="file.is_file_exist" src="{{file_path}}{{file.directory_base_path}}" alt="img">
+                        
+                          <img data-ng-if="!file.is_file_exist" src="{{file_path}}images/no-image.png" alt="img">
+                          
+                        </div> 
+                        <div class="big-folder-txt">
+                          {{file.original_name}}
+                        </div> 
+                        </div>
+                        
+                        
+                         <center data-ng-if="repos.length==0">
+                            <h2 class="add_image-repo">
+                              Empty
+                            </h2>
+                        </center>
+                        
+
+                    </div>  
+                  </div>
+                
+                </div>
+                <div class="row">
+                      <div class="col-md-7 col-sm-7 col-sm-offset-4">
+                        <div class="off-pagination">
+                           <dir-pagination-controls ng-if="repos.length > 1"
+                              max-size="1"
+                              direction-links="true"
+                              boundary-links="true" >
+                            </dir-pagination-controls>
+                        </div>
+                      </div>
+                    </div>  
+              </div>
+            </div> 
+            <div class="">
+            <button class="done-btn" data-ng-click="hidePopup()">Done</button>
+
+            </div> 
+        </div>
+      </div>  
+  </div>
+  </div>
+
+<!-- End image repo popup -->
+  
+
+</section>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+
+  </script>
+
+
+
+
+
+<script type="text/javascript">
+//   document.getElementById("uploadBtn").onchange = function () {
+//     document.getElementById("uploadFile").value = this.value;
+// };
+
+</script>
+
+
+<script type="text/javascript"> 
+$(document).ready(function(){
+
+    $( "#accordion" ).accordion();
+
+    $(".selectbox").click(function(){
+        $(this).toggleClass("toggleCaret");
+        $(".selectbox-option").toggleClass("openSelect");
+        $(".ui-accordion .ui-accordion-content").css("height","auto");
+        
+    });
+    $(document).mouseup(function (e)
+    {
+      var container = $(".selectbox").parent('.form-group');
+  
+      if (!container.is(e.target)  && container.has(e.target).length === 0)
+      {
+          $('.selectbox').removeClass("toggleCaret");
+          $(".selectbox-option").removeClass("openSelect");
+          $(".ui-accordion .ui-accordion-content").css("height","auto");
+      }
+    });
+    
+    var c = 1;
+});
+</script>
+
+

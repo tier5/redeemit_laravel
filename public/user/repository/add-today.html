@@ -1,0 +1,584 @@
+  <style>
+    .cropArea {
+      background: #E4E4E4;
+      margin: auto;
+      overflow: hidden;
+    }
+    .cropArea.big {
+      width:800px;
+      height:600px;
+    }
+    .cropArea.medium {
+      width:500px;
+      height:350px;
+    }
+    .cropArea.small {
+      width:300px;
+      height:200px;
+    }
+    
+    .pic-block{width: 100%;}
+
+  
+    .tab-product{height: auto;}
+    .pic-block{position: relative;}
+    .image-flote{position: absolute; width: 57px; 
+      height: auto; top: 4px; left: 5px; z-index: 99999;
+    }
+    .image-flote img{width: 100%;}
+.draggable
+{
+    position: relative; 
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    *display: inline;   
+
+    cursor: hand; 
+    cursor: pointer;       
+}
+
+.resizable
+{
+    width: 100px;   
+    border: 1px solid #bb0000;   
+}
+.resizable img
+{
+    width: 100%;   
+}
+
+.ui-resizable-handle 
+{
+    background: #f5dc58;
+    border: 1px solid #FFF;
+    width: 9px;
+    height: 9px;
+    
+    z-index: 2;
+}
+.ui-resizable-se
+{
+    right: -5px;
+    bottom: -5px;
+}
+
+.ui-rotatable-handle 
+{
+    background: #f5dc58;
+    border: 1px solid #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    
+    height:        10px;
+    left:          50%;
+    margin:        0 0 0 -5px;
+    position:      absolute;
+    top:           -5px;
+    width:         10px;
+}
+.ui-rotatable-handle.ui-draggable-dragging
+{
+    visibility:  hidden;
+}
+.white_border
+{
+    border: none;
+}
+
+#inner_con
+{
+    top: 10px;
+    left: 25px;
+}
+.small-layers{  border: 1px solid #999; padding:4px;}
+
+.smal-layers-main{height: 123px; overflow-y:auto;}
+
+.small-layers .layer_div{background: #EBEBEB; /*border: 1px solid #999;*/ padding:3px 7px; margin-bottom: 5px; color: #707070; font-size: 14px;}
+
+.all-btn button{background: #666;
+    color: #fff;
+    border: none;
+    font-size: 13px;
+    border-radius: 2px;
+    padding: 2px 7px;}
+
+.layer-curve{padding-top: 30px;}
+.pic-pre{padding-top: 50px;}
+.mdl-color--grey-100{background: #fff !important;}
+.layer-edit-panel{background: #707070; color: #fff; padding: 4px;
+text-align: right;}
+.layer-edit-panel a{color: #fff}
+.layer-edit-panel a:hover{text-decoration: none; color: #fff;}
+.layer-edit-panel span{padding: 0 5px;}
+
+.ui-slider-horizontal .ui-slider-handle{background: #73BF21 !important;}
+.ui-widget-header{background: #707070 !important;}
+
+  
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.7);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    /*padding: 8px;*/
+    text-decoration: none;
+    font-size: 20px !important;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.closebtn {
+    position: absolute;
+    top: -3px;
+    right: 5px;
+   /* font-size: 60px !important;*/
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .closebtn {
+    font-size: 40px !important;
+    top: 15px;
+    right: 35px;
+  }
+}
+</style>
+
+<script>
+  $("#hide").click(function(){
+      $(".edit-name1").hide();
+  });
+  $("#show").click(function(){
+      $(".edit-name1").show();
+  });
+
+  // $("#hide").click(function(){
+  //     $(".ui-widget-content").hide();
+  // });
+  $("#rotate").click(function(){
+      $(".ui-widget-content").show();
+  });
+
+  $("#layer").click(function(){
+      $(".all-layer").show();
+  });
+</script>
+
+
+<script>
+function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+}
+</script>
+
+
+
+
+
+<section class="text-fields add-image-page" ng-controller="RepoAddImageController" >
+  <!-- <div class="mdl-color--amber ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Add Image</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div> -->
+
+  <div class="mdl-grid mdl-grid--no-spacing img-repo2">
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-20 ml-card-holder"> <!-- ml-card-holder-first -->
+        
+        <div class="mdl-card"> <!-- mdl-shadow--1dp -->
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                
+            </div>
+             <div id="error_div" class="alert alert-danger">
+                
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="page-heading relative">  
+                  <h3>Drinks Item</h3>
+
+                  <span onclick="openNav()" class="repo-preview-btn" id="show"><a href="">Preview</a>
+
+                  <!--  <span style="font-size:30px;cursor:pointer" onclick="openNav()">☰ open</span> -->
+                    
+                  
+
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <form name="userForm" id="userForm" method="post" enctype="multipart/form-data" novalidate>
+                <div class="col-md-9 col-sm-9">
+                  <div class="row repo-top">
+                    <div class="col-md-4 col-sm-4">
+                    
+                      <input ng-model="repodetails.image_name" class="mdl-textfield__input" type="text" id="image_name" placeholder="Image Name" required />
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                   
+                      <select id="dir_id"  ng-model="selectedFolder">
+                        <option value="{{new_dir_id}}">Root Folder</option>
+                        <option value="{{cname.id}}" ng-repeat="cname in cnames" data-ng-if="cname.directory==1" >{{cname.file_name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                              <!-- <select id="image_type" >
+                       <option value="">Please Select One</option>
+                            <option value="home_img">home image</option>
+                            <option value="home_thumb_img">Add home image thumb</option>
+                            <option value="deal_details_img">Add Deal Details image</option>
+                            
+                        </select> -->
+                      <a ng-click="uploadFirstImage()" id="uploadFirstImage">
+                        <span class="green-btn">Add Layers
+                        </span>
+                      </a>  
+                      <div style="margin-bottom:20px;"></div>
+                        <input type="file" id="add_layer" accept="image/*" style="display:none;"> 
+                        </div>
+                      </div> 
+                      
+                      <!-- <div id="myNav" class="overlay">
+                        sdf
+                      </div> -->
+                      <div id="myNav" class="overlay"> 
+                        <div  class="col-md-2 col-sm-2 edit-name1 pull-right">
+                          <span class="repo-preview-btn1">Preview
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                          </span>
+
+                          <div class="row pre-repo">
+                            <div class="col-md-12 col-sm-12">
+                              <h2>Offer Details View</h2>
+                              <img src="../images/no-image-black.png" id="home_img" style="width:200px;">
+                            </div>
+                          </div>
+                          <div class="row pre-repo">
+                            <div class="col-md-12 col-sm-12">
+                              <h2>Offer Add View</h2>
+                              <img src="../images/no-image-black.png" id="home_thumb_img" style="width:200px;">
+                            </div>
+                          </div> 
+                          <div class="row pre-repo">
+                            <div class="col-md-12 col-sm-12">
+                              <h2>Offer Thumb View</h2>
+                              <img src="../images/no-image-black.png" id="deal_details_img" style="width:200px;">
+                            </div>  
+                          </div> 
+                        </div>  
+                      </div>
+                    </form>
+                  </div> 
+                  <div class="row repo-tab">
+                    <div class="col-md-12 col-sm-12">
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" ng-click="imageTypeChanged('small')">Small Layer</a></li>
+                        <li><a data-toggle="tab" ng-click="imageTypeChanged('large')">Big Layer</a></li>
+                        
+                      </ul>
+                      <div class="tab-content">
+                        <div class="row" ng-if="smallImageCropDiv">
+                          <div class="col-md-12 col-sm-12">
+                            <div class="scroll-div">
+                              <div id="container" style="background: #dadada;">
+                                <div id="inner_con"></div>
+                              </div>
+                            </div>
+                            <div class="row all-btn" style='padding-top: 10px;display: none;' id="low_section">
+                              <button id="save_pic">Get image</button>
+                              <button id="lock_outer_section" >lock outer Section</button>
+                              <button id="unlock_outer_section" >unlock outer Section</button>
+                              <button id="add_layer_btn" disabled="disabled">Add a layer</button>
+                              <button id="delete_layer" disabled="disabled" >Delete a layer</button>
+                              <br><br>
+
+                              <div class="row two-btns">
+                                <div class="col-md-6 col-sm-6">
+                                  <span class="rotate-btn" id="rotate">
+                                    <i class="fa fa-repeat" aria-hidden="true"></i>
+                                    Rotate 
+                                  </span>
+
+                                  <span class="layers-btn" id="layer">
+                                    <i class="fa fa-object-ungroup" aria-hidden="true"></i> 
+                                    Layers
+                                  </span>
+                                </div>
+                              </div>
+                              <div id="slider_data"></div>
+                              <hr>
+                              <div class="col-md-4 col-sm-4 all-layer">
+                                <div class="">
+                                  <div class="">
+                                    <h4>Layer Stack</h4>
+                                    <div class="small-layers">
+                                      <div class="smal-layers-main">
+                                        <div id="layers" curr_layer=""></div>
+                                      </div>
+                                      <div class="layer-edit-panel">
+                                        <span>
+                                          <a href="#">  
+                                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                          </a>
+                                        </span>
+                                        <span>
+                                          <a href="#">  
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                          </a> 
+                                        </span>
+                                      </div>  
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2 layer-curve">
+                                  <!-- <div id="slider_data"></div> -->
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class=""> <!-- m-t-20 -->
+                              <!-- <button id="send-btn" ng-click="upload_repo_img()" ng-disabled = "upload_repo_img_disabled" ng-bind = "upload_repo_img_btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                                Upload
+                              </button> --> 
+                              
+                              <!-- <button id="send-btn" ng-click="upload_repo_img()" ng-disabled = "upload_repo_img_disabled" ng-bind = "upload_repo_img_btn" class="upload-btn ">
+                                Upload File
+                              </button>             
+                       
+                              </div>-->
+                            </div>  
+                          </div>  
+                        </div>
+                        <div class="row" ng-if="largeImageCropDiv">
+                          <div class="col-md-12 col-sm-12">
+                            <div class="scroll-div">
+                              <div id="container" style="background: #dadada;">
+                                <div id="inner_con"></div>
+                              </div>
+                            </div>
+                            <div class="row all-btn" style='padding-top: 10px;display: none;' id="low_section">
+                              <button id="save_pic">Get image</button>
+                              <button id="lock_outer_section" >lock outer Section</button>
+                              <button id="unlock_outer_section" >unlock outer Section</button>
+                              <button id="add_layer_btn" disabled="disabled">Add a layer</button>
+                              <button id="delete_layer" disabled="disabled" >Delete a layer</button>
+                              <br><br>
+
+                              <div class="row two-btns">
+                                <div class="col-md-6 col-sm-6">
+                                  <span class="rotate-btn" id="rotate">
+                                    <i class="fa fa-repeat" aria-hidden="true"></i>
+                                    Rotate 
+                                  </span>
+
+                                  <span class="layers-btn" id="layer">
+                                    <i class="fa fa-object-ungroup" aria-hidden="true"></i> 
+                                    Layers
+                                  </span>
+                                </div>
+                              </div>
+                              <div id="slider_data"></div>
+                              <hr>
+                              <div class="col-md-4 col-sm-4 all-layer">
+                                <div class="">
+                                  <div class="">
+                                    <h4>Layer Stack</h4>
+                                    <div class="small-layers">
+                                      <div class="smal-layers-main">
+                                        <div id="layers" curr_layer=""></div>
+                                      </div>
+                                      <div class="layer-edit-panel">
+                                        <span>
+                                          <a href="#">  
+                                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                          </a>
+                                        </span>
+                                        <span>
+                                          <a href="#">  
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                          </a> 
+                                        </span>
+                                      </div>  
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2 layer-curve">
+                                  <!-- <div id="slider_data"></div> -->
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class=""> <!-- m-t-20 -->
+                              <!-- <button id="send-btn" ng-click="upload_repo_img()" ng-disabled = "upload_repo_img_disabled" ng-bind = "upload_repo_img_btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                                Upload
+                              </button> --> 
+                              
+                              <!-- <button id="send-btn" ng-click="upload_repo_img()" ng-disabled = "upload_repo_img_disabled" ng-bind = "upload_repo_img_btn" class="upload-btn ">
+                                Upload File
+                              </button>             
+                       
+                              </div>-->
+                            </div>  
+                          </div>  
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                  <button id="send-btn" ng-click="upload_repo_img()" ng-disabled = "upload_repo_img_disabled" ng-bind = "upload_repo_img_btn" class="upload-btn ">
+                      Upload File
+                  </button>             
+             
+                </div>
+              </div>
+            </div>  
+
+          </div>
+        </div>
+      </div>
+    </div>  
+  </section>
+
+
+
+            <!-- <div class="p-30 ">
+                        <form name="userForm" id="userForm" method="post" enctype="multipart/form-data" novalidate>
+                          <div class="row">
+
+                          <div class="col-md-4">
+                          <div class="mdl-textfield">
+                            <p>Image Name</p>
+                             <input ng-model="repodetails.image_name" class="mdl-textfield__input" type="text" id="image_name" placeholder="Image Name" required />
+                          </div> 
+                          <div class="mdl-textfield">
+                            <p>Select Directory</p>
+                            <select id="dir_id" ng-model="selectedFolder">
+                              <option value="{{new_dir_id}}">Root Folder</option>
+                              <option value="{{cname.id}}" ng-repeat="cname in cnames" >{{cname.file_name}}</option>
+                            </select>
+                          </div> 
+                          </div>
+                           <div class="col-md-8">
+                            <div class="row pic-pre">
+                                <div class="col-md-4 col-sm-4">      
+                                 <img src="" id="home_img" style="width:200px;">
+                                </div> 
+                                <div class="col-md-4 col-sm-4">        
+                                 <img src="" id="home_thumb_img" style="width:200px;">
+                                </div> 
+                                <div class="col-md-4 col-sm-4">       
+                                 <img src="" id="deal_details_img" style="width:200px;">
+                                </div>  
+                            </div>
+                           </div> 
+
+
+
+                            </div>
+
+                           <input type="file" id="upload1" value="Choose a file" accept="image/*" />
+                     <div class="m-t-20">
+                        <p>Select Image Type</p>
+                           <select id="image_type" >
+                           <option value="">Please Select One</option>
+                                <option value="home_img">home image</option>
+                                <option value="home_thumb_img">Add home image thumb</option>
+                                <option value="deal_details_img">Add Deal Details image</option>
+                                
+                            </select>
+                            <div style="margin-bottom:20px;"></div>
+                        <input type="file" id="add_layer" accept="image/*" style="display:none;"> 
+                     </div>
+                
+                    <div class="col-md-7">
+                    <div class="scroll-div">
+                    <div id="container" style="background: #dadada;">
+                    <div id="inner_con"></div>
+                    </div>
+                    </div>
+                    <div class="row all-btn" style='padding-top: 10px;display: none;' id="low_section">
+                    <button id="save_pic">Get image</button>
+                    <button id="lock_outer_section" >lock outer Section</button>
+                    <button id="unlock_outer_section" >unlock outer Section</button>
+                    <button id="add_layer_btn" disabled="disabled">Add a layer</button>
+                    <button id="delete_layer" disabled="disabled" >Delete a layer</button>
+                    <br><br>
+                    <div id="slider_data"></div>
+                    <hr>
+                    <div class="col-md-12">
+                    <div class="">
+                    <div class="col-md-6 ">
+                      
+                    <h4>Layer Stack</h4>
+                    <div class="small-layers">
+                        <div id="layers" curr_layer=""></div>
+                    </div>
+                    </div>
+
+                    </div>
+                    <div class="col-md-2 layer-curve">
+
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div> -->
+                    <!--<div class="col-md-5">
+
+
+
+                    <div class="clearfix"></div>
+
+                                   <div class="m-t-20">
+                                     <button id="send-btn" ng-click="upload_repo_img()" ng-disabled = "upload_repo_img_disabled" ng-bind = "upload_repo_img_btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                                      Upload
+                                    </button>               
+                                 
+                                  </div> 
+                                </form>
+                              </div>-->
+                       <!--<div class="col-md-6" id="preview">
+                        <h4>Layer Stack</h4>
+                        <div class="col-md-6" id="layers" curr_layer=""></div> 
+                    </div>-->

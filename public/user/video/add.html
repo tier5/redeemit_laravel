@@ -1,0 +1,69 @@
+<section class="text-fields" ng-controller="VideoAddController" >
+  <div class="mdl-color--amber ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">User Add Video</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <!-- <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-r-20 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>          
+        </div>
+      </div>
+    </div> -->
+
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp">
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                Data inserted successfully
+            </div>
+             <div id="error_div" class="alert alert-danger">                
+            </div>
+          </div>
+          
+          <div class="p-30">
+            <form name="f2" method="POST"  enctype="multipart/form-data">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <label for="option-1">
+                  <input type="radio" class="mdl-radio__button" ng-model="provider"  value="1" name="provider" />
+                  <span class="mdl-radio__label">Youtube</span>
+                </label>
+                <label for="option-2">
+                  <input type="radio" class="mdl-radio__button" ng-model="provider" value="2" name="provider" />
+                  <span class="mdl-radio__label">Vimeo</span>
+                </label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                  <div class="col-md-12">
+                    <input ng-model="video_name" class="mdl-textfield__input" type="text" id="video_name" placeholder="Video Name" />
+                  </div>                  
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                  <div class="col-md-9">
+                    <input ng-model="video_url" class="mdl-textfield__input" type="text" id="video_url" placeholder="Video URL" />
+                  </div>
+                  <div class="col-md-3" ng-if="video_url"> 
+                    <a class="various fancybox.iframe put_href" ng-click="showVideo()" href="#"> 
+                        <img ng-src="{{file_path}}images/play_normal.png" width="30" style="cursor:pointer"  />
+                    </a>                   
+                  </div>
+              </div>
+              <div class="m-t-20">
+                <button type="submit" ng-click = "addVideo()" ng-disabled="!video_url || !video_name" ng-bind="add_video_button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" id="add_video">
+                </button>               
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</section>

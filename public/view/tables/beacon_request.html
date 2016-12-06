@@ -1,0 +1,205 @@
+<style>
+.inventory-page table thead tr th{width: 13%; text-align: center;}
+.inventory-page table tbody tr td{width: 13%; text-align: center; word-break: break-all}
+.inventory-page table.mdl-data-table th{width: 15%; text-align: center;}
+.no-border{border:none !important;}
+
+.addnew-pop{background: #fff; max-height: 360px;
+position: absolute; margin: 0 auto; top: 5%; left: 0; right: 0; 
+bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 426px;}
+.inventory-page table thead tr th{width: 13%; text-align: center;}
+.inventory-page table tbody tr td{width: 13%; text-align: center; word-break: break-all}
+.inventory-page table.mdl-data-table th{width: 15%; text-align: center;}
+.no-border{border:none !important;}
+
+.f-plus{color: #73BF21;}
+.f-minus{color: #73BF21;}
+.mdl-data-table tbody tr .inner-table table thead tr:hover{background: #73BF21 !important;}
+.inner-table{padding: 0 10px;}
+.inner-table table{width: 100%; /*float: right; margin-right: 10px;*/}
+.inner-table table tr{height: 16px !important;}
+.inner-table table tr th{height: 16px !important;}
+.inner-table table tbody tr{/*border: 2px dashed #ccc;*/}
+.inner-table .pagination{margin:4px 0;}
+.mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric{text-align: center; vertical-align: middle;}
+.no-border{border:none !important;}
+.f-plus{color: #73BF21;}
+.f-minus{color: #73BF21;}
+.mdl-data-table tbody tr .inner-table table thead tr:hover{background: #73BF21 !important;}
+
+.video-table table tr td{text-align: center;}
+.inner-one table tbody tr{border: none !important;}
+
+</style>
+
+<section ng-controller="BeaconsRequestController">
+  <div class="addnew-bg" ng-if="assignBeaconPopShowing">
+    <div class="addnew-pop">
+      <span class="cross-default-pop" ng-click="hideAssignBeaconDiv()" style="cursor: pointer;"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+      <div class="invent-pop">
+        <div class="container">
+          <div class="">
+            <div class="form-group">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    Partner Name : {{assignedData.partnerName.toUpperCase()}}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">  
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    Beacon Type : {{assignedData.beacon_type.toUpperCase()}}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+               <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                    Select Beacon:
+                    <select ng-model="assignedData.beacon_id">
+                      <option value="{{beacons.id}}" ng-repeat="beacons in assignedData.beacons track by $index">{{beacons.name+'-'+beacons.major+'-'+beacons.minor}}</option>
+                    </select>
+                  </div>
+               </div>
+            </div>
+            <div class="">
+              <a class="done-btn" ng-click = "assignBeaconDone(assignedData)" ng-disabled="assign_button_clicked">{{assign_button_clicked?'Assigning Beacon ....': 'Assign Beacon'}}</a>
+            </div>
+          </div>
+          <div ng-if="beacon_assign_error_show">
+              <div class="alert alert-success" ng-if="suc">{{successmsg}}</div>
+              <div class="alert alert-danger" ng-if="err">{{errormsg}}</div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+  <div class="mdl-grid mdl-grid--no-spacing inventory-page">
+
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+
+      <div class="p-20 ml-card-holder">
+        <div ng-if="beacon_delete_error_show">
+            <div class="alert alert-danger" ng-if="err">{{errormsg}}</div>
+        </div>
+
+        <div class="page-heading">
+          <h3>All Request</h3>
+        </div>
+
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+          <div class="table-responsive video-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Redeemar partner</th>
+                  <th>No. of Request</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody ng-if="allRequest.length">
+                <tr dir-paginate="reqst in allRequest|itemsPerPage:10" pagination-id="firstPegi">
+                  <td colspan="12" class="no-padding">
+                    <div class="inner-table inner-one">
+                    <table>
+                      <colgroup>
+                        <col class="auto-cell-size p-r-20">
+                      </colgroup>
+                      <tr class="no-border">
+                        <td ng-click="showAllRequest(reqst.partner.id)" style="cursor: pointer;" >{{reqst.partner.company_name}}
+                          <i class="fa fa-plus f-plus" aria-hidden="true" ng-if="requestItemIndex != reqst.partner.id"></i>
+
+                          <i class="fa fa-minus f-minus" aria-hidden="true" ng-if="requestItemIndex == reqst.partner.id"></i>
+                        </td>
+                        <td ng-click="showAllRequest(reqst.partner.id)" style="cursor: pointer;" >{{reqst.all_request.length}}</td>
+                        <td>
+
+                          <img id="beacon-all-request-deleting-{{reqst.partner.id}}" title="Delete Beacon Details" class="delete_row" ng-src="{{file_path}}images/delete.png" width="15" style="cursor:pointer" data-ng-click="delete_beacon_request(reqst.partner.id)" style="display:block"/>
+
+                          <img id="beacon-all-request-{{reqst.partner.id}}" src="{{file_path}}images/spinner.gif" style="display:none">
+                        </td>
+                      </tr>
+                      <tr ng-if="requestItemIndex == reqst.partner.id">
+                        <td colspan="12">
+                          <div class="inner-table">
+                          <table>
+                            <colgroup>
+                              <col class="auto-cell-size p-r-20">
+                            </colgroup>
+                            <thead>
+                              <tr>
+                                <th>Requested On</th>
+                                <th>Beacon Type</th>
+                                <th>No. of Beacons</th>
+                                <th>No. of Assigned</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>  
+                            </thead>
+                            <tbody>
+                              <tr dir-paginate="single_reqst in reqst.all_request|itemsPerPage:10" pagination-id="secondPegi">
+                                <td>{{single_reqst.creation_time}}</td>
+                                <td>{{single_reqst.beacon_type}}</td>
+                                <td>{{single_reqst.no_of_beacons}}</td>
+                                <td>{{single_reqst.assigned_count}}</td>
+                                <td>{{single_reqst.status}}</td>
+                                <td>
+                                  <img class="delete_row" width="15" ng-src="{{file_path}}images/add_new.png" title="Assign Beacon to this partner" data-ng-click="assign_beacon(reqst, single_reqst.id)"  style="cursor:pointer">
+
+                                  <img id="beacon-single-request-deleting-{{single_reqst.id}}" title="Delete Beacon Details" class="delete_row" ng-src="{{file_path}}images/delete.png" width="15" style="cursor:pointer" data-ng-click="delete_beacon_single_request(single_reqst.id)" style="display:block"/>
+
+                                  <img id="beacon-single-request-{{single_reqst.id}}" src="{{file_path}}images/spinner.gif" style="display:none">
+                                </td>
+                              </tr>
+                              <tr ng-if="reqst.all_request.length > 10">
+                                <td colspan="5" class="text-center">
+                                  <dir-pagination-controls
+                                    max-size="5"
+                                    direction-links="true"
+                                    boundary-links="true" pagination-id="secondPegi">
+                                  </dir-pagination-controls>
+                                </td>
+                              </tr>
+                            </tbody>
+                            <tbody ng-if="reqst.all_request.length == 0">
+                              <tr>
+                                <td colspan="12">
+                                  <span>No data availabale.</span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                         </div> 
+                        </td>  
+                      </tr>
+                    </table>
+                  </div>
+                  </td>
+                </tr> 
+
+                <tr ng-if="allRequest.length > 10">
+                  <td colspan="5" class="text-center">
+                    <dir-pagination-controls
+                      max-size="7"
+                      direction-links="true"
+                      boundary-links="true" pagination-id="firstPegi">
+                    </dir-pagination-controls>
+                  </td>
+                </tr>
+                    
+              </tbody>
+              <tbody ng-if="!allRequest.length">
+                <tr>
+                  <td class="center" colspan="12">No data present</td>                
+                </tr>
+              </tbody>       
+            </table>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,84 @@
+<section ng-controller="CategoryController">
+  <div class="mdl-color--blue-grey ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Logo</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Reedemar Partner List</h2>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" id="msg_div" style="display:none">
+            <div class="alert alert-success">
+                Data deleted successfully
+            </div>
+          </div>
+          <table class="mdl-data-table ml-table-bordered mdl-js-data-table ">
+            <colgroup>
+              <col class="auto-cell-size p-r-20">
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Comapny Name</th>
+                <th class="mdl-data-table__cell--non-numeric">Logo</th>
+                <th class="mdl-data-table__cell--non-numeric">Rating</th>
+                <th class="mdl-data-table__cell--non-numeric">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="logo_{{logo.id}}" ng-if="logo_details.length > 0" dir-paginate="logo in logo_details|itemsPerPage:10">
+                <td>{{logo.company_name}}</td>                
+                <td>                  
+                  <a class="example-image-link" href="{{file_path}}../uploads/original/{{logo.logo_name}}" data-lightbox="example-1"><img ng-src="{{file_path}}../uploads/original/{{logo.logo_name}}" width="80" /> </a>
+                </td>
+                <td  id="div_{{logo.id}}" ng-if="logo.tracking_rating >= 0" > 
+                   <span class="rating-static rating-{{logo.tracking_rating*10}}"></span>
+                </td>
+                <td  id="div_{{logo.id}}" ng-if="logo.tracking_rating < 0">
+                  <img ng-src="{{file_path}}images/spinner.gif" /> 
+                </td>   
+                            
+                <td>
+                   <img ng-src="{{file_path}}images/delete.png" width="20" style="cursor:pointer" data-ng-click="delete_logo(logo.id);" />
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="4" class="text-center">
+                  <dir-pagination-controls
+                    max-size="7"
+                    direction-links="true"
+                    boundary-links="true" >
+                  </dir-pagination-controls>
+                </td>
+              </tr>
+            </tbody>
+                      
+          </table>
+        </div>
+        
+      </div>
+         <div class="tags m-t-20 f-right">
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/tables/add_logo">Add</a>
+        </div> 
+      </div>
+    </div>
+
+  </div>
+
+</section>

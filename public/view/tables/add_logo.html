@@ -1,0 +1,137 @@
+<section class="text-fields" ng-controller="CategoryController" >
+  <div class="mdl-color--amber ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Add Logo</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-r-20 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>          
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Add Logo</h2>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                
+            </div>
+             <div id="error_div" class="alert alert-danger">
+                
+            </div>
+          </div>
+
+          <div class="p-30">
+            <form ng-submit="uploadFile()" name="f1" method="POST"  enctype="multipart/form-data">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.company_name" class="mdl-textfield__input" type="text" id="company_name" />
+                <label class="mdl-textfield__label" for="company_name">Company Name</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.logo_text" class="mdl-textfield__input" type="text" id="logo_text" />
+                <label class="mdl-textfield__label" for="logo_text">Logo Search Text</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.first_name" class="mdl-textfield__input" type="text" id="first_name" />
+                <label class="mdl-textfield__label" for="last_name">First Name</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.last_name" class="mdl-textfield__input" type="text" id="last_name" />
+                <label class="mdl-textfield__label" for="company_name">Last Name</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.address" class="mdl-textfield__input" type="text" id="address" />
+                <label class="mdl-textfield__label" for="address">Address</label>
+              </div>
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.postal_code" class="mdl-textfield__input" type="text" id="postal_code" />
+                <label class="mdl-textfield__label" for="postal_code">Postal Code</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.contact_email" class="mdl-textfield__input" type="text" id="contact_email" />
+                <label class="mdl-textfield__label" for="logo_text">Contact Email</label>
+              </div>
+
+              <div data-key="address" class="um-field um-field-last_name um-field-text">
+                <div class="um-field-area">
+                  <select name="category_id" id="category_id">
+                    <option value="">-- Select category --</option>                    
+                    <option ng-repeat="cat in category_details"  value="{{cat.id}}">{{cat.cat_name}}</option>                    
+                  </select>
+                </div>
+              </div>
+              <div style="height:10px;"></div>
+              <div data-key="address" class="um-field um-field-last_name um-field-text">
+                <div class="um-field-area">
+                  <select name="subcat_id" id="subcat_id">
+                      <option value="">Select category first</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mdl-textfield">
+                <p>Upload Logo</p>
+                  <input type = "file" ng-model="Redeemer.logo_name" file-model = "myFile" id="logo_name" />
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+
+                <div  id="pre"> 
+                        <div class="col-md-6">
+                            <div class="upload-msg">
+                          <!--       Upload a file to start cropping -->
+                            </div>
+                            <div id="upload-demo"></div>
+                            <div id="img_data"></div>
+                       
+
+                        </div>
+                        <div class="col-md-6">&nbsp;</div>
+
+                 </div>
+
+              
+                 
+              </div>
+              <div class="row">
+              <div class="col-md-12">
+                    <input name="crop_it" id="crop_it" class="btn" value="Crop It" type="button">
+                    <input name="crop_it" id="crop_it_again" class="btn" value="Crop It" type="button">
+                    <input name="use_original" id="use_original" class="btn" value="Use Original" type="button">
+                   
+                  </div>
+              </div>    
+
+              
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.web_address" class="mdl-textfield__input" type="text" id="web_address" />
+                <label class="mdl-textfield__label" for="web_address">Web Address</label>
+              </div>
+              
+                    <input name="cp_it" id="cp_it" class="btn"  type="hidden">
+             
+              <div class="m-t-20">
+                <button id="upload_file9" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                  {{savingLogo?'Saving...':'Save'}}
+                </button>               
+              </div>
+            </form>
+          </div>          
+        </div>
+        <div class="tags m-t-20 f-right">
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/tables/logo">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>  
+</section>

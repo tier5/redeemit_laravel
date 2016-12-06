@@ -1,0 +1,131 @@
+<style>
+  div#logo_details_div{display: block !important;}
+  div.mdl-cell.border-box{margin: 8px;}
+</style>
+<section class="text-fields" ng-controller="LogoController" >
+  <div class="mdl-color--amber ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Logo Creator</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+  <div class="mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp">          
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+            </div>
+             <div id="error_div" class="alert alert-danger">
+            </div>
+          </div>
+          <div class="p-30">
+            <div class="demo-grid-ruler mdl-grid">
+              <div class="mdl-cell border-box mdl-cell--12-col">
+                Search for my logo
+                <input ng-model="searchText"  type="text" placeholder="Company Name" class="input-field" />                     
+                  <div id="filter-count"></div>            
+              </div>            
+            </div>
+            <div class="demo-grid-2 mdl-grid">              
+              <div class="mdl-cell border-box mdl-cell--12-col">
+                <div id="myWorkContent" ng-if="logo_details.length >0">
+                   <ul style="margin:0; padding:0">
+                      <li class="image_container" ng-repeat="logo in logo_details | filter:{ company_name: searchText }">
+                        <div class="text_div">
+                          <input class="checkboxs" ng-click="show_rating(logo.id);" type="radio" name="company_logo_id" value="{{logo.id}}" />
+                        </div>
+                        <div class="image_div">
+                           <img ng-if="logo.logo_name" ng-src="{{file_path}}../uploads/original/{{logo.logo_name}}" width="120" />
+                        </div>
+                      </li>                      
+                   </ul>                   
+               </div> 
+               <div class="border_box" ng-if="logo_details.length == 0">
+                   No data present.           
+               </div>  
+              </div>
+            </div>
+            <div class="clear"></div>
+              <div class="demo-grid-2 mdl-grid">
+                <div class="mdl-cell border-box border-box mdl-cell--6-col">
+                  <div>
+                    <div class="upload-heading">
+                      <h3>Upload File (<small>JPG/JPEG formats, 2 MB Max File Size</small>)</h3>
+                    </div>                    
+                    <div>
+                      <p>
+                        <input onchange="angular.element(this).scope().fileSelected(this)"   type = "file" ng-model="Logo.logo_name" file-model = "myFile" id="logo_name" />
+                         <img src="{{file_path}}images/spinner.gif" data-ng-if="showUploadloader" class="col-md-offset-6 col-sm-offset-6" />
+                        <div class="row" id="pre">
+                        <div class="">
+                            <div class="upload-msg">
+                          <!--       Upload a file to start cropping -->
+                            </div>
+                            <div id="upload-demo"></div>
+                        </div>
+                        </div>
+                      </p>
+                      <p><hr></p>
+                      <p class="small"> 
+                        By uploading the file, you certify that you own the copyright for these photos or are authorized by the 
+                          owner to make a photo-to-canvas reproduction. 
+                      </p>  
+                      <p class="small">                        
+                          <strong>My logo does not receive a minimum star rating.</strong>        
+                      </p>
+                      <p class="small" style="vertical-align:top;">     
+                                        
+                          <input type="checkbox" name="enhance_logo" id="enhance_logo" checked="checked"  value="1" /><strong>Allow redeemar to professionaly enhance my logo for best result</strong>
+                      </p> 
+                      <div  class="m-t-30 pull-right" style="margin:0 5px 5px 0;">
+                        <div class="m-t-20"> 
+                        </div>
+                      </div>            
+                    </div>
+                  </div> 
+                </div>
+                <div class="mdl-cell border-box mdl-cell--6-col" id="logo_details_div">
+                  <div class="demo-grid-ruler mdl-grid center">
+                    <div class="found-logo">
+                    <div>                      
+                      <div class="border-area">
+                        <img id="logo_image_first" ng-src="../../public/front_end/images/reg-logo1big.jpg"  />
+                      </div>
+                    </div> 
+                    <div class="center logo-scan">
+                    Logo scanability
+                    </div>
+                    <div class="center">
+                    <div id="rating_div" >                         
+
+                    </div>  
+                  </div>
+                  <div class="small-info">
+                    Congratulations ! We have found your logo 
+                  </div>                      
+                  <!-- code from Uday da -->
+                    <div class="m-t-20">
+                      <button data-ng-if="itemId" id="add_logo"  ng-click = "delete_user_logo(itemId);" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        {{deletingLogo?'Deleting...':'Delete'}}
+                      </button>
+                     
+                    </div>
+                  </div>
+                </div> 
+              </div>
+            </div>
+            <form name="userForm"  novalidate>
+              <div class="form-group" >
+                  <input type="hidden" name="user_logo_id" class="form-control" ng-model="userlogo.user_logo_id" value="{{userlogo.user_logo_id}}" id="user_logo_id" required>
+
+                  <input type="hidden" name="user_logo_target_id" class="form-control" ng-model="userlogo.user_logo_target_id" value="{{userlogo.user_logo_target_id}}" id="user_logo_target_id" required>                  
+              </div>             
+            </form> 
+                   
+          </div>
+        </form>
+        </div>
+  </div>  
+</section>
+<div id="img_data" style="display:none;"></div>

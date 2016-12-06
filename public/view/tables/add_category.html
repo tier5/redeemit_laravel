@@ -1,0 +1,62 @@
+<section class="text-fields" ng-controller="CategoryController" >
+  <div class="mdl-color--amber ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Add Category</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-r-20 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>          
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Add Category</h2>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                
+            </div>
+             <div id="error_div" class="alert alert-danger">
+                
+            </div>
+          </div>
+
+          <div class="p-30">
+            <form name="f1" id="f1" ng-submit="add_category()" method="post" enctype="multipart/form-data" >
+             
+              <div class="mdl-textfield">
+                <p>Select Category</p>
+                 <select id="parent_id">
+                    <option value="">Parent</option>
+                    <option ng-selected="{{ cat.id == new_cat_id }}" value="{{cat.id}}" ng-repeat="cat in category_drop" >{{cat.cat_name}}</option>
+                  </select>  
+              </div> 
+               <div class="mdl-textfield">
+                <p>Name</p>
+                 <input ng-model="category.cat_name" class="mdl-textfield__input" type="text" id="cat_name" placeholder="Name" required />
+              </div> 
+               
+              <div class="m-t-20">
+                 <button type="submit" id="add_category" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                  Save
+                </button>                 
+               
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</section>

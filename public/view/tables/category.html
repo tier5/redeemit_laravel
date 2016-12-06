@@ -1,0 +1,371 @@
+<style>
+.no-border{border:none !important;}
+.fa{cursor: pointer;}
+img{cursor: pointer;}
+.f-plus{color: #73BF21;}
+.f-minus{color: #73BF21;}
+.mdl-data-table tbody tr .inner-table table thead tr:hover{background: #73BF21 !important;}
+/*.inner-table table{width: 90%; float: right;}*/
+.inner-table table{width: 95%; margin: 0 auto;}
+.inner-table table tr{height: 16px !important;}
+.inner-table table tr th{height: 16px !important;}
+.inner-table table tbody tr{/*border: 2px dashed #ccc;*/}
+.inner-table .pagination{margin:4px 0;}
+.mdl-data-table{width: 100%; display: table;}
+
+.default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 226px;
+  position: fixed; margin: 0 auto; top: 35%; left: 0; right: 0; 
+  bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 426px;}
+  .black-bg{background: rgba(0,0,0,0.7); position: absolute; width: 100%; height: 100% !important; display: block; z-index: 9999; overflow-x: none;}
+/*.new-row{margin-bottom: 15px;}*/
+.pop-heading{font-size: 16px; border-bottom: 1px solid #ccc; margin-bottom: 15px;}
+.black-bg{top: 0;}
+.table{margin-bottom:0px; }
+.table tr td{border: none !important;}
+table.table tbody tr{border: none;}
+.table-responsive th{width: 30%;}
+.table-responsive td{width: 30%;}
+/*.table-responsive td:first-child{text-align: left;}*/
+
+.form-control {padding: 6px 3px;font-size: 13px;border-radius: 0;}
+label{font-weight: normal; font-size: 12px;}
+.btn{border-radius: 0;}
+
+</style>
+
+<section ng-controller="CategoryController">
+  <!-- <div class="mdl-color--blue-grey ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Redeemar Partner</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div> -->
+
+  <div class="mdl-grid mdl-grid--no-spacing inventory-page">
+
+    <!-- <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div> -->
+
+    <div class=" mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone"> <!-- mdl-cell -->
+      <div class="p-20 ml-card-holder">
+        <div ng-if="error_msg" class="alert alert-danger"><p>{{error_msg}}</p></div>
+        <div ng-if="succ_msg" class="alert alert-success"><p>{{succ_msg}}</p></div>
+        <!-- ml-card-holder-first -->
+      <div class="page-heading">
+        <div class="row page-row">
+        <div class="col-md-3 col-sm-3">  
+        <h3>Category List</h3>
+        </div>
+        <div class="col-md-4 col-sm-4">
+        <input class="form-control" placeholder="Search.." type="text" name="searchCategory" ng-model="searchCategory"/>
+        </div>
+        </div>
+      </div>
+
+
+      <div class="table-responsive">
+          <table class="mdl-data-table ml-table-bordered mdl-js-data-table is-upgraded" width="100%;">
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>  
+            <tbody>
+            <tr dir-paginate="firstLevel in categoriesTree | filter:searchCategory | itemsPerPage:5" pagination-id="firstPegi">
+              <td colspan="5" class="no-padding">
+                <table class="table">
+                  <tr class="no-border">
+                    <td style="cursor: pointer;" ng-click="setRootCatId(firstLevel.id)">
+                      {{firstLevel.cat_name}}
+                    <i ng-if="selectedRootCatId!=firstLevel.id"  class="green fa fa-plus"></i>
+                    <i ng-if="selectedRootCatId==firstLevel.id"  class="green fa fa-minus"></i> 
+                    </td>
+                    <td ng-if="firstLevel.status==1"><img ng-click="changeStatus(firstLevel.id)" width="15" alt="img" src="{{root_base_url}}admin/public/images/active.png" style="cursor: pointer;" title="Change Status"></td>
+                    <td ng-if="firstLevel.status==0" style="cursor: pointer;" title="Change Status"><img ng-click="changeStatus(firstLevel.id)" width="15" alt="img" src="{{root_base_url}}admin/public/images/block.png"></td>
+                    <td style="cursor: pointer;">
+                        <span ng-click="showEditCatPopup(firstLevel)">
+                        <img width="20" src="{{root_base_url}}admin/public/images/edit.png" alt="Edit" title="Edit Category">
+                        </span>
+                        <span data-ng-click="deleteCategory(firstLevel)"><img width="20" src="{{root_base_url}}admin/public/images/delete.png" alt="Delete" title="Delete Category"></span>
+                        <span data-ng-click="showAddcatPopup(firstLevel.id)" ><img width="20" src="{{root_base_url}}admin/public/images/add_new.png" alt="Add" title="Add Another Sub-Category to this Category"></span>
+                    </td>
+                  </tr>
+
+                  <tr ng-if="selectedRootCatId == firstLevel.id" >
+                    <td colspan="5" class="no-padding">
+                      
+                      <div class="inner-table">
+                        <table class="table">
+                        <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                       
+                        <tr dir-paginate="secondtLevel in firstLevel.children |itemsPerPage:5" pagination-id="secondPegi">
+                          <td colspan="5" class="no-padding">
+                           <table class="table">
+                            <tr>
+                              <td style="cursor: pointer;" ng-click="setSubCatId(secondtLevel.id)">
+                                {{secondtLevel.cat_name}}
+                                <i ng-if="selectedSubCatId!=secondtLevel.id"  class="green fa fa-plus"> </i>
+                                <i ng-if="selectedSubCatId==secondtLevel.id"  class="green fa fa-minus"> </i>
+                              </td>
+                            
+                              <td ng-if="secondtLevel.status==1"><img ng-click="changeStatus(secondtLevel.id)" width="15" alt="img" src="{{root_base_url}}admin/public/images/active.png" style="cursor: pointer;" title="Change Status"></td>
+                              <td ng-if="secondtLevel.status==0"><img ng-click="changeStatus(secondtLevel.id)" width="15" alt="img" src="{{root_base_url}}admin/public/images/block.png" style="cursor: pointer;" title="Change Status"></td>
+                              <td style="cursor: pointer;">
+                                <span ng-click="showEditCatPopup(secondtLevel)">
+                                <img width="15" alt="Edit" src="{{root_base_url}}admin/public/images/edit.png" title="Edit Sub-Category">
+                                </span>
+                                <span data-ng-click="deleteCategory(secondtLevel)">
+                                <img width="15" alt="Delete" src="{{root_base_url}}admin/public/images/delete.png" title="Delete Sub-Category">
+                                </span>
+                                <span ng-click="showAddcatPopup(secondtLevel.id)">
+                                <img width="15" alt="Add" src="{{root_base_url}}admin/public/images/add_new.png" title="Add Another Sub-sub-Category to this Sub-Category">
+                                </span>
+                              </td>
+                             </tr>
+                            
+                            <!--- 3rd Level Start -->
+                            
+                              <tr ng-if="selectedSubCatId == secondtLevel.id">
+                                <td colspan="3">
+                                    <div class="inner-table">
+                                      <table>
+                                        <thead>
+                                          <tr>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="thirdtLevel in secondtLevel.children |itemsPerPage:5" pagination-id="thirdPegi">
+                                              <td>{{thirdtLevel.cat_name}}</td>
+                                              
+                                              <td ng-if="thirdtLevel.status==1"><img ng-click="changeStatus(thirdtLevel.id)" width="15" alt="img" src="{{root_base_url}}admin/public/images/active.png" title="Change Status" /></td>
+                                              <td ng-if="thirdtLevel.status==0"><img ng-click="changeStatus(thirdtLevel.id)" width="15" alt="img" src="{{root_base_url}}admin/public/images/block.png" title="Change Status" /></td>
+                                              
+                                              </td>
+                                              <td>
+                                              <span ng-click="showEditCatPopup(thirdtLevel)">
+                                              <img width="15" alt="Edit" src="{{root_base_url}}admin/public/images/edit.png" title="Edit Sub-Sub-Category" />
+                                              </span>
+                                              <span ng-click="deleteCategory(thirdtLevel)">
+                                              <img width="15" alt="Delete" src="{{root_base_url}}admin/public/images/delete.png" title="Delete Sub-Sub-Category" />
+                                              </span>
+                                              
+                                              </td>
+                                            </tr>
+                                            <tr ng-if="secondtLevel.children.length<1">
+                                              <td colspan="3" align="center"> No categories found </td>
+                                            </tr>
+                                            <tr ng-if="secondtLevel.children.length > 5">
+                                              <td colspan="3">
+                                                <!--<ul class="pagination">
+                                                <li><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">4</a></li>
+                                                </ul>-->
+                                                <dir-pagination-controls pagination-id="thirdPegi" 
+                                                  max-size="1"
+                                                  direction-links="true"
+                                                  boundary-links="true" >
+                                                </dir-pagination-controls>
+                                              </td>
+                                            </tr>
+                                        </tbody>
+                                      </table>  
+                                    </div>
+                                </td>  
+                              </tr>
+      
+                                  
+                            <!--- 3rd Level End --->
+                            
+                           </table>
+                           </td>
+                        </tr>
+                        <tr ng-if="firstLevel.children.length==0">
+                          <td colspan="3" align="center"> No categories found </td>
+                        </tr>
+                        <tr ng-if="firstLevel.children.length > 5">
+                          <td colspan="3">
+                            <!--<ul class="pagination">
+                              <li><a href="#">1</a></li>
+                              <li><a href="#">2</a></li>
+                              <li><a href="#">3</a></li>
+                              <li><a href="#">4</a></li>
+                            </ul>-->
+                            <dir-pagination-controls pagination-id="secondPegi" 
+                              max-size="1"
+                              direction-links="true"
+                              boundary-links="true" >
+                            </dir-pagination-controls>
+                          </td>
+                        </tr>
+                         </tbody>
+                       </table>
+                      </div>
+
+                    </td>
+                  </tr>  
+
+                  </table>  
+              </td>
+            </tr>  
+            <tr ng-if="categoriesTree.length==0">
+              <td colspan="3" align="center"> No categories found </td>
+            </tr> 
+            <tr ng-if="categoriesTree.length > 5">
+                <td colspan="5" class="no-padding">  
+                  <dir-pagination-controls pagination-id="firstPegi" 
+                      max-size="1"
+                      direction-links="true"
+                      boundary-links="true" >
+                    </dir-pagination-controls>
+                </td>
+              </tr> 
+            </tbody>  
+          </table>  
+          </div>
+
+          <br><br><br>
+
+
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+          <!-- <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Redeemar Partner List</h2>
+          </div> -->
+        </div>
+        <div class="tags m-t-20">          
+          <!-- <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/tables/add">Add</a> -->
+           <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn" ng-click="showAddcatPopup()" href="javascript:;">Add</a>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  
+   <!-- Add category popup -->
+  
+  <div class="black-bg" ng-if="showAddcategoryPopup" >
+    <div class="default-pop">
+      <span class="cross-default-pop" id="hide" ng-click="hideAddcatPopup();" style="cursor: pointer;"><img src="{{root_base_url}}admin/public/images/cross-btn.png" alt="x"></span>
+      
+      <div class="import-img-popup">
+        <div class="container">
+            <div class="row">
+              <div ng-if="addpopup_error_msg" class="alert alert-danger"><p>{{addpopup_error_msg}}</p></div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <div class="pop-heading">Add new category</div> -->
+              <div class="row new-row">  
+              <div class="form-group">
+                <label class="col-md-4">Category Name</label>
+                <div class="col-md-8">
+                  <input type="hidden" name="parentid" ng-init="cat.parent_id=cat.parent_id?cat.parent_id:0" ng-model="cat.parent_id" />
+                  <input type="text" allowpattern="[^a-zA-Z0-9' -]" ng-model="cat.cat_name" class="form-control" name="category_name" id="category_name" />
+                </div>
+              </div>
+              </div>
+              <div class="row new-row">
+              <div class="form-group">
+                <label class="col-md-4">Status</label>
+                <div class="col-md-8">
+                  <select id="status" class="form-control" ng-init="cat.status=cat.status!='0'?'1':'0'" ng-model="cat.status">
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                </div>
+              </div>
+              </div>
+              
+              
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn green-btn" ng-click="saveCat(cat)">Done</button>
+            <!-- <button class="green-btn" ng-click="hideAddcatPopup()">Cancel</button> -->
+              </div>
+            </div>
+        </div>
+      
+      </div>
+      <!-- <div class="floate-btn">
+            <button class="green-btn" ng-click="saveCat(cat)">Done</button>
+            <button class="green-btn" ng-click="hideAddcatPopup()">Cancel</button>
+          </div> -->
+    </div>
+  </div>
+  <!-- End add category popup -->
+  
+   <!-- Edit category popup -->
+  
+  <div class="black-bg" ng-if="showEditcategoryPopup" >
+    <div class="default-pop">
+      <span class="cross-default-pop" id="hide" ng-click="hideEditcatPopup();" style="cursor: pointer;"><img src="{{root_base_url}}admin/public/images/cross-btn.png" alt="x"></span>
+      <div class="import-img-popup">
+        <div class="container">
+            <div class="row">
+              <div ng-if="editpopup_error_msg" class="alert alert-danger"><p>{{editpopup_error_msg}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <div class="pop-heading">Edit category</div> -->
+              <div class="row new-row">  
+              <div class="form-group">
+                <label class="col-md-4">Category Name</label>
+                <div class="col-md-8">
+                  <input type="hidden"  ng-model="ecat.id" />
+                  <input type="text" allowpattern="[^a-zA-Z0-9' -]" ng-model="ecat.cat_name" class="form-control"   />
+                </div>
+              </div>
+              </div>
+              <div class="row new-row">
+              <div class="form-group">
+                <label class="col-md-4">Status</label>
+                <div class="col-md-8">
+                  <select  data-ng-model="ecat.status" class="form-control" id="status" ng-options="c.id as c.name for c in statusOptions" ></select>
+                </div>
+              </div>
+              </div>
+              
+              
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn green-btn" ng-click="updateCat(ecat)">Done</button>
+            <!-- <button class="green-btn" ng-click="hideEditcatPopup()">Cancel</button> -->
+              </div>
+            </div>
+        </div>
+      
+      </div>
+    <!--   <div class="floate-btn">
+            
+          </div>  --> 
+    </div>
+  </div>
+  <!-- End edit category popup -->
+
+</section>

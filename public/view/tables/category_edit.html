@@ -1,0 +1,57 @@
+<section class="text-fields" ng-controller="CategoryController  " >
+  <div class="mdl-color--amber ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Update Category</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-r-20 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>          
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Update Category</h2>
+          </div>
+          
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                Data inserted successfully
+            </div>
+             <div id="error_div" class="alert alert-danger">
+                
+            </div>
+          </div>
+
+          <div class="p-30">
+            <form name="f1" method="POST" >
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">                
+                <input id="cat_name" ng-model="category_details[0].cat_name" class="mdl-textfield__input" type="text" placeholder="Category Name"   />
+              </div>                        
+              <div class="m-t-20">
+                <button type="button" ng-click = "edit_category()" id="edit_category" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                  Save
+                </button>   
+
+                <button id="cancel_category" type="button" ng-click = "cancel_category('tables')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" >
+                  Back  
+                </button>                
+              </div>
+            </form>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>  
+</section>

@@ -1,0 +1,89 @@
+<section ng-controller="CategoryController">
+  <div class="mdl-color--blue-grey ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Category</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Category List</h2>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                
+            </div>
+             <div id="error_div" class="alert alert-danger">
+                
+            </div>
+          </div>
+          <table class="mdl-data-table ml-table-bordered mdl-js-data-table ">
+            <colgroup>
+              <col class="auto-cell-size p-r-20">
+            </colgroup>
+            <thead>
+            <tr class="mdl-data-table__cell--non-numeric">
+              <th class="mdl-data-table__cell--non-numeric">Name</th> 
+              <th class="mdl-data-table__cell--non-numeric">Status</th>
+              <th class="mdl-data-table__cell--non-numeric">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr id="val_{{category.id}}" ng-if="category_details.length > 0"  ng-repeat="category in category_details">               
+                <td>                  
+                    <a href="javascript:void(0);" data-ng-click="set_cat_id(category.id)">{{category.cat_name}}
+                    </a>
+                </td>                               
+                <td> 
+                  <img id="row_{{ category.id }}" style="cursor:pointer" ng-if="category.status == '1'" ng-src="{{img_file_path}}images/active.png" width="20" data-ng-click="update_category(category.id,category.status);" />
+
+                   <img id="row_{{ category.id }}" style="cursor:pointer" ng-if="category.status != '1'" ng-src="{{img_file_path}}images/block.png" width="20" data-ng-click="update_category(category.id,category.status);" />
+                </td>
+                <td id="row_{{category.id}}">
+                  <img class="delete_row" ng-src="{{file_path}}images/edit.png" width="20" style="cursor:pointer" data-ng-click="category_edit(category.id);" />
+                  
+                  <img class="delete_row" ng-src="{{file_path}}images/delete.png" width="20" style="cursor:pointer" data-ng-click="delete_category(category.id);" />
+
+                  
+                </td>
+              </tr> 
+              
+              <tr ng-if="category_details.length == 0">
+                <td class="center" colspan="5">No data present</td>                
+              </tr> 
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  
+                </td>
+              <tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="tags m-t-20 f-right" >          
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/tables/add_category">Add{{new_cat_id}}</a>
+        </div>
+        <div class="tags m-t-20 f-right" ng-if="cat_id >0">          
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-ng-click="set_cat_id('');">Back</a>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" name="cat_id" id="cat_id" value="" />
+  </div>
+
+</section>

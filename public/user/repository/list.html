@@ -1,0 +1,326 @@
+<style>
+.bottom-btn{padding: 10px; text-align: right;}
+.img-list-span{display: inline-block; width: 100%;height: 100%;padding: 10px 15px;}
+.list-group-item.img-list-span-box{ padding: 0;}
+.hover span{ border: 2px dotted #666; }
+</style>
+
+<section ng-controller="RepoListController">
+
+  <div class="mdl-grid mdl-grid--no-spacing imagerepo-page">
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="p-20 ml-card-holder"> <!-- ml-card-holder-first -->
+        <div class="page-heading">  
+          <h3>Image List <span class="pull-right col-md-3" >{{copyToDir}}<span></h3>
+        </div>
+        <div class="image-repo-holder">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 bhoechie-tab-container">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 nopadding">
+                  <div class="bhoechie-tab-menu">
+                    <div class="list-group">
+                      <a class="list-group-item img-list-span-box text-center {{activeDirMenu==0?'active':''}}" ng-click="showAllimages();setActiveClass(0)" data-drop="true"   jqyoui-droppable="{onOver: 'onOver', onOut: 'onOut',  onDrop: 'onDrop'}" data-dirid="0">
+                        <span class="img-list-span">All Files</span>
+                      </a>
+                      <a class="list-group-item img-list-span-box text-center {{activeDirMenu==1?'active':''}}" ng-click="showStoreimages();setActiveClass(1)" data-drop="true">
+                        <span class="img-list-span">Store Images</span>
+                      </a>
+                      <a class="list-group-item img-list-span-box text-center {{activeDirMenu==directory.id?'active':''}}" ng-repeat="directory in directory_details track by $index" ng-if="directory_details.length" ng-click="setActiveClass(directory.id)" data-drop="true"   jqyoui-droppable="{onOver: 'onOver', onOut: 'onOut',  onDrop: 'onDrop'}" data-dirid="{{directory.id}}" >
+                        <span class="dirnameSpan img-list-span" data-ng-hide="renameOpenIndex == directory.id" data-ng-click="get_image_by_dir_id(directory)" >{{directory.original_name}}</span>
+                        <span class="editnameSpn" data-ng-show="renameOpenIndex == directory.id">
+                          <input  type="text" allowpattern="[^a-zA-Z0-9_-]" data-ng-blur="renameDirName(directory.id,directory.original_name)"  data-ng-model="directory.original_name" class="form-control">
+                        </span>
+                        <span class="edit-dot" data-ng-click="showorhideme(directory.id)">
+                          <img ng-src="{{file_path}}images/dots.png" alt="img" />
+                        </span>
+                        <span class="edit-name" ng-if="directoryIndex == directory.id">
+                          <span class="edit-name-main">
+                            <span class="repo-name-edit" ng-click="openRename(directory.id)">
+                              <span class="repo-arrow-2">
+                                <img ng-src="{{file_path}}images/repo-arrow-2.png" alt="img">
+                              </span>  
+                              <i class="fa fa-pencil-square-o"  aria-hidden="true"></i>Rename
+                            </span>
+                            <span class="repo-name-delete" ng-click="delete_folder(directory.id)">
+                              <i class="fa fa-trash" aria-hidden="true"></i> 
+                              Remove
+                            </span>
+                          </span>
+                        </span>
+                      </a>
+                    </div>
+                    <div class="add-folder" ng-if="showAddFolder">
+                      <input type="text" placeholder="New Folder Name" allowpattern="[^a-zA-Z0-9_-]" class="form-control" ng-blur="blurUpdate()" id="addFolder" ng-model="folderName">
+                    </div>  
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-sm-offset-1">
+                      <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn add-folder-btn ref" ng-click="showAddFolderBox()">
+                        Add Folder
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab ">
+                  <!-- flight section -->
+                  <div class="bhoechie-tab-content active">
+                    
+                    <div class="tab_heading">
+                      <div class="row">
+                          <div class="col-md-9 col-sm-9">
+                            <h3>{{folder_name}}</h3>
+                            <div id="show_message" style="display:none">
+                              <div id="success_div" class="alert alert-success"></div>
+                              <div id="error_div" class="alert alert-danger"></div>
+                            </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                            <a href="#/repository/add" class="green-btn">
+                            <i class="fa fa-upload" aria-hidden="true"></i>
+                              Upload Image
+                            </a>
+                          </div>
+                      </div>
+                    </div> 
+                    <div class="repo-scroll" ng-if="selectedDirId != '1'">
+                      <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true}" ng-hide="!list1.title">Drag me</div>
+                     
+                        <div class="row imagerepo-row">
+                        <div class="col-md-3 col-sm-3 center" dir-paginate="repo in repo_details |itemsPerPage:10" ng-if="repo.directory!=1">
+                         
+                           <div class="img-repo-box"  data-drag="true" data-jqyoui-options="{revert: 'invalid',appendTo:'body'}" data-repoid="{{repo.id}}"  jqyoui-draggable="{index:'123',animate:true,onStart:'onStart(repo.id)'}"  >
+                            <div class="img-repo-box-pic">  
+                              <img ng-src="{{file_path}}{{repo.directory_base_path}}" alt="img">
+                                <span class="overlay">
+                                  <div class="overlay-main">
+                                    <div class="overlay-main-left">
+                                
+                                      <i class="fa fa-search-plus show1" aria-hidden="true" ></i>
+
+                                      <div class="repo-pop">
+                                        
+                                        <div class="my-main adding-gr">
+                                          <!-- <span class="hide-cross" id="hide">X</span> -->
+
+                                          <span class="pop-arrow"><img src="{{file_path}}images/repo-arrow.png" alt="img"></span>
+                                          <div class="repo-big-holder">  
+                                            <img src="{{file_path}}{{repo.directory_base_path}}" alt="img">
+                                          </div>
+                                        </div>
+                                        <div class="row repo-des">
+                                          <div class="col-md-3 col-sm-3">
+                                          File Name:
+                                          </div>
+                                          <div class="col-md-9 col-sm-9">
+                                          {{repo.original_name}}    
+                                          </div>
+                                        </div>
+                                        <div class="row repo-des">
+                                          <div class="col-md-3 col-sm-3">
+                                          Image Size:
+                                          </div>
+                                          <div class="col-md-9 col-sm-9">
+                                          {{repo.img_dimension}}   
+                                          </div>
+                                        </div>
+
+
+                                      </div>
+
+                                    </div>
+                                    <div class="overlay-main-right">
+                                      <i class="fa fa-trash" ng-click="deleteRepoImg(repo.id)" aria-hidden="true"></i>
+                                    </div>
+                                
+                                  </div>
+                                </span> 
+                              </div>
+                              <span class="repo-name">{{repo.original_name}} </span>
+                            </div>
+                        </div>
+                        
+                        <!-- no record -->
+                        <center data-ng-if="repo_details.length==0">
+                            <h2 class="add_image-repo">
+                              <a href="#/repository/add">
+                            <i class="fa fa-camera" aria-hidden="true"></i> <br>
+                              Add your images
+                              </a>
+                            </h2>
+                        </center>
+                         
+                        <!-- end no record -->
+                       
+                        </div>
+                      
+                      
+                      
+                      </div>
+                      <div class="page-number1">
+                         <dir-pagination-controls ng-if="repo_details.length > 1"
+                              max-size="1"
+                              direction-links="true"
+                              boundary-links="true" >
+                            </dir-pagination-controls>
+                      </div>
+                    <div class="repo-scroll" ng-if="selectedDirId == '1'">
+                      <div class="row imagerepo-row">
+                        <div class="col-md-3 col-sm-3 center" ng-repeat="repo in repo_details">
+                         
+                           <div class="img-repo-box">
+                            <div class="img-repo-box-pic">  
+                              <img ng-src="{{file_path}}{{repo.image_path}}" alt="img">
+                                <span class="overlay">
+                                  <div class="overlay-main">
+                                    <div class="overlay-main-left">
+                                
+                                      <i class="fa fa-search-plus show1" aria-hidden="true" ></i>
+
+                                      <div class="repo-pop">
+                                        
+                                        <div class="my-main adding-gr">
+                                          <!-- <span class="hide-cross" id="hide">X</span> -->
+
+                                          <span class="pop-arrow"><img src="{{file_path}}images/repo-arrow.png" alt="img"></span>
+                                          <div class="repo-big-holder">  
+                                            <img src="{{file_path}}{{repo.image_path}}" alt="img">
+                                          </div>
+                                        </div>
+                                        <div class="row repo-des">
+                                          <div class="col-md-3 col-sm-3">
+                                          File Name:
+                                          </div>
+                                          <div class="col-md-9 col-sm-9">
+                                          {{repo.image_name}}    
+                                          </div>
+                                        </div>
+                                        <div class="row repo-des">
+                                          <div class="col-md-3 col-sm-3">
+                                          Image Size:
+                                          </div>
+                                          <div class="col-md-9 col-sm-9">
+                                          {{repo.img_dimension}}   
+                                          </div>
+                                        </div>
+
+
+                                      </div>
+
+                                    </div>
+                                
+                                  </div>
+                                </span> 
+                              </div>
+                              <span class="repo-name">{{repo.image_name}} </span>
+                            </div>
+                        </div>
+                        
+                        <!-- no record -->
+                        <center data-ng-if="repo_details.length==0">
+                            <h2 class="add_image-repo">
+                              <a href="#/repository/add">
+                            <i class="fa fa-camera" aria-hidden="true"></i> <br>
+                              Add your images
+                              </a>
+                            </h2>
+                        </center>
+                         
+                        <!-- end no record -->
+                       
+                        </div>
+                      
+                      
+                      
+                      </div>
+                  </div>
+                  <!-- train section -->
+                  <div class="bhoechie-tab-content">
+                      <center>
+                        <h1 class="glyphicon glyphicon-road" style="font-size:12em;color:#55518a"></h1>
+                        <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
+                        <h3 style="margin-top: 0;color:#55518a">Train Reservation</h3>
+                      </center>
+                  </div>
+      
+                  <!-- hotel search -->
+                  <div class="bhoechie-tab-content">
+                      <div class="repo-scroll">
+                        <center>
+
+                          <h2 class="add_image-repo">
+                            <a href="#">
+                          <i class="fa fa-camera" aria-hidden="true"></i> <br>
+                            Add your images
+                            </a>
+                          </h2>
+
+                        </center>
+                      </div> 
+                  </div>
+                  <div class="bhoechie-tab-content">
+                      <div class="repo-scroll">
+                        <center>
+
+                          <h2 class="add_image-repo">
+                            <a href="">
+                          <i class="fa fa-camera" aria-hidden="true"></i> <br>
+                            Add your images
+                            </a>
+                          </h2>
+
+                        </center>
+                      </div> 
+                  </div>
+                  <div class="bhoechie-tab-content">
+                    <div class="repo-scroll">
+                      <center>
+
+                        <h2 class="add_image-repo">
+                          <a href="#">
+                        <i class="fa fa-camera" aria-hidden="true"></i> <br>
+                          Add your images
+                          </a>
+                        </h2>
+
+                      </center>
+                    </div>  
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+        <!-- image-repo-holder ends here --> 
+        
+  </div>
+
+</div>
+
+<div class="tags m-t-20 ">
+    <!-- <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn ref">
+    Add Folder
+    </a> -->
+
+</div>
+
+
+    <!-- <div class="tags m-t-20 f-right">
+      <a ng-if="!setBackButton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/repository/add" >Add Directory</a>
+
+      <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/repository/add_image" >Upload File</a>
+      <a ng-if="setBackButton" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="clearAlllocalStorage(setBackButton)" >Back</a>
+    </div> -->
+</div>
+</div>
+<input type="hidden" name="dir_id" id="dir_id" value="" />
+</div>
+<script>
+  $(document).on('click','.show1',function(){
+    $(this).parent().find('.repo-pop').show();
+  });
+  $(document).on('mouseleave','.img-repo-box',function(){
+    $(this).find('.repo-pop').hide();
+  });
+</script>
+</section>

@@ -1,0 +1,140 @@
+.demo-ribbon {
+  width: 100%;
+  height: 40vh;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.demo-main {
+  /*margin-top: -35vh;*/
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+
+  margin-top: 0;
+  background: #000 url("../../../images/partners-login-bg.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.mdl-textfield {
+  width: 100%;
+}
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
+  color: rgb(3,169,244);
+}
+
+.mdl-textfield__label:after {
+  background-color: rgb(3, 169, 244);
+}
+
+.login-logo{
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.login-top-menu ul{
+    margin: 30px;
+    padding: 0;
+    list-style-type: none;
+    float: right;
+}
+
+.login-top-menu ul li{
+    float: left;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.login-top-menu ul li a{
+  color:#fff;
+  text-decoration: none;
+}
+
+.login-top-menu ul li a:hover{
+  color:#1ff502;
+}
+
+.mdl-textfield__input.login-field{
+  border: none;
+  font-size: 20px;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background: none !important;
+}
+
+.nopadding{
+  padding: 0 !important;
+}
+
+.login-form{
+  padding: 20px 0;
+}
+
+.login-form .mdl-textfield {
+    padding: 0;
+}
+
+.demo-content.mdl-color--white.login-section{
+    background: none !important;
+    box-shadow: none;
+}
+
+.form-inputs{
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.login-form .mdl-button--raised.mdl-button--colored {
+    background: #1ff502 !important;
+    color: #474646;
+    text-transform: capitalize;
+    font-weight: normal;
+    width: 100%;
+    font-size: 25px;
+    padding: 5px 0 40px !important;
+    border-radius: 8px;
+}
+
+.login-form .mdl-button--raised.mdl-button--colored:hover {
+    background: #474646 !important;
+    color: #1ff502;
+}
+
+.login-logo .img-responsive {
+    margin: 0 auto;
+}
+
+p.forgt-pass{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+p.forgt-pass a, p.otp-notice{
+  color: #fff;
+  font-size: 18px;
+}
+
+
+
+.form-horizontal input::-webkit-input-placeholder {
+   color: #ccc;
+}
+
+.form-horizontal input:-moz-placeholder { /* Firefox 18- */
+   color: #ccc;  
+}
+
+.form-horizontal input::-moz-placeholder {  /* Firefox 19+ */
+   color: #ccc;  
+}
+
+.form-horizontal input:-ms-input-placeholder {  
+   color: #ccc;  
+}
+

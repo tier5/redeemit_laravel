@@ -1,0 +1,85 @@
+<section ng-controller="PartnerListController">
+  <div class="mdl-color--blue-grey ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Redeemar Partner</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Redeemar Partner List</h2>
+          </div>
+          <table class="mdl-data-table ml-table-bordered mdl-js-data-table ">
+            <colgroup>
+              <col class="auto-cell-size p-r-20">
+            </colgroup>
+            <thead>
+            <tr class="mdl-data-table__cell--non-numeric">
+              <th class="mdl-data-table__cell--non-numeric">Comapny Name</th>
+              <th class="mdl-data-table__cell--non-numeric">Email</th>
+              <th class="mdl-data-table__cell--non-numeric">Password</th>
+              <th class="mdl-data-table__cell--non-numeric">Approve</th>
+              <th class="mdl-data-table__cell--non-numeric">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="reedemar_details.length > 0"  dir-paginate="item in reedemar_details|itemsPerPage:10">
+                <td>{{item.company_name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.original_pass}}</td>
+                <td> 
+                   <img id="row_{{ item.id }}" style="cursor:pointer" ng-if="item.approve == '1'" ng-src="{{img_file_path}}images/active.png" width="20" data-ng-click="update_status(item.id,item.approve);" />
+
+                   <img id="row_{{ item.id }}" style="cursor:pointer" ng-if="item.approve != '1'" ng-src="{{img_file_path}}images/block.png" width="20" data-ng-click="update_status(item.id,item.approve);" />
+                </td>
+                <td id="row_{{item.id}}">
+                  <img class="delete_row" ng-src="{{file_path}}images/edit.png" width="20" style="cursor:pointer" data-ng-click="redirect_edit(item.id);" />
+                  
+                  <img class="delete_row" ng-src="{{file_path}}images/delete.png" width="20" style="cursor:pointer" data-ng-click="delete_reedemer(item.id);" />
+                </td>
+              </tr> 
+              <tr>
+                <td colspan="4" class="text-center">
+                  <dir-pagination-controls
+                    max-size="7"
+                    direction-links="true"
+                    boundary-links="true" >
+                  </dir-pagination-controls>
+                </td>
+              </tr>
+              <tr ng-if="reedemar_details.length == 0">
+                <td class="center" colspan="5">No data present</td>                
+              </tr> 
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  
+                </td>
+              <tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="tags m-t-20 f-right">          
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/tables/add">Add</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

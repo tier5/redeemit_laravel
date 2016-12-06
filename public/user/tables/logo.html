@@ -1,0 +1,222 @@
+
+<style type="text/css">
+  
+  .default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 166px; width: 344px;
+position: fixed; margin: 0 auto; top: 35%; left: 0; right: 0; 
+bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+.black-bg{position: fixed;}
+</style>
+<script>
+
+ $(document).ready(function(){
+     $("#hide").click(function(){
+         $(".black-bg").hide();
+         enableScroll();
+     });
+     $("#show").click(function(){
+         $(".black-bg").show();
+         disableScroll();
+     });
+     
+ });
+
+ // left: 37, up: 38, right: 39, down: 40,
+// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+  e.returnValue = false;  
+}
+
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+
+function enableScroll() {
+  $(".black-bg").hide();
+    if (window.removeEventListener)
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.onmousewheel = document.onmousewheel = null; 
+    window.onwheel = null; 
+    window.ontouchmove = null;  
+    document.onkeydown = null;  
+}
+</script>
+
+
+<section ng-controller="LogoController">
+<!--   <div class="mdl-color--blue-grey ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">User Logo List</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div> -->
+
+  <div class="black-bg">
+    <div class="default-pop">
+      <span class="cross-default-pop" id="hide">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+      <div class="invent-pop">
+      <div class="container logo-pop">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <h2>Update Trigger</h2>
+          </div>  
+        </div>
+        <div class="form-group">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <select class="form-control">
+              <option>Select Triger</option>
+              <option>1</option>
+              <option>1</option>
+              <option>1</option>
+            </select>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <select class="form-control">
+              <option>Select Triger</option>
+              <option>1</option>
+              <option>1</option>
+              <option>1</option>
+            </select>
+          </div>
+        </div> 
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <button class="blue-btn">Add Product</button>
+            </div>
+          </div>  
+        </div> 
+
+      </div> 
+      </div> 
+    </div>  
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing logo-page">
+<span id="show">Show</span>
+    <!-- <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+
+      <div class="p-20 ml-card-holder">
+          <div class="page-heading">
+            <h3>User Logo List</h3>
+          </div>
+
+
+
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+        <div class="table-responsive video-table">
+          <table class="table">
+            <colgroup>
+              <col class="auto-cell-size p-r-20">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Company Name</th> <!-- class="mdl-data-table__cell--non-numeric" -->
+                <th>Trigger</th>
+                <th>Action</th>
+                <th>Rating</th>
+                <th>Default</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody ng-if="logo_details.length">
+              <tr  dir-paginate="reedemar_logo in logo_details|itemsPerPage:10">
+                <td>{{reedemar_logo.logo_text}}</td>
+                <td>
+                  <img ng-src="{{file_path}}../uploads/original/{{reedemar_logo.logo_name}}" width="80" />
+                </td>
+                <td>
+                  <a id="logo_text_{{reedemar_logo.id}}" value="1" class="fancybox-media logo_text various fancybox.iframe put_href" href="../user/changeaction/{{reedemar_logo.id}}/{{reedemar_logo.action_id}}"> 
+                    {{reedemar_logo.action.action_name}}
+                  </a>  
+                </td>
+                <td  id="div_{{reedemar_logo.id}}" ng-if="reedemar_logo.tracking_rating >= 0" > 
+                   <span class="rating-static rating-{{reedemar_logo.tracking_rating*10}}"></span>
+                </td>
+                <td  id="div_{{reedemar_logo.id}}" ng-if="reedemar_logo.tracking_rating < 0">
+                  <img ng-src="{{file_path}}images/spinner.gif" /> 
+                </td>                 
+                <td ng-if="reedemar_logo.tracking_rating < 0">
+                  <img ng-src="{{file_path}}images/spinner.gif" />
+                </td>
+                <td>
+                  <span  ng-if="reedemar_logo.default_logo == 1">
+                    <img ng-src="{{file_path}}images/default.png" width="20" data-ng-
+                    click="update_status(reedemar_logo.id);" />    
+                  </span>
+                  <span  ng-if="reedemar_logo.default_logo == 0">
+                    <a data-ng-click="make_default(reedemar_logo.id);" href="javascript:void(0);" >
+                        Make this Default
+                    </a>
+                  </span>
+                </td>
+                <td>
+                  <img ng-src="{{file_path}}images/delete.png" width="15" style="cursor:pointer" data-ng-click="delete_user_logo(reedemar_logo.id);" ng-if="reedemar_logo.default_logo != 1"/>
+                </td>
+              </tr> 
+
+               <tr ng-if="logo_details.length > 10">
+                <td colspan="5" class="text-center">
+                  <dir-pagination-controls
+                    max-size="7"
+                    direction-links="true"
+                    boundary-links="true" >
+                  </dir-pagination-controls>
+                </td>
+              </tr>
+                  
+            </tbody>
+                  <tbody ng-if="!logo_details.length">
+              <tr>
+                <td class="center" colspan="12">No data present</td>                
+              </tr>
+            </tbody>       
+          </table>
+        </div>  
+        </div>
+        <div class="tags m-t-20">
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn" href="#/tables/create_logo">Add</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+<script type="text/javascript">
+     //$(document).ready(function(){  
+     //alert("a")     ;
+       // $("#rateYo").rateYo({
+       //      rating: 3
+       // });      
+     //});
+  </script>
