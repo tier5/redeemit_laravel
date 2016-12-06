@@ -21,7 +21,7 @@ class CronController extends Controller {
 	public function getUpdaterating($id = Null)
 	{		
 		//dd("A");
-		$logo=Logo::where('tracking_rating','<','0')->get();
+		$logo=Logo::where('tracking_rating','<',0)->get();
 		$logo_details=json_decode($logo);
 		//dd($logo->toArray());
 		$client = new vuforiaclient();
@@ -31,9 +31,13 @@ class CronController extends Controller {
 			$response_arr=json_decode($target_res_details);
 			//echo $logo->target_id."<br>";
 			//dd($response_arr->target_record->tracking_rating);
-			$target_id=$response_arr->target_record->target_id;
-			$tracking_rating=$response_arr->target_record->tracking_rating;
-			$affectedRows = Logo::where('target_id', $target_id)->update(['tracking_rating' => $tracking_rating, 'status' => 1]);
+
+			if(isset($response_arr->target_record)) {			
+				$target_id=$response_arr->target_record->target_id;
+				$tracking_rating=$response_arr->target_record->tracking_rating;
+				$affectedRows = Logo::where('target_id', $target_id)->update(['tracking_rating' => $tracking_rating, 'status' => 1]);
+			}
+
 		}
 		//return $logo;
 

@@ -322,7 +322,7 @@ class PartnerController extends Controller {
 		$medium_path	= base_path()."/uploads/medium"."/";
 		$original_path	= base_path()."/uploads/original"."/";
 		
-		$fileManagerUserfilePath = rtrim(base_path(),'/admin');
+		$fileManagerUserfilePath = rtrim(base_path(),'admin');
 
 		
 		$largeWidth   = env('LOGO_LARGE_WIDTH');
@@ -339,9 +339,9 @@ class PartnerController extends Controller {
 		$mainMediumFilePath   = $medium_path.$newRandName.'.'.$mainExt;
 		$mainThumb_path   	  = $thumb_path.$newRandName.'.'.$mainExt;
 		
-		$fileMngrSmallPath  =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/small/'.$newRandName.'.png';
-		$fileMngrMediumPath =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/medium/'.$newRandName.'.png';
-		$fileMngrLargePath  =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/large/'.$newRandName.'.png';
+		$fileMngrSmallPath  =  rtrim(base_path(),'admin') .'filemanager/userfiles/small/'.$newRandName.'.png';
+		$fileMngrMediumPath =  rtrim(base_path(),'admin') .'filemanager/userfiles/medium/'.$newRandName.'.png';
+		$fileMngrLargePath  =  rtrim(base_path(),'admin') .'filemanager/userfiles/large/'.$newRandName.'.png';
 				
 		try{
 		$obj->base64toiamge($src,$mainOriginalFilePathTmp);
@@ -558,9 +558,9 @@ class PartnerController extends Controller {
 			$fileMng_smallWidth   = env('LOGO_SMALL_WIDTH');
 			$fileMng_smallHeight  = env('LOGO_SMALL_HEIGHT');
 			
-			$fileMngrSmallPath  =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/small/'.$logoBaseName.'.png';
-			$fileMngrMediumPath =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/medium/'.$logoBaseName.'.png';
-			$fileMngrLargePath  =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/large/'.$logoBaseName.'.png';
+			$fileMngrSmallPath  =  rtrim(base_path(),'admin') .'filemanager/userfiles/small/'.$logoBaseName.'.png';
+			$fileMngrMediumPath =  rtrim(base_path(),'admin') .'filemanager/userfiles/medium/'.$logoBaseName.'.png';
+			$fileMngrLargePath  =  rtrim(base_path(),'admin') .'filemanager/userfiles/large/'.$logoBaseName.'.png';
 			
 			$thumb_path= base_path() . "/uploads/thumb/".$logoBaseName;
 			$medium_path= base_path() . "/uploads/medium/".$logoBaseName;
@@ -686,7 +686,7 @@ class PartnerController extends Controller {
 			
 			try{
 				$upload_dir = base_path()."/uploads/";
-				$copy_base_path = rtrim(base_path(),'admin/') . '/filemanager/userfiles/'.$user->id;
+				$copy_base_path = rtrim(base_path(),'admin') . '/filemanager/userfiles/'.$user->id;
 				$upload_path=$upload_dir."/".$user->id;
 				
 				if(!file_exists($upload_path))
@@ -924,17 +924,17 @@ class PartnerController extends Controller {
 		$logo_medium_path="../uploads/medium/".$logo->logo_name;
 		$logo_thumb_path="../uploads/large/".$logo->logo_name;
 
-		$fileMngrSmallPath  =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/small/'.$logo->logo_name;
-		$fileMngrMediumPath =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/medium/'.$logo->logo_name;
-		$fileMngrLargePath  =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/large/'.$logo->logo_name;
+		$fileMngrSmallPath  =  rtrim(base_path(),'admin') .'filemanager/userfiles/small/'.$logo->logo_name;
+		$fileMngrMediumPath =  rtrim(base_path(),'admin') .'filemanager/userfiles/medium/'.$logo->logo_name;
+		$fileMngrLargePath  =  rtrim(base_path(),'admin') .'filemanager/userfiles/large/'.$logo->logo_name;
 
 		$alt_logo_original_path="../uploads/small/".$logoNameArr[1].'.'.$alterExt;
 		$alt_logo_medium_path="../uploads/medium/".$logoNameArr[1].'.'.$alterExt;
 		$alt_logo_thumb_path="../uploads/large/".$logoNameArr[1].'.'.$alterExt;
 
-		$alt_fileMngrSmallPath  =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/small/'.$logoNameArr[1].'.'.$alterExt;
-		$alt_fileMngrMediumPath =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/medium/'.$logoNameArr[1].'.'.$alterExt;
-		$alt_fileMngrLargePath  =  rtrim(base_path(),'/admin') .'/filemanager/userfiles/large/'.$logoNameArr[1].'.'.$alterExt;
+		$alt_fileMngrSmallPath  =  rtrim(base_path(),'admin') .'filemanager/userfiles/small/'.$logoNameArr[1].'.'.$alterExt;
+		$alt_fileMngrMediumPath =  rtrim(base_path(),'admin') .'filemanager/userfiles/medium/'.$logoNameArr[1].'.'.$alterExt;
+		$alt_fileMngrLargePath  =  rtrim(base_path(),'admin') .'filemanager/userfiles/large/'.$logoNameArr[1].'.'.$alterExt;
 
 
 		if(file_exists($logo_original_path))
