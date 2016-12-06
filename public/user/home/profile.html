@@ -1,0 +1,158 @@
+<section ng-controller="ProfileController">
+  <div class="mdl-grid mdl-grid--no-spacing dashboard-profilepage">
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="p-20 ml-card-holder">
+        <div class="image-repo-holder">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 ">
+                <div class="white-bg">
+                  <h2>Company Information</h2>
+                    <div class="white-bg-main">
+
+                      <div class="form-group">
+                        <input type="text" required placeholder="Company Name" name="company_name" class="form-control" ng-model="profileData.company_name">
+                        <div id="company_name_msg" class="red" ></div>
+                      </div>
+                      <div class="form-group">
+                        <span>Category : {{profileData.cat_name}}</span>
+                      </div>
+                      <div class="form-group">
+                        <select class="form-control" ng-model="profileData.subcat_id" ng-options="subcat.id as subcat.cat_name for subcat in profileData.subcat_list" ng-selected="selectedSubCat == subcat.id"/> 
+                        <div id = "subcat_id_msg" class="red" ></div>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" placeholder="Company Website" name="web_address" class="form-control um-form-field valid" ng-model="profileData.web_address">
+                        <div id = "web_address_msg" class="red" ></div>
+                      </div> 
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <input type="text" placeholder="Owner Name" name="first_name" class="form-control " ng-model="profileData.first_name">
+                              <div id = "first_name_msg" class="red" ></div>  
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">    
+                              <input type="text" placeholder="Last Name" name="last_name" class="form-control " ng-model="profileData.last_name">
+                              <div id = "last_name_msg" class="red" ></div> 
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" placeholder="Brand Details" name="brand_details" class="form-control um-form-field valid" ng-model="profileData.brand_details">
+                        <div id = "brand_details_msg" class="red" ></div>
+                      </div>
+                    </div>
+                    <h3>Company Contact Details</h3>
+                    <div class="white-bg-main">
+                      <div class="form-group">  
+                        <input type="email" placeholder="Email" name="user_email" class="form-control" ng-model="profileData.email">
+                        <div id = "user_email_msg" class="red"></div>   
+                      </div>
+                      <div class="form-group">
+                        <input type="number" class="form-control" name="mobile" placeholder="Phone Number" ng-model="profileData.mobile" value="{{profileData.mobile}}">
+                        <div id = "mobile_msg" class="red"></div>                      
+                      </div>         
+                    </div>
+                    <h3>Company Address</h3>
+                    <div class="white-bg-main">
+                      <div class="form-group">
+                        <input type="text" placeholder="Street Address" name="address" class="form-control" ng-model="profileData.address">
+                        <div id = "address_msg" class="red"></div>                         
+                      </div>
+                      <div class="form-group">        
+                        <input type="text" class="form-control " name="city" placeholder="City" ng-model="profileData.city">
+                        <div id = "city_msg" class="red" ></div>  
+                      </div>
+                      <div class="form-group">        
+                        <input type="text" class="form-control " name="state" placeholder="State" class="red" ng-model="profileData.state"> 
+                        <div id = "state_msg"></div> 
+                      </div>
+                      <div class="form-group">        
+                        <input type="text" placeholder="Zip" value="{{profileData.zipcode}}" name="zipcode" class="form-control " ng-model="profileData.zipcode">
+                        <div id = "zipcode_msg" class="red"></div> 
+                      </div>
+                    </div>
+                    <h3>Change Username Or Password</h3>
+                    <div class="white-bg-main">
+                      <div class="form-group">
+                        <div class="autoUpdate">
+                         <input type="text" class="form-control" placeholder="Username" ng-model="profileData.username">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="row">      
+                           <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                               <input type="password" value="" placeholder="Old Password" id="user_password" name="user_password" class="form-control" ng-model="changepass.password">
+                               <div id = "user_password_msg" class="red"></div>
+                              </div>
+                           </div> 
+                           <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                               <input type="password" placeholder="New Password" value="" name="user_new_password" class="form-control" ng-model="changepass.new_password">
+                               <div id = "user_new_password_msg" class="red"></div>
+                              </div>
+                           </div> 
+                           <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                               <input type="password" placeholder="Retype Password" value="" name="confirm_user_password" class="form-control" ng-model="changepass.confirm_user_password">
+                               <div id = "confirm_user_password_msg" class="red"></div>
+                              </div>
+                           </div>
+                        </div>      
+                      </div>
+                      <div class="form-group">
+                        <button type="button" class="btn btn-default btn-block complete-reg" ng-click="updateUderData()" mg-disabled="disableIt">{{saving?'Updating..':'Update Data'}}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                  <div class="white-bg">
+                    <div class="green-heading">
+                      Payment Method
+                    </div>
+                    <div class="white-bg-main">
+                      <div class="form-group">
+                        <label>Credit / Debit Card  No.</label>
+                        <input type="text" class="cards form-control" placeholder="Enter Card  No.">
+                      </div>
+                      <div class="form-group">
+                         <label>Name on Card</label>
+                         <input type="text" class="form-control" placeholder="Name on Card">
+                      </div>
+                      <div class="row">
+                         <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                               <label>Expiry Date</label>
+                               <input type="text" class="form-control" placeholder="MM / YYYY">
+                            </div>
+                         </div>
+                         <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                               <label>CVV No.</label>
+                               <input type="text" class="form-control" placeholder="CVV No">
+                            </div>
+                         </div>
+                      </div>
+                      <div class="form-group">
+                         <div class="row">
+                            <div class="col-sm-offset-4 col-xs-offset-3">
+                               <input class="" type="submit" value="Save">
+                            </div>
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,663 @@
+<style>
+/*.mdl-data-table{display: table;}*/
+.default-pop{background: #fff;  max-height: 415px; width: 608px; position: fixed; margin: 0 auto; top: 20%; left: 0; right: 0; bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+.default-pop1{background: #fff;  max-height: 500px; width: 608px; position: fixed; margin: 0 auto; top: 20%; left: 0; right: 0; bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+.black-bg{background: rgba(0,0,0,0.7); position: fixed; width: 100%; height: 100% !important; display: block; z-index: 9999; overflow-x: none;}
+.form-control {padding: 6px 3px;font-size: 13px;border-radius: 0;}
+.reg-form{overflow-y: auto; max-height: 480px; padding-bottom: 15px;}
+.registration button.complete-reg {
+    background: #1ff102;
+    border: none;
+    margin: 20px auto;
+    width: 40%;
+    padding: 10px;
+    font-size: 16px;
+    color: #474646;
+}
+.registration h3 {
+    font-size: 20px;
+    color: #474646;
+    border-bottom: 1px solid #474646;
+    padding-bottom: 10px;
+    margin: 20px 0;
+}
+.default-pop2{background: #fff;  max-height: 200px; width: 323px; position: fixed; margin: 0 auto; top: 20%; left: 0; right: 0; bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+
+.inventory-page table thead tr th{width: 13%; text-align: center;}
+.inventory-page table tbody tr td{width: 13%; text-align: center; word-break: break-all}
+.inventory-page table.mdl-data-table th{width: 15%; text-align: center;}
+.no-border{border:none !important;}
+.f-plus{color: #73BF21;}
+.f-minus{color: #73BF21;}
+.mdl-data-table tbody tr .inner-table table thead tr:hover{background: #73BF21 !important;}
+.inner-table table{width: 90%; float: right;}
+.inner-table table tr{height: 16px !important;}
+.inner-table table tr th{height: 16px !important;}
+.inner-table table tbody tr{/*border: 2px dashed #ccc;*/}
+.inner-table .pagination{margin:4px 0;}
+.mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric{text-align: center; vertical-align: middle;}
+.no-border{border:none !important;}
+.f-plus{color: #73BF21;}
+.f-minus{color: #73BF21;}
+.mdl-data-table tbody tr .inner-table table thead tr:hover{background: #73BF21 !important;}
+.inner-table table{width: 90%; float: right;}
+.inner-table table tr{height: 16px !important;}
+.inner-table table tr th{height: 16px !important;}
+.inner-table table tbody tr{/*border: 2px dashed #ccc;*/}
+.inner-table .pagination{margin:4px 0;}
+.mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric{text-align: center; vertical-align: middle;}
+
+</style>
+
+<section ng-controller="PartnerListController">
+  <div class="black-bg" ng-if="addPartner">
+    <div class="default-pop1">
+      <span class="cross-default-pop" ng-click="hideMe()">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+      <div class="reg-form registration">
+        <div class="col-md-12 col-sm-12 reg-left">
+            <h3>Add New Partner Information</h3>
+            <div class="form-group">
+              <input type="text" required placeholder="Company Name" id="company_name" name="company_name" class="form-control" ng-model="newPartnerDetails.company_name">
+              <div id="company_name_msg" class="red" ></div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <select class="form-control" ng-model="newPartnerDetails.cat_id" ng-options="cat.id as cat.cat_name for cat in cat_list" ng-change="get_subcat()" ng-selected="cat.id" id="selected_cat"/>
+                  <div id = "category_id_msg" class="red" ></div>                   
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <select class="form-control" ng-model="newPartnerDetails.subcat_id" ng-options="subcat.id as subcat.cat_name for subcat in subcat_details" ng-selected="subcat.id"/>
+                  <div id = "subcat_id_msg" class="red" ></div>                               
+                </div>
+              </div>
+            </div>
+            <div class="form-group">       
+              <input type="text" placeholder="Company Website" name="web_address" class="form-control um-form-field valid" ng-model="newPartnerDetails.web_address">
+              <div id = "web_address_msg" class="red" ></div>                               
+            </div>
+            <div class="form-group">
+              <div class="row">
+              <div class="col-md-6 col-sm-6">
+              <div class="form-group">
+              <input type="text" placeholder="Owner Name" name="first_name" class="form-control" ng-model="newPartnerDetails.first_name">
+              <div id = "first_name_msg" class="red" ></div>  
+              </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+              <div class="form-group">  
+              <input type="text" placeholder="Last Name" name="last_name" class="form-control" ng-model="newPartnerDetails.last_name">
+              <div id = "last_name_msg" class="red" ></div> 
+              </div>
+              </div>
+              </div>
+            </div>
+            <h3>Add Partner Contact Details</h3>
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">  
+                  <input type="email" placeholder="Email" name="user_email" class="form-control" ng-model="newPartnerDetails.email">
+                  <div id = "user_email_msg" class="red"></div>   
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <input type="number" class="form-control" name="mobile" placeholder="Phone Number" ng-model="newPartnerDetails.mobile">
+                  <div id = "mobile_msg" class="red"></div>                               
+                </div>
+              </div>
+            </div>
+            <h3>Add Partner Address</h3>
+            <div class="form-group">
+              <input type="text" placeholder="Street Address" name="address" class="form-control" ng-model="newPartnerDetails.address">
+              <div id = "address_msg" class="red"></div>                               
+            </div> 
+            <div class="form-group">
+              <div class="row">
+              <div class="col-md-4 col-sm-4">
+              <div class="form-group">  
+              <input type="text" class="form-control" name="city" placeholder="City" ng-model="newPartnerDetails.city">
+              <div id = "city_msg" class="red" ></div>  
+              </div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+              <div class="form-group">  
+              <input type="text" class="form-control" name="state" placeholder="State" class="red" ng-model="newPartnerDetails.state"> 
+              <div id = "state_msg"></div> 
+              </div>    
+              </div>
+              <div class="col-md-4 col-sm-4">
+              <div class="form-group">  
+              <input type="text" placeholder="Zip" name="zipcode" class="form-control" ng-model="newPartnerDetails.zipcode">
+              <div id = "zipcode_msg" class="red"></div> 
+              </div> 
+              </div>
+              </div>                                                 
+            </div>
+            <h3>Upload Logo</h3>
+            <div class="form-group">
+              <input type = "file" ng-model="new_partner_logo_name" file-model = "myFile" id="new_partner_logo_name" onchange="angular.element(this).scope().addLogoChanged()" />                               
+            </div>
+        </div> 
+        <div class="">
+          <div class=""> 
+            <button type="button" class="btn btn-default btn-block complete-reg" ng-click="saveRedeemar()" ng-disabled="addingData">{{addingData?'Saving..':'Add Partner Data'}}</button>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" ng-if="sm1">
+            <div class="alert alert-success" ng-if="workingfine1">
+                {{msg}}
+            </div>
+            <div class="alert alert-danger" ng-if="!workingfine1">
+                {{msg}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="black-bg" ng-if="editPartner">
+    <div class="default-pop1">
+      <span class="cross-default-pop" ng-click="hideMe()">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+      <div class="reg-form registration">
+        <div class="col-md-12 col-sm-12 reg-left">
+            <h3>Edit Partner Information</h3>
+            <div class="form-group">
+              <input type="text" required placeholder="Company Name" id="company_name" name="company_name" class="form-control" ng-model="partnerDetails.company_name">
+              <div id="edit_company_name_msg" class="red" ></div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <select class="form-control" ng-model="partnerDetails.cat_id" ng-options="cat.id as cat.cat_name for cat in cat_list" ng-change="get_subcat()" ng-selected="selectedCategory == partnerDetails.cat_id"/>
+                  <div id = "edit_category_id_msg" class="red" ></div>                   
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <!-- <select class="form-control" name="subcat_id" id="subcat_id">
+                        <option value="">Select category first</option>
+                  </select> -->
+                  <select class="form-control" ng-model="partnerDetails.subcat_id" ng-options="subcat.id as subcat.cat_name for subcat in subcat_details" ng-selected="selectedSubCategory == partnerDetails.subcat_id"/>
+                  <div id = "edit_subcat_id_msg" class="red" ></div>                               
+                </div>
+              </div>
+            </div>
+            <div class="form-group">       
+              <input type="text" placeholder="Company Website" name="web_address" class="form-control um-form-field valid" ng-model="partnerDetails.web_address">
+              <div id = "edit_web_address_msg" class="red" ></div>                               
+            </div>
+            <div class="form-group">
+              <div class="row">
+              <div class="col-md-6 col-sm-6">
+              <div class="form-group">
+              <input type="text" placeholder="Owner Name" name="first_name" class="form-control" ng-model="partnerDetails.first_name">
+              <div id = "edit_first_name_msg" class="red" ></div>  
+              </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+              <div class="form-group">  
+              <input type="text" placeholder="Last Name" name="last_name" class="form-control" ng-model="partnerDetails.last_name">
+              <div id = "edit_last_name_msg" class="red" ></div> 
+              </div>
+              </div>
+              </div>
+            </div>
+            <h3>Edit Partner Contact Details</h3>
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">  
+                  <input type="email" placeholder="Email" name="user_email" class="form-control" ng-model="partnerDetails.email">
+                  <div id = "edit_user_email_msg" class="red"></div>   
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <input type="number" class="form-control" name="mobile" placeholder="Phone Number" value="{{partnerDetails.mobile}}" ng-model="partnerDetails.mobile">
+                  <div id = "edit_mobile_msg" class="red"></div>                               
+                </div>
+              </div>
+            </div>
+            <h3>Edit Partner Address</h3>
+            <div class="form-group">
+              <input type="text" placeholder="Street Address" name="address" class="form-control" ng-model="partnerDetails.address">
+              <div id = "edit_address_msg" class="red"></div>                               
+            </div> 
+            <div class="form-group">
+              <div class="row">
+              <div class="col-md-4 col-sm-4">
+              <div class="form-group">  
+              <input type="text" class="form-control" name="city" placeholder="City" ng-model="partnerDetails.city">
+              <div id = "edit_city_msg" class="red" ></div>  
+              </div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+              <div class="form-group">  
+              <input type="text" class="form-control" name="state" placeholder="State" class="red" ng-model="partnerDetails.state"> 
+              <div id = "edit_state_msg"></div> 
+              </div>    
+              </div>
+              <div class="col-md-4 col-sm-4">
+              <div class="form-group">  
+              <input type="text" placeholder="Zip" name="zipcode" class="form-control" ng-model="partnerDetails.zipcode">
+              <div id = "edit_zipcode_msg" class="red"></div> 
+              </div> 
+              </div>
+              </div>                                                 
+            </div>
+        </div> 
+        <div class="">
+          <div class=""> 
+            <button type="button" class="btn btn-default btn-block complete-reg" ng-click="updatePartnerDetails()" ng-disabled="updatingData">{{updatingData?'Updating..':'Update Partner Data'}}</button>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" ng-if="sm1">
+            <div class="alert alert-success" ng-if="workingfine1">
+                {{msg}}
+            </div>
+            <div class="alert alert-danger" ng-if="!workingfine1">
+                {{msg}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="black-bg" ng-if="editLogo">
+    <div class="default-pop1">
+      <span class="cross-default-pop" ng-click="hideMe()">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+      <div class="reg-form registration">
+        <div class="col-md-12 col-sm-12 reg-left">
+            <h3>Edit Unregistered Partner Information</h3>
+            <div class="form-group">
+              <input type="text" required placeholder="Company Name" id="company_name" name="company_name" class="form-control" ng-model="logoData.company_name">
+              <div id="company_name_msg" class="red" ></div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <select class="form-control" ng-model="logoData.cat_id" ng-options="cat.id as cat.cat_name for cat in cat_list" ng-change="get_subcat()" ng-selected="selectedLogoCategory == logoData.cat_id" id="selected_logo_cat"/>
+                  <div id = "category_id_msg" class="red" ></div>                   
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <!-- <select class="form-control" name="subcat_id" id="subcat_id">
+                        <option value="">Select category first</option>
+                  </select> -->
+                  <select class="form-control" ng-model="logoData.subcat_id" ng-options="subcat.id as subcat.cat_name for subcat in subcat_details" ng-selected="selectedLogoSubCategory == logoData.subcat_id"/>
+                  <div id = "subcat_id_msg" class="red" ></div>                               
+                </div>
+              </div>
+            </div>
+            <div class="form-group">       
+              <input type="text" placeholder="Company Website" name="web_address" class="form-control um-form-field valid" ng-model="logoData.web_address">
+              <div id = "web_address_msg" class="red" ></div>                               
+            </div>
+            <div class="form-group">
+              <div class="row">
+              <div class="col-md-6 col-sm-6">
+              <div class="form-group">
+              <input type="text" placeholder="Owner Name" name="first_name" class="form-control" ng-model="logoData.first_name">
+              <div id = "first_name_msg" class="red" ></div>  
+              </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+              <div class="form-group">  
+              <input type="text" placeholder="Last Name" name="last_name" class="form-control" ng-model="logoData.last_name">
+              <div id = "last_name_msg" class="red" ></div> 
+              </div>
+              </div>
+              </div>
+            </div>
+            <h3>Edit Unregistered Partner Contact Details</h3>
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">  
+                  <input type="email" placeholder="Email" name="user_email" class="form-control" ng-model="logoData.contact_email">
+                  <div id = "user_email_msg" class="red"></div>   
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <input type="number" class="form-control" name="mobile" placeholder="Phone Number" value="{{logoData.mobile}}" ng-model="logoData.mobile">
+                  <div id = "mobile_msg" class="red"></div>                               
+                </div>
+              </div>
+            </div>
+            <h3>Edit Unregistered Partner Address</h3>
+            <div class="form-group">
+              <input type="text" placeholder="Street Address" name="address" class="form-control" ng-model="logoData.address">
+              <div id = "address_msg" class="red"></div>                               
+            </div> 
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4 col-sm-4">
+                  <div class="form-group">  
+                    <input type="text" class="form-control" name="city" placeholder="City" ng-model="logoData.city">
+                    <div id = "city_msg" class="red" ></div>  
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <div class="form-group">  
+                    <input type="text" class="form-control" name="state" placeholder="State" class="red" ng-model="logoData.state"> 
+                    <div id = "state_msg"></div> 
+                  </div>    
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <div class="form-group">  
+                    <input type="text" placeholder="Zip" name="zipcode" class="form-control" ng-model="logoData.zipcode">
+                    <div id = "zipcode_msg" class="red"></div> 
+                  </div> 
+                </div>
+              </div>                                                 
+            </div>
+            <h3>Partner Logo</h3>
+            <div class="form-group" ng-if="noNewLogo">
+              <img ng-src="{{file_path}}../uploads/medium/{{logoData.logo_name}}" alt="img">
+              <input class="btn green-btn" type="button" value="Change Logo" ng-click="uploadNewLogo()"/>
+            </div>
+
+
+            <div class="form-group" ng-if="!noNewLogo">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <input class="" type = "file" ng-model="edit_new_partner_logo" file-model = "myFile" id="edit_new_partner_logo" onchange="angular.element(this).scope().updateLogoChanged()" />
+              </div>
+              <div class="col-md-4 col-sm-4">
+              <div class="form-group">  
+              <input type="text" placeholder="Zip" name="zipcode" class="form-control" ng-model="partnerDetails.zipcode">
+              <div id = "zipcode_msg" class="red"></div> 
+              </div>
+              </div>
+              </div>                                                 
+            </div>
+        </div> 
+        <div class="">
+          <div class=""> 
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" ng-if="sm1">
+            <div class="alert alert-success" ng-if="workingfine1">
+                {{msg}}
+            </div>
+            <br>
+            <div class="row">  
+              <div class="col-md-12 col-sm-12">
+                <input type="button" class="btn green-btn" value="Cancel" ng-click="cancelUploadNewLogo()"/>
+              </div> 
+            </div>         
+            </div>
+        </div> 
+        <div class="">
+          <div class=""> 
+            <button type="button" class="btn btn-default btn-block complete-reg" ng-click="updatePartnerLogoDetails()" ng-disabled="updatingData">{{updatingData?'Updating..':'Update Partner Data'}}</button>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" ng-if="sm1">
+            <div class="alert alert-success" ng-if="workingfine1">
+                {{msg}}
+            </div>
+            <div class="alert alert-danger" ng-if="!workingfine1">
+                {{msg}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="black-bg" ng-if="uploadMe">
+    <div class="default-pop2">
+      <div class="p-l-20 p-r-20 p-b-20" ng-if="sm">
+        <div class="alert alert-success" ng-if="workingfine">
+            {{msg}}
+        </div>
+        <div class="alert alert-danger" ng-if="!workingfine">
+            {{msg}}
+        </div>
+      </div>
+      <span class="cross-default-pop" ng-click="hideMe()">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+      <div class="reg-form registration">
+        <div class="mdl-textfield">
+          <p>Upload Logo</p>
+          <input type = "file" ng-model="new_logo_name" file-model = "myFile" id="new_logo_name" onchange="angular.element(this).scope().imageChanged()" />
+        </div>
+
+        <div class=""> <!-- m-t-20 -->
+          <button type="button" class="btn green-btn" ng-click="uploadFile()" ng-disabled="savingLogo">
+            {{savingLogo?'Saving...':'Save'}}
+          </button>  
+          <!-- mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect  -->            
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing inventory-page">
+
+    <div class="mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <!-- mdl-cell -->
+      <div class="p-20 ml-card-holder "><!--  ml-card-holder-first -->
+        <div class="p-l-20 p-r-20 p-b-20" ng-if="sm">
+          <div class="alert alert-success" ng-if="workingfine">
+              {{msg}}
+          </div>
+          <div class="alert alert-danger" ng-if="!workingfine">
+              {{msg}}
+          </div>
+        </div>
+        <div class="page-heading">
+          <div class="row page-row">
+          <div class="col-md-3 col-sm-3">  
+          <h3>Partner List</h3>
+          </div>
+          <div class="col-md-4 col-sm-4">
+          <input class="form-control" placeholder="Search.." type="text" name="searchPartner" ng-model="searchPartner"/>
+          </div>
+          </div>
+        </div>
+        <div class="mdl-card mdl-shadow--1dp m-b-30 partner-table">
+          <div class="table-responsive">
+          <table class="table"><!-- mdl-data-table ml-table-bordered mdl-js-data-table -->
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Comapny Name</th>
+                <th class="mdl-data-table__cell--non-numeric">Logo</th>
+                <th class="mdl-data-table__cell--non-numeric">Rating</th>
+                <th class="mdl-data-table__cell--non-numeric">Email</th>
+                <th class="mdl-data-table__cell--non-numeric">Username</th>
+                <th class="mdl-data-table__cell--non-numeric">Approve</th>
+                <th class="mdl-data-table__cell--non-numeric">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="no-border" dir-paginate="partner in reedemar_details| filter: searchPartner |  orderBy:'id':true | itemsPerPage:5" pagination-id="firstPegi" ng-if="reedemar_details.length > 0">
+                <td colspan="7" class="no-padding">
+                  <table class="table">
+                    <tr class="no-border">
+                      <td ng-click="showAllLogo(partner.id)" style="cursor: pointer;">  {{partner.company_name}}
+                        <i class="fa fa-plus f-plus" aria-hidden="true" ng-if="partner.logo_details.length && partnerItemIndex != partner.id"></i>
+                        <i class="fa fa-minus f-minus" aria-hidden="true" ng-if="partner.logo_details.length && partnerItemIndex == partner.id"></i>
+                      </td>
+                      <td ng-click="showAllLogo(partner.id)" style="cursor: pointer;">
+                        <img ng-if="partner.default_logo_image" ng-src="{{file_path}}../uploads/medium/{{partner.default_logo_image}}" alt="img">
+                        <img ng-if="!partner.default_logo_image" src="{{file_path}}../public/images/no-image.png" alt="No Image"  />
+                      </td>
+                      <td ng-if="partner.rating > 0"> 
+                         <span class="rating-static rating-{{partner.rating*10}}"></span>
+                      </td>
+                      <td ng-if="!partner.rating || partner.rating<1">
+                        <img src="{{file_path}}images/spinner.gif">
+                      </td>
+                      <td>{{partner.email}}</td>
+                      <td>{{partner.username}}</td>
+                      <td>
+                        <img style="cursor:pointer" ng-if="partner.approve == '1'" ng-src="{{file_path}}images/active.png" width="20" data-ng-click="update_status(partner.id,partner.approve);" />
+
+                         <img style="cursor:pointer" ng-if="partner.approve != '1'" ng-src="{{file_path}}images/block.png" width="20" data-ng-click="update_status(partner.id,partner.approve);" />
+                      </td>
+                      <td>
+                        <img ng-show="showDeleteLoader == partner.id" src="{{file_path}}images/spinner.gif">
+                        <img ng-src="{{file_path}}images/delete.png" title="Delete Redeemar Partner Details" width="15" style="cursor:pointer" ng-click="deletePartnerDetails(partner.id)" ng-show="showDeleteLoader != partner.id">
+                        <!-- <img ng-src="{{file_path}}images/edit.png" title="Edit Redeemar Partner Details" width="15" style="cursor:pointer" ng-click="editPartnerDetails(partner.id)"> -->
+                        <img title="Add Logo for this redeemar Partner" ng-src="{{file_path}}images/add_new.png" width="15" style="cursor:pointer" ng-click="addNewLogo(partner.id)"/>
+                      </td>
+                    </tr>
+
+                    <tr ng-if="partnerItemIndex == partner.id">
+                      <td colspan="7">
+                      <div class="inner-table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Logo</th>
+                              <th>Default</th>
+                              <th>Trigger</th>
+                              <th>Rating</th>
+                              <th>Action</th>
+                            </tr>  
+                          </thead>
+                          <tbody>
+                            <tr dir-paginate="logo in logo_details|itemsPerPage:5" pagination-id="secondPegi" ng-if="logo_details.length > 0">
+                              <td><img ng-src="{{file_path}}../uploads/medium/{{logo.logo_name}}" alt="img"></td>
+                              <td><img ng-src="{{file_path}}images/default1.png" alt="img" ng-if="logo.default_logo == '1'"> <span ng-if="logo.default_logo != '1'">---</span></td>
+                              <td>{{logo.trigger}}</td>
+                              <td><span class="rating-static rating-{{logo.tracking_rating*10}}"></span></td>
+                              <td title="Delete this logo">
+
+                                <img width="16" ng-src="{{file_path}}images/delete.png" style="cursor:pointer" ng-click="deletePartnerLogo(logo.reedemer_id, logo.id)" ng-if="logo.default_logo != '1' && showLoader != logo.id">
+                                <img class="col-md-offset-6 col-sm-offset-6 ng-scope" ng-if="showLoader == logo.id" src="{{file_path}}images/spinner.gif" style="">
+                              </td>
+                            </tr>
+                            <tr ng-if="logo_details.length > 5">
+                              <td colspan="5" class="text-center">
+                                <dir-pagination-controls
+                                  max-size="5"
+                                  direction-links="true"
+                                  boundary-links="true" pagination-id="secondPegi">
+                                </dir-pagination-controls>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tbody ng-if="logo_details.length == 0">
+                            <tr>
+                              <td colspan="12">
+                                <span>No data availabale.</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                       </div> 
+                      </td>  
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr ng-if="reedemar_details.length > 5">
+                <td colspan="5" class="text-center">
+                  <dir-pagination-controls
+                    max-size="5"
+                    direction-links="true"
+                    boundary-links="true"  pagination-id="firstPegi">
+                  </dir-pagination-controls>
+                </td>
+              </tr>
+            </tbody>
+
+            <tbody ng-if="reedemar_details.length == 0">
+              <tr>
+                <td colspan="12">
+                  No data availabale.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+      <div class="p-20 ml-card-holder "><!--  ml-card-holder-first -->
+        <div class="page-heading">
+          <div class="row page-row">
+          <div class="col-md-5 col-sm-5">   
+          <h3>Unregistered Partner List</h3>
+          </div>
+          <div class="col-md-5 col-sm-5"> 
+          <input class="form-control" placeholder="Search.." type="text" name="searchLogo" ng-model="searchLogo"/>
+          </div>
+          </div>
+        </div>
+        <div class="mdl-card mdl-shadow--1dp m-b-30 partner-table">
+          <div class="table-responsive">
+          <table class="mdl-data-table ml-table-bordered mdl-js-data-table ">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Comapny Name</th>
+                <th class="mdl-data-table__cell--non-numeric">Logo</th>
+                <th class="mdl-data-table__cell--non-numeric">Rating</th>
+                <th class="mdl-data-table__cell--non-numeric">Email</th>
+                <th class="mdl-data-table__cell--non-numeric">Approve</th>
+                <th class="mdl-data-table__cell--non-numeric">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="no-border" dir-paginate="logos in reedemar_logo_details| filter: searchLogo | orderBy:'id':true | itemsPerPage:5" pagination-id="thirdPegi" ng-if="reedemar_logo_details.length > 0">
+                <td>{{logos.company_name}}
+                </td>
+                <td>
+                  <img ng-if="logos.logo_name" ng-src="{{file_path}}../uploads/medium/{{logos.logo_name}}" alt="Image not found">
+                  <img ng-if="!logos.logo_name" src="{{file_path}}../public/images/no-image.png" alt="No Image"  />
+                </td>
+                <td ng-if="logos.tracking_rating >0"> 
+                   <span class="rating-static rating-{{logos.tracking_rating*10}}"></span>
+                </td>
+                <td ng-if="!logos.tracking_rating || logos.tracking_rating<1">
+                  <img src="{{file_path}}images/spinner.gif">
+                </td>
+                <td>{{logos.contact_email}}</td>
+                <td>
+                  <img style="cursor:pointer" ng-if="logos.status == '1'" ng-src="{{file_path}}images/active.png" width="20" data-ng-click="change_status(logos.id,logos.status);" />
+
+                   <img style="cursor:pointer" ng-if="logos.status != '1'" ng-src="{{file_path}}images/block.png" width="20" data-ng-click="change_status(logos.id,logos.status);" />
+                </td>
+                <td>
+                  <img ng-show="showLogosDeleteLoader == logos.id" src="{{file_path}}images/spinner.gif">
+                  <img ng-src="{{file_path}}images/delete.png" title="Delete Unregistered Redeemar Partner Details" width="16" style="cursor:pointer" ng-click="deletePartnerLogo(null, logos.id)" ng-show="showLogosDeleteLoader != logos.id">
+                  <img ng-src="{{file_path}}images/edit.png" title="Edit Unregistered Redeemar Partner Details" width="20" style="cursor:pointer" ng-click="editLogosDetails(logos)">
+                </td>
+              </tr>
+              <tr ng-if="reedemar_logo_details.length > 5">
+                <td colspan="5" class="text-center">
+                  <dir-pagination-controls
+                    max-size="5"
+                    direction-links="true"
+                    boundary-links="true" pagination-id="thirdPegi">
+                  </dir-pagination-controls>
+                </td>
+              </tr>
+            </tbody>
+            <tbody ng-if="reedemar_logo_details.length == 0">
+              <tr>
+                <td colspan="12">
+                  <span>No data availabale.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+      <div class="tags">
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn" ng-click="addRedeemar()">Add</a>
+      </div> 
+    </div>
+  </div>
+
+</section>

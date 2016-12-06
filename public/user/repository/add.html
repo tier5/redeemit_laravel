@@ -1,0 +1,572 @@
+
+<style>
+  .cropArea {
+    background: #E4E4E4;
+    margin: auto;
+    overflow: hidden;
+  }
+  .cropArea.big {
+    width:800px;
+    height:600px;
+  }
+  .cropArea.medium {
+    width:500px;
+    height:350px;
+  }
+  .cropArea.small {
+    width:300px;
+    height:200px;
+  }
+  
+  .pic-block{width: 100%;}
+
+
+  .tab-product{height: auto;}
+  .pic-block{position: relative;}
+  .image-flote{position: absolute; width: 57px; 
+    height: auto; top: 4px; left: 5px; z-index: 99999;
+  }
+  .image-flote img{width: 100%;}
+  .draggable {
+    position: relative; 
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    *display: inline;   
+
+    cursor: hand; 
+    cursor: pointer;
+  }
+
+  .resizable
+  {
+      width: 100px;   
+      border: 1px solid #bb0000;   
+  }
+  .resizable img
+  {
+      width: 100%;   
+  }
+
+  .ui-resizable-handle 
+  {
+      background: #f5dc58;
+      border: 1px solid #FFF;
+      width: 9px;
+      height: 9px;
+      
+      z-index: 2;
+  }
+  .ui-resizable-se
+  {
+      right: -5px;
+      bottom: -5px;
+  }
+
+  .ui-rotatable-handle 
+  {
+      background: #f5dc58;
+      border: 1px solid #FFF;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -o-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      cursor: pointer;
+      
+      height:        10px;
+      left:          50%;
+      margin:        0 0 0 -5px;
+      position:      absolute;
+      top:           -5px;
+      width:         10px;
+  }
+  .ui-rotatable-handle.ui-draggable-dragging
+  {
+      visibility:  hidden;
+  }
+  .white_border
+  {
+      border: none;
+  }
+
+/* Modified bt Tania */
+  .inner_con
+  {
+    top: 5px;
+    border: 3px dashed #666;
+    width: 96% !important;
+    height: 96% !important;
+    background: #ebebeb !important;
+  }
+
+/**/  
+  .small-layers{  border: 1px solid #999; padding:4px;}
+
+  .smal-layers-main{height: 123px; overflow-y:auto;}
+
+  .small-layers .layer_div{background: #EBEBEB; /*border: 1px solid #999;*/ padding:3px 7px; margin-bottom: 5px; color: #707070; font-size: 14px;}
+
+  .repo-tab .nav-tabs{
+    border: none;
+  }
+
+  .all-btn{
+    display: inline-block;
+    width: 100%;
+  }
+
+  .all-btn button{background: #666;
+      color: #fff;
+      border: none;
+      font-size: 13px;
+      border-radius: 2px;
+      padding: 2px 7px;}
+
+  .layer-curve{padding-top: 30px;}
+  .pic-pre{padding-top: 50px;}
+  .mdl-color--grey-100{background: #fff !important;}
+  .layer-edit-panel{background: #707070; color: #fff; padding: 4px;
+  text-align: right;}
+  .layer-edit-panel a{color: #fff}
+  .layer-edit-panel a:hover{text-decoration: none; color: #fff;}
+  .layer-edit-panel span{padding: 0 5px;}
+
+  .ui-slider-horizontal .ui-slider-handle{background: #73BF21 !important;}
+  .ui-widget-header{background: #707070 !important;}
+
+    
+
+  .overlay {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0, 0.7);
+      overflow-x: hidden;
+      transition: 0.5s;
+  }
+
+  .overlay-content {
+      position: relative;
+      top: 25%;
+      width: 100%;
+      text-align: center;
+      margin-top: 30px;
+  }
+
+  .overlay a {
+      /*padding: 8px;*/
+      text-decoration: none;
+      font-size: 20px !important;
+      color: #fff;
+      display: block;
+      transition: 0.3s;
+  }
+
+  .overlay a:hover, .overlay a:focus {
+      color: #f1f1f1;
+  }
+
+  .closebtn {
+      position: absolute;
+      top: -3px;
+      right: 5px;
+     /* font-size: 60px !important;*/
+  }
+
+  #container1 {
+    height: 164px;
+    width: 231px;
+    position: relative;
+  }
+
+  #container3 {
+    height: 231px;
+    width: 331px;
+    position: relative;
+  }
+
+  #container2 {
+    height: 457px;
+    width: 957px;
+    position: relative;
+  }
+
+  #container4 {
+    height: 258px;
+    width: 360px;
+    position: relative;
+  }
+
+  #container5 {
+    height: 208px;
+    width: 208px;
+    position: relative;
+  }
+
+  @media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .closebtn {
+      font-size: 40px !important;
+      top: 15px;
+      right: 35px;
+    }
+  }
+</style>
+
+
+<section class="text-fields add-image-page" ng-controller="RepoAddImageController" >
+  <div class="mdl-grid mdl-grid--no-spacing img-repo2">
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-20 ml-card-holder"> <!-- ml-card-holder-first -->
+        
+        <div class="mdl-card"> <!-- mdl-shadow--1dp -->
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                
+            </div>
+             <div id="error_div" class="alert alert-danger">
+                
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 nopadding">
+                <div class="page-heading relative imgrepo-heading">  
+                  <h3>{{SelectedFolderName}}</h3>
+                  <span onclick="openNav()" class="repo-preview-btn" id="show">
+                    <a href="">Preview</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-9 col-sm-9 nopadding">
+                <div class="row repo-top">
+                  <div class="col-md-4 col-sm-4">
+                  
+                    <input ng-model="image_name" class="mdl-textfield__input" type="text" id="image_name" placeholder="Image Name" required ng-if="selectedDirId != '1'"/>
+                  </div>
+                  <div class="col-md-4 col-sm-4">
+                    <select id="dir_id" ng-model="selectedFolder" ng-change="changeSelectedDirectory()">
+                      <option value="{{cname.id}}" ng-repeat="cname in cnames" data-ng-if="cname.directory==1" >{{cname.file_name}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4 col-sm-4">
+                    <a ng-click="uploadFirstImage()" id="uploadFirstImage">
+                      <span class="green-btn" ng-if="!layersDetailedList.length">Add Layers
+                      </span>
+                    </a>  
+                    <div style="margin-bottom:20px;"></div>
+                      <input type="file" id="add_layer" name="CropOriginalImage" accept="image/*" style="display:none;"/>
+                      </div>
+                    </div>
+                    <div id="myNav" class="overlay" ng-if="selectedDirId != '1'"> 
+                      <div  class="col-md-2 col-sm-2 edit-name1 pull-right">
+                        <span class="repo-preview-btn1">Preview
+                          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                        </span>
+
+                        <div class="row pre-repo">
+                          <div class="col-md-12 col-sm-12">
+                            <h2>Small Image</h2>
+                            <img src="{{file_path}}images/no-image-black.png" id="small_image" style="width:200px;">
+                          </div>
+                        </div>
+                        <div class="row pre-repo">
+                          <div class="col-md-12 col-sm-12">
+                            <h2>Medium Image</h2>
+                            <img src="{{file_path}}images/no-image-black.png" id="medium_image" style="width:200px;">
+                          </div>
+                        </div>
+                        <div class="row pre-repo">
+                          <div class="col-md-12 col-sm-12">
+                            <h2>Large Image</h2>
+                            <img src="{{file_path}}images/no-image-black.png" id="large_image" style="width:200px;">
+                          </div>
+                        </div>
+                      </div>  
+                    </div>
+                    <div id="myNav" class="overlay" ng-if="selectedDirId == '1'"> 
+                      <div  class="col-md-2 col-sm-2 edit-name1 pull-right">
+                        <span class="repo-preview-btn1">Preview
+                          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                        </span>
+
+                        <div class="row pre-repo">
+                          <div class="col-md-12 col-sm-12">
+                            <h2>Store Front Image</h2>
+                            <img src="{{file_path}}images/no-image-black.png" id="front_image" style="width:350px;">
+                          </div>
+                        </div>
+                        <div class="row pre-repo">
+                          <div class="col-md-12 col-sm-12">
+                            <h2>Brand Image</h2>
+                            <img src="{{file_path}}images/no-image-black.png" id="brand_image" style="width:200px;">
+                          </div>
+                        </div>
+                      </div>  
+                    </div>
+                  </div> 
+                  <div class="row repo-tab" ng-if="selectedDirId != '1'">
+                    <div class="col-md-12 col-sm-12">
+                      <ul class="nav nav-tabs">
+                        <li class="active" ng-click="imageTypeChanged('small_image')" id="small_image1"><a data-toggle="tab">Home Page Top Pic Image  </a></li>
+                        <li ng-click="imageTypeChanged('medium_image')" id="medium_image1"><a data-toggle="tab">Home Page Offer Category Image  </a></li>
+                        <li ng-click="imageTypeChanged('large_image')" id="large_image1"><a data-toggle="tab">Deals Details Page Image </a></li>
+                        
+                      </ul>
+                      <div class="tab-content">
+                        <div class="row">
+                          <div class="col-md-12 col-sm-12">
+                              <div class="scroll-div">
+
+                                <div class="col-md-10 col-sm-10 nopadding">
+                                  <div id="container1" ng-if="smallImageCropDiv">
+                                    <div class="inner_con">
+                                      <div class="draggable" id="draggable{{layer.layerId}}" style="position:absolute;top:0px;left:0px;" ng-click="getSelectedLayer(layer.layerId)" ng-repeat="layer in layersDetailedList track by $index">
+                                        <div class="rotatable" id="rotatable{{layer.layerId}}">
+                                          <div class="resizable" id="resizable{{layer.layerId}}">
+                                            <img src="{{layer.image_data}}" alt="" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-10 col-sm-10 nopadding">
+                                  <div id="container3" ng-if="mideumImageCropDiv">
+                                    <div class="inner_con">
+                                      <div class="draggable" id="draggable{{layer.layerId}}" style="position:absolute;top:0px;left:0px;" ng-click="getSelectedLayer(layer.layerId)" ng-repeat="layer in layersDetailedList track by $index">
+                                        <div class="rotatable" id="rotatable{{layer.layerId}}">
+                                          <div class="resizable" id="resizable{{layer.layerId}}">
+                                            <img src="{{layer.image_data}}" alt="" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>  
+
+                                <div class="col-md-12 col-sm-12 nopadding">
+                                  <div id="container2" ng-if="largeImageCropDiv">
+                                    <div class="inner_con">
+                                      <div class="draggable" id="draggable{{layer.layerId}}" style="position:absolute;top:0px;left:0px;" ng-click="getSelectedLayer(layer.layerId)" ng-repeat="layer in layersDetailedList track by $index">
+                                        <div class="rotatable" id="rotatable{{layer.layerId}}">
+                                          <div class="resizable" id="resizable{{layer.layerId}}">
+                                            <img src="{{layer.image_data}}" alt="" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+
+                            <div class="all-btn" style='padding-top: 10px;'>
+                              <button ng-click="save_image()">Set image</button>
+                              <button id="lock_outer_section" >lock outer Section</button>
+                              <button id="unlock_outer_section" >unlock outer Section</button>
+                              <!-- <button id="add_layer_btn" ng-click="uploadFirstImage()" ng-if="showAddLayerButton">Add a layer</button> -->
+                              <button id="delete_layer" ng-click="deleteLayer(SelectedLayerId)" ng-if="showDeleteLayerButton" >Delete a layer</button>
+                              <br><br>
+
+                              <div class="row two-btns">
+                                <div class="col-md-6 col-sm-6">
+                                  <!-- <span class="rotate-btn" id="rotate">
+                                    <i class="fa fa-repeat" aria-hidden="true"></i>
+                                    Rotate 
+                                  </span> -->
+
+                                  <span class="layers-btn" ng-click="showAllLayers()">
+                                    <i class="fa fa-object-ungroup" aria-hidden="true"></i> 
+                                    Layers
+                                  </span>
+                                </div>
+                              </div>
+                              <!-- <div id="slider_data"></div> -->
+                              <hr>
+                              <div class="col-md-4 col-sm-4 all-layer nopadding" ng-if="showLayers">
+                                <div class="">
+                                  <div class="">
+                                    <h4>Layer Stack</h4>
+                                    <div class="small-layers">
+                                      <div class="smal-layers-main">
+                                        <!-- <div id="layers" curr_layer=""></div> -->
+                                        <div class="layer_div" layer_name="{{layer.layer_name" ng-repeat="layer in layersDetailedList track by $index" curr_layer="draggable{{layer.layerId}}" ng-click="getSelectedLayer(layer)"> 
+                                          Layer {{$index+1}}
+                                        </div>
+                                      </div>
+                                      <!-- Modified by Tania -->
+                                      <div class="layer-edit-panel">
+                                        <span>
+                                          <a ng-click="uploadFirstImage()" title="Add Layer">  
+                                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                          </a>
+                                        </span>
+                                        <span>
+                                          <a href="" ng-click="deleteLayer(SelectedLayerId)" title="Delete Layer">  
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                          </a> 
+                                        </span>
+                                      </div> 
+                                      <!--=======-->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                          </div>  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row repo-tab" ng-if="selectedDirId == '1'">
+                    <div class="col-md-12 col-sm-12">
+                      <ul class="nav nav-tabs">
+                        <li class="active" ng-click="imageTypeChanged('front_image')" id="front_image1"><a data-toggle="tab">Store Front Page Image  </a></li>
+                        <li ng-click="imageTypeChanged('brand_image')" id="brand_image1"><a data-toggle="tab">Brand Image  </a></li>
+                        
+                      </ul>
+                      <div class="tab-content">
+                        <div class="row">
+                          <div class="col-md-12 col-sm-12">
+                              <div class="scroll-div">
+
+                                <div class="col-md-10 col-sm-10 nopadding">
+                                  <div id="container4" ng-if="frontImageCropDiv">
+                                    <div class="inner_con">
+                                      <div class="draggable" id="draggable{{layer.layerId}}" style="position:absolute;top:0px;left:0px;" ng-click="getSelectedLayer(layer.layerId)" ng-repeat="layer in layersDetailedList track by $index">
+                                        <div class="rotatable" id="rotatable{{layer.layerId}}">
+                                          <div class="resizable" id="resizable{{layer.layerId}}">
+                                            <img src="{{layer.image_data}}" alt="" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-10 col-sm-10 nopadding">
+                                  <div id="container5" ng-if="brandImageCropDiv">
+                                    <div class="inner_con">
+                                      <div class="draggable" id="draggable{{layer.layerId}}" style="position:absolute;top:0px;left:0px;" ng-click="getSelectedLayer(layer.layerId)" ng-repeat="layer in layersDetailedList track by $index">
+                                        <div class="rotatable" id="rotatable{{layer.layerId}}">
+                                          <div class="resizable" id="resizable{{layer.layerId}}">
+                                            <img src="{{layer.image_data}}" alt="" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            <div class="all-btn" style='padding-top: 10px;'>
+                              <button ng-click="save_image()">Set image</button>
+                              <button id="lock_outer_section" >lock outer Section</button>
+                              <button id="unlock_outer_section" >unlock outer Section</button>
+                              <!-- <button id="add_layer_btn" ng-click="uploadFirstImage()" ng-if="showAddLayerButton">Add a layer</button> -->
+                              <button id="delete_layer" ng-click="deleteLayer(SelectedLayerId)" ng-if="showDeleteLayerButton" >Delete a layer</button>
+                              <br><br>
+
+                              <div class="row two-btns">
+                                <div class="col-md-6 col-sm-6">
+                                  <!-- <span class="rotate-btn" id="rotate">
+                                    <i class="fa fa-repeat" aria-hidden="true"></i>
+                                    Rotate 
+                                  </span> -->
+
+                                  <span class="layers-btn" ng-click="showAllLayers()">
+                                    <i class="fa fa-object-ungroup" aria-hidden="true"></i> 
+                                    Layers
+                                  </span>
+                                </div>
+                              </div>
+                              <!-- <div id="slider_data"></div> -->
+                              <hr>
+                              <div class="col-md-4 col-sm-4 all-layer nopadding" ng-if="showLayers">
+                                <div class="">
+                                  <div class="">
+                                    <h4>Layer Stack</h4>
+                                    <div class="small-layers">
+                                      <div class="smal-layers-main">
+                                        <!-- <div id="layers" curr_layer=""></div> -->
+                                        <div class="layer_div" layer_name="{{layer.layer_name" ng-repeat="layer in layersDetailedList track by $index" curr_layer="draggable{{layer.layerId}}" ng-click="getSelectedLayer(layer)"> 
+                                          Layer {{$index+1}}
+                                        </div>
+                                      </div>
+                                      <!-- Modified by Tania -->
+                                      <div class="layer-edit-panel">
+                                        <span>
+                                          <a ng-click="uploadFirstImage()" title="Add Layer">  
+                                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                          </a>
+                                        </span>
+                                        <span>
+                                          <a href="" ng-click="deleteLayer(SelectedLayerId)" title="Delete Layer">  
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                          </a> 
+                                        </span>
+                                      </div> 
+                                      <!--=======-->
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                          </div>  
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                  <button id="send-btn" ng-click="upload_repo_img()" ng-bind = "upload_repo_img_btn" class="upload-btn ">
+                      Upload File
+                  </button>             
+             
+                </div>
+              </div>
+            </div> 
+
+          </div>
+        </div>
+      </div>
+    </div>  
+  </section>
+
+
+
+<script>
+  $("#hide").click(function(){
+      $(".edit-name1").hide();
+  });
+
+  $("#show").click(function(){
+      $(".edit-name1").show();
+  });
+
+  $("#rotate").click(function(){
+      $(".ui-widget-content").show();
+  });
+
+  $("#layer").click(function(){
+      $(".all-layer").show();
+  });
+
+  function openNav() {
+      document.getElementById("myNav").style.width = "100%";
+  }
+
+  function closeNav() {
+      document.getElementById("myNav").style.width = "0%";
+  }
+</script>

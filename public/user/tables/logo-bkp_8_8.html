@@ -1,0 +1,107 @@
+<section ng-controller="LogoController">
+  <div class="mdl-color--blue-grey ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">User Logo List</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <!-- <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+          <table class="mdl-data-table ml-table-bordered mdl-js-data-table ">
+            <colgroup>
+              <col class="auto-cell-size p-r-20">
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Company Name</th>
+                <th class="mdl-data-table__cell--non-numeric">Trigger</th>
+                <th class="mdl-data-table__cell--non-numeric">Action</th>
+                <th class="mdl-data-table__cell--non-numeric">Rating</th>
+                <th class="mdl-data-table__cell--non-numeric">Default</th>
+                <th class="mdl-data-table__cell--non-numeric">&nbsp</th>
+              </tr>
+            </thead>
+            <tbody ng-if="logo_details.length">
+              <tr  dir-paginate="reedemar_logo in logo_details|itemsPerPage:10">
+                <td>{{reedemar_logo.logo_text}}</td>
+                <td>
+                  <img ng-src="{{file_path}}../uploads/original/{{reedemar_logo.logo_name}}" width="80" />
+                </td>
+                <td>
+                  <a id="logo_text_{{reedemar_logo.id}}" value="1" class="fancybox-media logo_text various fancybox.iframe put_href" href="../user/changeaction/{{reedemar_logo.id}}/{{reedemar_logo.action_id}}"> 
+                    {{reedemar_logo.action.action_name}}
+                  </a>  
+                </td>
+                <td  id="div_{{reedemar_logo.id}}" ng-if="reedemar_logo.tracking_rating >= 0" > 
+                   <span class="rating-static rating-{{reedemar_logo.tracking_rating*10}}"></span>
+                </td>
+                <td  id="div_{{reedemar_logo.id}}" ng-if="reedemar_logo.tracking_rating < 0">
+                  <img ng-src="{{file_path}}images/spinner.gif" /> 
+                </td>                 
+                <td ng-if="reedemar_logo.tracking_rating < 0">
+                  <img ng-src="{{file_path}}images/spinner.gif" />
+                </td>
+                <td>
+                  <span  ng-if="reedemar_logo.default_logo == 1">
+                    <img ng-src="{{file_path}}images/default.png" width="20" data-ng-
+                    click="update_status(reedemar_logo.id);" />    
+                  </span>
+                  <span  ng-if="reedemar_logo.default_logo == 0">
+                    <a data-ng-click="make_default(reedemar_logo.id);" href="javascript:void(0);" >
+                        Make this Default
+                    </a>
+                  </span>
+                </td>
+                <td>                  
+                  <img ng-src="{{file_path}}images/delete.png" width="20" style="cursor:pointer" data-ng-click="delete_user_logo(reedemar_logo.id);" ng-if="reedemar_logo.default_logo != 1"/>
+                </td>
+              </tr> 
+
+               <tr ng-if="logo_details.length > 10">
+                <td colspan="5" class="text-center">
+                  <dir-pagination-controls
+                    max-size="7"
+                    direction-links="true"
+                    boundary-links="true" >
+                  </dir-pagination-controls>
+                </td>
+              </tr>
+                  
+            </tbody>
+                  <tbody ng-if="!logo_details.length">
+              <tr>
+                <td class="center" colspan="12">No data present</td>                
+              </tr>
+            </tbody>       
+          </table>
+        </div>
+        <div class="tags m-t-20">
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/tables/create_logo">Add</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+<script type="text/javascript">
+     //$(document).ready(function(){  
+     //alert("a")     ;
+       // $("#rateYo").rateYo({
+       //      rating: 3
+       // });      
+     //});
+  </script>

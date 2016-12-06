@@ -1,0 +1,101 @@
+<section class="text-fields" ng-controller="CategoryController" >
+  <div class="mdl-color--amber ml-header relative clear">
+    <div class="p-20">
+      <h3 class="mdl-color-text--white m-t-20 m-b-5">Add Reedemer Partner</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100">
+      <div class="p-40 p-r-20 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>          
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-20 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card mdl-shadow--1dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Add Reedemer Partner</h2>
+          </div>          
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                Data inserted successfully
+            </div>
+             <div id="error_div" class="alert alert-danger">
+                
+            </div>
+          </div>
+          <div class="p-30">
+            <form name="f1" method="POST" ng-submit="add_reedemer()">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.company_name" class="mdl-textfield__input" type="text" id="company_name" />
+                <label class="mdl-textfield__label" for="first_name">Company Name</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.first_name" class="mdl-textfield__input" type="text" id="first_name" />
+                <label class="mdl-textfield__label" for="last_name">First Name</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.last_name" class="mdl-textfield__input" type="text" id="last_name" />
+                <label class="mdl-textfield__label" for="company_name">Last Name</label>
+              </div>
+
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.address" class="mdl-textfield__input" type="text" id="address" />
+                <label class="mdl-textfield__label" for="address">Address</label>
+              </div>
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.postal_code" class="mdl-textfield__input" type="text" id="postal_code" />
+                <label class="mdl-textfield__label" for="postal_code">Postal Code</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield">
+                <input ng-model="Redeemer.email" class="mdl-textfield__input" type="text" pattern="^\s*[a-zA-Z0-9.-_]+@[a-zA-Z0-9.-_]+\.[a-zA-Z]{2,4}\s*$" id="email" name="email" />
+                <label class="mdl-textfield__label" for="email">Email</label>
+                <span class="mdl-textfield__error">Please supply a valid email address.</span>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+                <input ng-model="Redeemer.web_address" class="mdl-textfield__input" type="text" id="web_address" />
+                <label class="mdl-textfield__label" for="web_address">Web Address</label>
+              </div>
+              <!-- <div data-key="address" class="um-field um-field-last_name um-field-text">
+                <div class="um-field-area">
+                  <select name="category_id" id="category_id">
+                    <option value="">-- Select category --</option>                    
+                    <option ng-repeat="cat in category_details"  value="{{cat.id}}">{{cat.cat_name}}</option>                    
+                  </select>
+                </div>
+              </div>
+              <div style="height:10px;"></div>
+              <div data-key="address" class="um-field um-field-last_name um-field-text">
+                <div class="um-field-area">
+                  <select name="subcat_id" id="subcat_id">
+                      <option value="">Select category first</option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="mdl-textfield mdl-js-textfield">
+                <input ng-model="Redeemer.password" class="mdl-textfield__input" type="password" id="password" name="password" />
+                <label class="mdl-textfield__label" for="sample2">Password</label>
+              </div>
+              <div class="m-t-20">
+                <button type="submit" id="add_reedemer" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                  Save user
+                </button>               
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="tags m-t-20 f-right">
+          <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="#/tables/list">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>  
+</section>

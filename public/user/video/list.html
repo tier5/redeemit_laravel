@@ -1,0 +1,190 @@
+
+<style>
+/*.dashboard{position: relative;}*/
+.default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 166px; width: 426px;
+position: absolute; margin: 0 auto; top: 15%; left: 0; right: 0; 
+bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+
+
+
+/*.default-pop{
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 9957;
+    background: #fff; 
+    height: 400px;
+    margin-top: -213px;
+    max-height: 166px;
+    width: 426px;
+    margin-left: -213px;
+    padding: 10px; 
+    border: 1px solid #ccc;
+
+}*/
+
+
+/*.video-pop{background: #fff;  max-height: 350px; width: 600px;
+position: absolute; margin: 0 auto; top: 15%; left: 0; right: 0; 
+bottom: 0; z-index: 9999; border: 1px solid #ccc; display:block;}*/
+
+.video-pop {
+  bottom: 0;
+  display: block;
+  left: 0;
+  margin: 0 auto;
+  max-height: 350px;
+  position: absolute;
+  right: 0;
+  top: 15%;
+  width: 563px;
+  z-index: 9957;
+}
+
+/*.video-pop {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 9957;
+
+    height: 400px;
+    margin-top: -280px;
+    max-height: 350px;
+    width: 563px;
+    margin-left: -280px;
+}*/
+
+
+
+
+
+
+
+.black-bg{position: absolute;}
+
+
+.video-pop iframe{max-width: 100%; max-height: 100%; border: 1px solid #fff;}
+
+.green-btn{background: #73BF21; color: #fff; padding: 3px 25px; cursor: pointer; width: 132px; margin: 0 auto; display:block;}
+input[type="text"]{width: 100%; border:1px solid #595959; border-radius: 0}
+
+.import-img-popup input[type="text"]{font-size: 13px; padding: 7px;}
+.green-btn{padding: 7px 22px; width: 120px; font-size: 13px;}
+
+</style>
+
+
+<section ng-controller="VideoListController">
+
+  <div class="video-bg">
+    <div class="video-pop">
+      <span class="cross-default-pop">
+        <img src="{{file_path}}images/cross-btn.png" alt="x" ng-click="hidePopup()">
+      </span>
+      <div id="myCode"></div>
+    </div> 
+  </div>
+
+  <div class="black-bg">
+    <div class="default-pop">
+      <span class="cross-default-pop" ng-click="hideAddPopup()">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+      <div class="import-img-popup">
+        <div class="container">
+
+          <div class="form-group">
+            <!-- <input type="text" placeholder="Video Title" class="form-control"> -->
+            <input ng-model="video_name" class="mdl-textfield__input" type="text" id="video_name" placeholder="Video Name" />
+          </div>
+          <div class="form-group">
+            <!-- <input type="text" placeholder="Video URL" class="form-control"> -->
+            <input ng-model="video_url" class="mdl-textfield__input" type="text" id="video_url" placeholder="Video URL" />
+          </div>
+          <!-- <div class="form-group">
+            <a class="various fancybox.iframe put_href" ng-click="showVideo()" href="#"> 
+           <img ng-src="{{file_path}}images/play_normal.png" width="30" style="cursor:pointer"  />
+            </a> 
+          </div> -->
+          <div class="form-group col-sm-offset-0">
+            <!-- <button class="green-btn">Done</button> -->
+            <button type="submit" ng-click = "addVideo()" ng-disabled="!video_url || !video_name" ng-bind="add_video_button" class="green-btn" id="add_video">Done</button> 
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing video-page">
+
+    <div class="mdl-cell mdl-cell--9-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="p-20 ml-card-holder ">
+        <div class="page-heading">
+          <h3>Video List</h3>
+        </div>
+        <div class="mdl-card mdl-shadow--1dp m-b-30">
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+            </div>
+            <div id="error_div" class="alert alert-danger"> 
+            </div>
+          </div>
+          <div class="table-responsive video-table">
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th>Video Title</th>
+                  <th>Video</th>
+                  <th>Default</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr dir-paginate="video in video_details|itemsPerPage:10">
+                  <td>{{video.video_name}}</td>
+                  <td ng-click="showVideoInPopup(video)">
+                    <div class="video-frame">
+
+                      <a title="{{video.video_name}}">
+
+                        <img ng-src="{{video.video_thumb}}" style="cursor:pointer" alt="img">
+
+                      </a>
+
+                    </div>
+                  </td>
+                  <td>
+                    <!-- <span ng-if="video.default_video == 1" style="cursor:pointer">
+                      <img ng-src="{{file_path}}images/default.png" width="20"/>
+                    </span>
+                    <span  ng-if="video.default_video == 0" style="cursor:pointer">
+                      <a data-ng-click="make_default(video.id);" href="javascript:void(0);" >
+                        Make this Default
+                      </a>
+                    </span> -->
+                    <input type="radio" name="defaultVideo" ng-change='make_default(video.id)' value="{{video.id}}" ng-model="defaultVideo">
+                  </td>
+                  <td>
+                    <img width="20" src="{{file_path}}images/delete.png" title="Delete Video" data-ng-click="delete_video(video.id);" style="cursor:pointer" ng-if="video.default_video != 1">
+                  </td>
+                </tr>
+              </tbody>
+              <tbody ng-if="!video_details.length">
+                <tr>
+                  <td class="center" colspan="4">No data present</td>                
+                </tr>
+            </table> 
+          </div>
+        </div>
+        <div class="tags m-t-20">
+          <a value="1" class="blue-btn mdl-button" href="" title="" ng-click="showAddVideoPopup()">Add Video</a>
+        </div>        
+      </div>
+    </div>
+    <input type="hidden" name="cat_id" id="cat_id" value="" />
+  </div>
+</section>

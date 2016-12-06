@@ -1,0 +1,45 @@
+#myWorkContent{
+    /*width:530px;*/
+    height:210px;
+   
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+#myWorkContent li {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#myWorkContent img {border: 0px solid #CCC;}
+
+.image_container{
+    margin:5px;
+    height:180px; 
+    width:130px;
+    border: 1px solid #ccc;
+}
+.image_div{
+   padding:5px;
+   height:180px;  
+   overflow:hidden; 
+}
+.text_div{
+   height:30px;
+   border-bottom: 1px solid #ccc;
+   border-right: 1px solid #ccc;
+   width:35px;
+   padding:5px;
+   text-align: left;  
+   white-space: normal;
+   vertical-align: top;
+}
+.checkbox_div{
+
+}
+
+.checkboxs{
+  -webkit-appearance: checkbox; /* Chrome, Safari, Opera */
+  -moz-appearance: checkbox;    /* Firefox */
+  -ms-appearance: checkbox;     /* not currently supported */
+}

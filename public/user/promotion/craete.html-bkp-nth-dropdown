@@ -1,0 +1,1019 @@
+<style>
+  .relative{position: relative;}
+  .help{position: absolute; right: 10px; top: 0}
+  #accordion.ui-accordion .ui-accordion-content{width: 100%;}
+  #accordion h3{padding-left: 25px;}
+
+
+  .default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 325px;
+  position: absolute; margin: 0 auto; top: 15%; left: 0; right: 0; 
+  bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 607px;}
+  .cross-default-pop{/*float: right; */cursor: pointer;}
+  .black-bg{background: rgba(0,0,0,0.7); position: absolute; width: 100%; height: 100% !important; display: block; z-index: 9999; overflow-x: none;}
+
+  .import-img-popup .container{width: 100%;}
+  .import-img-single img {border: 1px solid #b7b7b7; max-width: 100%;}
+  .sigle-row {padding-bottom: 25px;}
+  .floate-btn {background: #fff none repeat scroll 0 0; bottom: 0;
+  width: 100%;}
+  /*.import-img-popup {padding: 40px 0; position: relative;}*/
+
+  .import-img-single img{border:1px solid #B7B7B7;}
+  .import-img-single img:hover{border:1px solid #73BF21;}
+  .import-img-single img:focus{border:1px solid #73BF21;}
+  .import-img-single img.active{border:1px solid #73BF21;}
+  .off-build-page .container{max-width: 901px;}
+
+
+  .addnew-pop{background: #fff; max-height: 166px;
+  position: absolute; margin: 0 auto; top: 5%; left: 0; right: 0; 
+  bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 426px;}
+
+
+</style>
+
+
+<script>
+
+ $(document).ready(function(){
+     $("#hide1").click(function(){
+         $(".addnew-bg").hide();
+         enableScroll();
+     });
+     $("#show1").click(function(){
+      
+         $(".addnew-bg").show();
+         disableScroll();
+     });
+     
+ });
+
+ // left: 37, up: 38, right: 39, down: 40,
+// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+  e.returnValue = false;  
+}
+
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+
+function enableScroll() {
+  $(".black-bg").hide();
+    if (window.removeEventListener)
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.onmousewheel = document.onmousewheel = null; 
+    window.onwheel = null; 
+    window.ontouchmove = null;  
+    document.onkeydown = null;  
+}
+</script>
+
+
+
+
+
+
+<!-- <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script> -->
+
+  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+<section class="text-fields off-page" ng-controller="PromotionController" >
+
+  <div class="addnew-bg">
+    <div class="addnew-pop">
+      <span class="cross-default-pop" id="hide1" ng-click="hideMe()" style="cursor: pointer;"><img src="../images/cross-btn.png" alt="x"></span>
+        <div class="invent-pop">
+        <div class="container">  
+        <form name="f2" method="POST" enctype="multipart/form-data">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <div class="">
+                          <div class="form-group">
+                             <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                   <input class="form-control" type="text" placeholder="Campaign Name" ng-model="Campaign.a_c_name" id="a_c_name">
+                                </div>
+                             </div>
+                          </div> 
+                            <div class="form-group">  
+                             <div class="row">   
+                                <div class="col-md-6 col-sm-6" >
+                                   <input ng-model="Campaign.a_c_s_date" class="form-control cal" type="text" id="a_c_s_date" placeholder="Start Date" />
+
+                                  <!-- <input type="text" id="datepicker"> --> 
+
+
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                   <input ng-model="Campaign.a_c_e_date"  class="form-control cal" type="text" id="a_c_e_date" placeholder="End Date" />
+                                </div>
+                             </div>
+                            </div> 
+                             <div class=""><!-- tags m-t-20 --> 
+                                <a class="done-btn" href="" ng-click = "addCampaign()">Done</a>
+                                <!-- <a class="done-btn" href="" ng-click = "hideAddCampaignDiv()">Cancel</a> -->
+                             </div>
+                          </div>
+        </form>
+        </div>
+        </div>
+    </div>  
+  </div>
+
+  <div class="black-bg" ng-if="showproductorinventory">
+    <div class="default-pop">
+      <span class="cross-default-pop" id="hide" ng-click="hideMe()" style="cursor: pointer;"><img src="../images/cross-btn.png" alt="x"></span>
+      
+      <div class="import-img-popup">
+        <div class="container">
+          <!-- <div class="row sigle-row">
+            <div class="col-md-3 col-sm-3 import-img-single">
+              <img alt="img" src="../images/soda.png">
+              <div class="import-img-single-txt">2 Liter Soda</div>
+            </div>
+          </div> -->
+          <div class="row sigle-row" ng-if="AllData.length">
+            <div class="col-md-3 col-sm-3 import-img-single" data-ng-repeat="data in AllData track by $index" ng-click="usethisProduct(data.id, data.choiceid)">
+              <img alt="img" src="{{file_path}}{{data.product_image}}">
+              <div class="import-img-single-txt">{{data.product_name}}</div>
+            </div>
+          </div>
+
+          <div class="row sigle-row" ng-if="AllInventoryData.length">
+            <div class="col-md-3 col-sm-3 import-img-single" data-ng-repeat="inventorydata in AllInventoryData track by $index" ng-click="usethisInventory(inventorydata.id, inventorydata.inventorychoiceid)">
+              <img alt="img" src="{{file_path}}{{inventorydata.inventory_image}}">
+              <div class="import-img-single-txt">{{inventorydata.inventory_name}}</div>
+            </div>
+          </div>
+
+          
+        </div>
+
+      </div>
+      <div class="floate-btn">
+            <button class="green-btn" ng-click="hideMe()">Done</button>
+          </div>
+    </div>
+  </div>
+
+  <div class="off-build-page"> 
+<!-- <span id="show1">Hi</span> -->
+    <div class="container">
+      <div class="row">
+        <div class="">
+          <div class="row">
+            <div class="col-md-7 col-sm-7">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">STEP 1 : Design</h2>
+              </div>
+              <div class="box-sec">
+                <h2> Offer Details</h2>
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                    <div class="form-group">       
+                      <select class="form-control" ng-model="campaign_id" id="campaign_id" ng-change="get_campaign_details()">     
+                          <option value="{{camp.id}}" ng-repeat="camp in campaign_list">{{camp.campaign_name}}</option>          
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <div class="selectbox">
+                        select category<i class="fa fa-caret-down caret-down " aria-hidden="true"></i><i class="fa fa-caret-up caret-up" aria-hidden="true"></i>
+                      </div>
+                      
+                      <script type="text/ng-template" id="categoryTree">
+                        {{ category.cat_name }}
+                        <ul ng-if="category.children">
+                            <li ng-repeat="category in category.children" ng-include="'categoryTree'">           
+                            </li>
+                        </ul>
+                        
+                        <h3 ng-click="setOpenCat(cat.id)">{{cat.cat_name}}<span ng-if="openCat!=cat.id"  class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
+                          <span ng-if="openCat==cat.id" ng-click="setOpenCat(0)" class="ui-accordion-header-icon ui-icon ui-icon-triangle-2-s"></span></h3>
+                          
+                            <ul ng-if="category.children">
+                              <li data-ng-repeat="subc in cat.children">{{subc.cat_name}}
+                              <input type="checkbox" ng-click="getSelected()" data-subcatname="{{subc.cat_name}}" value="{{subc.id}}" class="check_class"></li>
+                             
+                            </ul>
+                                              </script>
+                      
+                      <div class="selectbox-option">
+                        <div id="accordion1">
+                          
+                          <li ng-repeat="category in categorryList" ng-include="'categoryTree'"></li>
+                          
+                          <div class="" data-ng-repeat="cat in categorryList"></div>
+                          
+                          
+                          <div class="" data-ng-repeat="cat in categorryList">
+                          <h3 ng-click="setOpenCat(cat.id)">{{cat.cat_name}}<span ng-if="openCat!=cat.id"  class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
+                          <span ng-if="openCat==cat.id" ng-click="setOpenCat(0)" class="ui-accordion-header-icon ui-icon ui-icon-triangle-2-s"></span></h3>
+                          <div ng-if="openCat==cat.id">
+                            <ul>
+                              <li data-ng-repeat="subc in cat.children">{{subc.cat_name}}
+                              <input type="checkbox" ng-click="getSelected()" data-subcatname="{{subc.cat_name}}" value="{{subc.id}}" class="check_class"></li>
+                             
+                            </ul>
+                          </div>
+                          </div>
+                          
+                        </div>
+                        
+                      </div>
+                      <div class="selected-value">
+                        
+                      </div>
+                    </div>  
+
+
+                    <!-- <div class="form-group">
+                      <select class="form-control">
+                      <option>Sub Catagory</option>
+                      <option>Sub Catagory1</option>
+                      <option>Sub Catagory2</option>
+                      </select>
+                    </div> -->
+                    <div class="form-group custom-margin">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                          <div class="form-group custom-margin">
+                            <input type="text" placeholder="Start Date" id="c_s_date" class="mdl-textfield__input cal ng-pristine ng-untouched ng-valid " ng-model="promotion.c_s_date">
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                          <div class="form-group custom-margin">
+                            <input type="text" placeholder="End Date" id="c_e_date" class="mdl-textfield__input cal ng-pristine ng-untouched ng-valid " ng-model="promotion.c_e_date">
+                            <span class="red-txt" >{{validate_hour_txt}}</span>
+                          </div>
+                        </div>
+
+                      </div> 
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                          <input type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" placeholder="No. redeemars" id="total_redeemar" ng-model="promotion.total_redeemar" required="">
+                          <input type="hidden" ng-init="promotion.start_hour=24" ng-model="promotion.start_hour" />
+                        </div>
+                      <div class="col-md-6 col-sm-6 offer-full">
+                        <a href="" class="offer-val-btn" ng-click="showMyDiv()">Offer Validation</a>
+                        <div class="on-demand">
+                          <input type="checkbox"> Offer On Demand 
+                        </div>
+                        <div class="my" ng-if="showOfferValidationTimeDiv">
+                          <div class="my-main">
+                            <p>Validate After <input type="text" ng-model="selected_validate_after_Hour" id="selected_validate_after_Hour" placeholder="Hour" ng-change="promotion.start_hour=selected_validate_after_Hour"  title="Set after how many hours, this offer will be valid." > </p>
+
+                            <span class="pop-arrow"><img src="{{file_path}}images/pop-arrow.jpg" alt="img"></span>
+
+                            <div class="rz-slide">
+                              <!-- <article class="val-slide"> -->
+                                <rzslider
+                                  rz-slider-model="validate_after_hour.value"
+                                  rz-slider-options="validate_after_hour.options"
+                                ></rzslider>
+                              <!-- </article> -->
+                            </div>
+
+                            <div class="pull-left">Select Hour</div>
+                            <div class="pull-right"><a class="validate-btn" ng-click="hourValidate(selected_validate_after_Hour)" href="javascript:;">Validate</a></div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>  
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Meta Tags" class="form-control" name="tags">
+                    <!-- <input name="tags" class="form-control" id="more_information" value=""> -->
+                  </div> 
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                  <div class="row">
+                    <div class="col-md-4 col-sm-4 no-right-padding">
+                      <div title="Add a new campaign" class="form-group">
+                        <!-- <a href="" class=" various fancybox.iframe put_href" value="1">  -->
+
+                         <!--  <span class="choose choose-btn choose-btn-new" ng-click="showAddCampaignForm()">Add new</span> -->
+
+                          <span id="show1" class="choose choose-btn choose-btn-new">Add new</span>
+
+
+                          
+                        <!-- </a> -->
+                      </div>
+                    </div> 
+                    <div class="col-md-7 col-sm-7 no-padding">
+                      <div class="camp-date green" ng-model="show_camp_date"><!-- MM/DD/YY - MM/DD/YY --> {{show_camp_date}}</div>
+                      <div class="camp-date">Campaign Date</div>
+                    </div>
+                  </div>
+
+
+                  <div title="Write Offer Description in short." class="form-group off-descrip"> 
+                    <label>Offer Description</label>                   
+                    <textarea ng-trim="false" maxlength="60" id="offer_description" rows="2" placeholder="Offer Description" ng-model="offer_description" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" required="" title="Here you can put some text"></textarea>
+                  </div>
+                  <div title="Write brief description of your current offer." class="form-group">  
+                    <label>Full Description</label>                  
+                    <textarea ng-trim="false" maxlength="100" id="what_you_get" rows="2" placeholder="What You Get" ng-model="what_you_get" class="form-control full-descrip ng-pristine ng-untouched ng-valid ng-valid-maxlength"></textarea>
+                  </div>
+
+                </div>
+
+                <div class="e-campaingn" ng-if="showAddCampaignDiv">
+                <input type="text" id="datepicker1">
+                  <div class="e-campaingn-main">
+                    <span class="top-arrow">
+                      <img ng-src="{{file_path}}images/up-arrow.png" alt="">
+                    </span>
+                    <span class="hide-cross" id="hide" data-ng-click="hideAddCampaignDiv()">X</span>
+
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 edit-pops">
+
+                        <form name="f2" method="POST" enctype="multipart/form-data">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <div class="campaign-adding">
+                             <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                   <input class="form-control" type="text" placeholder="Campaign Name" ng-model="Campaign.a_c_name" id="a_c_name">
+                                </div>
+                                <div class="col-md-3 col-sm-3" >
+                                   <input ng-model="Campaign.a_c_s_date" class="form-control" type="text" id="a_c_s_date" placeholder="Start Date" />
+
+                                  <!-- <input type="text" id="datepicker"> --> 
+
+
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                   <input ng-model="Campaign.a_c_e_date"  class="form-control" type="text" id="a_c_e_date" placeholder="End Date" />
+                                </div>
+                             </div>
+                             <div class="tags m-t-20 ">
+                                <a class="done-btn" href="" ng-click = "addCampaign()">Done</a>
+                                <a class="done-btn" href="" ng-click = "hideAddCampaignDiv()">Cancel</a>
+                             </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">STEP 2 : Financing</h2>
+          </div>
+
+          <input type="hidden" id="inventory_or_product_image_id" name="inventory_or_product_image_id">
+
+          <div class="box-sec">
+            <h2>Product Offers</h2>
+            <div class="relative">
+              <span class="red-info">* Match your offer product with the correct image</span>
+            </div>
+            <div class="single-product single-product-first">
+              <div class="container">
+               <!--  {{choices}} -->
+                <div class="row" data-ng-repeat="choice in choices track by $index">
+                  <div class="col-md-3 col-sm-3">
+                    <a ng-click="fetchAllProduct(choice.choiceid)"> 
+                      <button  type="button" class="green-btn green-import-btn2">Import Product</button>
+                    </a>
+                    <!-- <a value="1" class=" various fancybox.iframe put_href" href="{{site_path}}index.php/product/showlist?choiceid={{choice.choiceid}}"> 
+                    <button  type="button" class="green-btn green-import-btn2">Import Product</button>
+                    </a> -->
+
+                    <a class="red-btn" ng-click="removeChoice(choice)">Remove Product</a>
+                  </div>
+                  <div class="col-md-6 col-sm-6" ng-if="choice.productData.length">
+                    <div class="row">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" readonly ng-model="choice.productData[0].product_name">
+                          </div>
+                          <div class="col-md-4 col-sm-4 no-padding-left">
+                            <a value="1" class=" various fancybox.iframe put_href" href="{{site_path}}index.php/directory/repository">
+                              <button class="green-btn green-import-btn2" value="Import Image" ng-click="clickedOnMe(choice)">
+                                Import Image
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 no-padding">
+                          <input class="form-control" type="number" min="1" ng-change="productnochanged(choice)" ng-model="choice.noofproduct">
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_cost">${{choice.total_cost}}</span>
+                          <span class="small-txt">Cost</span>
+                          <input type="hidden" name="one_product_cost{{choice.choiceid}}" id="one_product_cost{{choice.choiceid}}" />
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_selling_price">${{choice.total_selling_price}}</span>
+                          <span class="small-txt">Seling Price</span>
+                          <input type="hidden" name="one_product_selling_price{{choice.choiceid}}" id="one_product_selling_price{{choice.choiceid}}" />
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                           <span class="green-big-txt" name="product_retail_value">${{choice.total_retail_price}}</span> 
+                          <span class="small-txt">Retail Value</span>
+                          <input type="hidden" name="one_product_retail_price{{choice.choiceid}}" id="one_product_retail_price{{choice.choiceid}}" />
+                        </div>
+                        <div class="col-md-1 col-sm-1">
+                          <!-- <input type="radio" ng-model="selectedImage" ng-value="choice.productData[0].product_image" ng-init="$index==0?(selectedImage=choice.productData[0].product_image):''"> -->
+                          <input type="radio" value="" name="selectedImage" ng-change='changeOnPrimary(choice)' ng-model="choice.selectedImage" ng-value="true">
+                          
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6" ng-if="!choice.productData.length">
+                    <div class="row">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" id="product_name{{choice.choiceid}}" readonly>
+                          </div>
+                          <div class="col-md-4 col-sm-4 no-padding-left">
+                            <a value="1" class=" various fancybox.iframe put_href" href="{{site_path}}index.php/directory/repository" title="Choose image from your Image Repository. Or upload an Image.">
+                              <button class="green-btn green-import-btn2" value="Import Image" ng-click="clickedOnMe(choice)">
+                                Import Image
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 no-padding">
+                          <input class="form-control" type="number" min="1" value="1" ng-change="productnochanged(choice.choiceid)" ng-model="product.noofproduct">
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_cost" id="product_cost{{choice.choiceid}}"></span>
+                          <span class="small-txt">Cost</span>
+                          <input type="hidden" name="one_product_cost{{choice.choiceid}}" id="one_product_cost{{choice.choiceid}}" />
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_selling_price" id="product_selling_price{{choice.choiceid}}"></span>
+                          <span class="small-txt">Seling Price</span>
+                          <input type="hidden" name="one_product_selling_price{{choice.choiceid}}" id="one_product_selling_price{{choice.choiceid}}" />
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                           <span class="green-big-txt" id="product_retail_value{{choice.choiceid}}" name="product_retail_value"></span> 
+                          <span class="small-txt">Retail Value</span>
+                          <input type="hidden" name="one_product_retail_price{{choice.choiceid}}" id="one_product_retail_price{{choice.choiceid}}" />
+                        </div>
+                        <div class="col-md-1 col-sm-1">
+                          <input type="radio" value="" name="selectedImage" ng-change='changeOnPrimary(choice)' ng-model="choice.selectedImage" ng-value="true">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-3" ng-if="choice.productData.length">
+                    <div class="off-page-pic">
+                      <img alt="img" ng-src="{{file_path}}{{choice.productData[0].product_image}}" class="border_container prod_image" id="product_image_id{{choice.choiceid}}">
+                    </div>
+                    <div class="off-page-pic-info">{{choice.productData[0].image_name}}</div>
+                  </div>
+                  <div class="col-md-3 col-sm-3" ng-if="!choice.productData.length">
+                    <div class="off-page-pic">
+                      <img alt="img" ng-src="{{file_path}}images/no-image.png" class="border_container prod_image"  id="product_image_id{{choice.choiceid}}">
+                    </div>
+                    <div class="off-page-pic-info">Spaghetti with Meat Ball</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row off-total">
+                <div class="col-md-6 col-sm-6 align-right">
+                  Markup {{markup}}%
+                </div>
+                <div class="col-md-6 col-sm-6 align-left">
+                    Gross Margin ${{grossMargin}}
+                </div>
+              </div>
+              <div class="row add_more">
+                <!-- <a href="#">  
+                Add More Product
+                </a> -->
+                <input class="choose-btn" type='button' ng-click="addNewChoice()" value='Add More Product' id='saddButton' title="Add another option to select Product">
+              </div>
+            </div>
+            <h2>Inventory Items</h2>
+            <div class="relative">
+              <span class="red-info">* Match your offer inventory with the correct image</span>
+            </div>
+
+            <div class="single-product">
+              <div class="container">
+               <!--  {{choices}} -->
+                <div class="row" data-ng-repeat="inventorychoice in inventorychoices track by $index">
+                  <div class="col-md-3 col-sm-3">
+                    <a ng-click="fetchAllInventory(inventorychoice.inventorychoiceid)"> 
+                      <button  type="button" class="green-btn green-import-btn2">Import Inventory</button>
+                    </a>
+
+                    <a class="red-btn" ng-click="removeInventoryChoice(inventorychoice)">Remove Inventory</a>
+                  </div>
+                  <div class="col-md-6 col-sm-6" ng-if="inventorychoice.InventoryData.length">
+                    <div class="row">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" readonly ng-model="inventorychoice.InventoryData[0].inventory_name">
+                          </div>
+                          <div class="col-md-4 col-sm-4 no-padding-left">
+                            <a value="1" class=" various fancybox.iframe put_href" href="{{site_path}}index.php/directory/repository">
+                              <button class="green-btn green-import-btn2" value="Import Image"  ng-click="clickedOnMe(inventorychoice)">
+                                Import Image
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 no-padding">
+                          <input class="form-control" type="number" min="1" ng-change="inventorynochanged(inventorychoice)" ng-model="inventorychoice.noofinventory">
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="inventory_cost">${{inventorychoice.total_cost}}</span>
+                          <span class="small-txt">Cost</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_selling_price">${{inventorychoice.total_selling_price}}</span>
+                          <span class="small-txt">Seling Price</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                           <span class="green-big-txt" name="product_retail_value">${{inventorychoice.total_retail_price}}</span> 
+                          <span class="small-txt">Retail Value</span>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6" ng-if="!inventorychoice.InventoryData.length">
+                    <div class="row">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-8 col-sm-8">
+                            <input type="text" class="form-control" readonly>
+                          </div>
+                          <div class="col-md-4 col-sm-4 no-padding-left">
+                            <a value="1" class=" various fancybox.iframe put_href" href="{{site_path}}index.php/directory/repository">
+                              <button class="green-btn green-import-btn2" value="Import Image" ng-click="clickedOnMe(inventorychoice)">
+                                Import Image
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 no-padding">
+                          <input class="form-control" type="number" min="1" value="1">
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_cost"></span>
+                          <span class="small-txt">Cost</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                          <span class="green-big-txt" name="product_selling_price"></span>
+                          <span class="small-txt">Seling Price</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                           <span class="green-big-txt" name="product_retail_value"></span> 
+                          <span class="small-txt">Retail Value</span>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-3" ng-if="inventorychoice.InventoryData.length">
+                    <div class="off-page-pic">
+                      <img alt="img" ng-src="{{file_path}}{{inventorychoice.InventoryData[0].inventory_image}}" class="border_container" id="inventory_image_id{{inventorychoice.inventorychoiceid}}">
+                    </div>
+                    <div class="off-page-pic-info">{{inventorychoice.InventoryData[0].image_name}}</div>
+                  </div>
+                  <div class="col-md-3 col-sm-3" ng-if="!inventorychoice.InventoryData.length">
+                    <div class="off-page-pic">
+                      <img alt="img" ng-src="{{file_path}}images/no-image.png" class="border_container" id="inventory_image_id{{inventorychoice.inventorychoiceid}}">
+                    </div>
+                    <div class="off-page-pic-info">Spaghetti with Meat Ball</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row off-total">
+                <div class="col-md-6 col-sm-6 align-right">
+                  Markup {{inventorymarkup}}%
+                </div>
+                <div class="col-md-6 col-sm-6 align-left">
+                    Gross Margin ${{inventorygrossMargin}}
+                </div>
+              </div>
+              <div class="row add_more">
+                <!-- <a href="#">  
+                Add More Product
+                </a> -->
+                <input class="choose-btn" type='button' ng-click="addNewInventoryChoice()" value='Add More Inventory' id='saddButton' title="Add another Inventory">
+              </div>
+            </div>
+
+          </div>
+
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">STEP 3 : Installation</h2>
+    </div>
+    <div class="box-sec">
+    <h2>Offer Calculator</h2>
+    <div class="relative">
+        <span class="red-info">* Calculation includes Redeemar cost</span>
+    </div>
+
+    <div class="row">
+    <div class="col-md-12 col-sm-12 align-center total-retail">
+    <h4>Total Retail Value:</h4>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      <span class="red">Optional</span> Choose a minimum profit margin <input class="form-control width46" type="text"> or profit mark up <input class="form-control width46" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+        <span class="choose-discount">Choose a discount </span> 
+        <input type="checkbox"> On Inventory Item Only
+      </div>  
+    </div>
+    <div class="row custom-row">
+      <div class="col-md-3 col-sm-3 align-center">
+
+          <label>OFF</label>
+          <input class="form-control" type="text">
+          <div class="row">
+          <div class="col-md-6 col-sm-6 no-padding-right">
+          $ <input type="radio">
+          </div>
+          <div class="col-md-6 col-sm-6 no-padding-left">
+          % <input type="radio">
+          </div>
+          </div>
+
+      </div>
+      <div class="col-md-3 col-sm-3 align-center">
+
+          <label>DISCOUNT</label>
+          <input class="form-control" type="text">
+          <div class="row">
+          <div class="col-md-6 col-sm-6 no-padding-right">
+          $ <input type="radio">
+          </div>
+          <div class="col-md-6 col-sm-6 no-padding-left">
+          % <input type="radio">
+          </div>
+          </div>
+
+      </div>
+      <div class="col-md-3 col-sm-3 align-center">
+
+          <label>SAVINGS</label>
+          <input class="form-control" type="text">
+          <div class="row">
+          <div class="col-md-6 col-sm-6 no-padding-right">
+          $ <input type="radio">
+          </div>
+          <div class="col-md-6 col-sm-6 no-padding-left">
+          % <input type="radio">
+          </div>
+          </div>
+
+      </div>
+      <div class="col-md-3 col-sm-3 align-center">
+
+          <label>VALUE</label>
+          <input class="form-control" type="text">
+          <div class="row">
+          <div class="col-md-6 col-sm-6 no-padding-right">
+          $ <input type="radio">
+          </div>
+          <div class="col-md-6 col-sm-6 no-padding-left">
+          % <input type="radio">
+          </div>
+          </div>
+
+      </div>
+
+
+    </div>
+    <div class="row last-offer-calc">
+      <div class="col-md-4 col-sm-4">
+        <div class="statement">
+          <ul>
+            <li>
+              <span class="green-point"></span>
+              Good
+            </li>
+            <li>
+              <span class="yellow-point"></span>
+              Fair
+            </li>
+            <li>
+              <span class="red-point"></span>
+              Poor
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+           <span class="last-green">$00</span> 
+          <span class="last-offer">Profit</span>
+          </div>
+          <div class="col-md-6 col-sm-6">
+           <span class="last-green">$00</span> 
+          <span class="last-offer">Markup</span> 
+          </div>
+        </div>  
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      This offer is above your desired profit
+      </div>  
+    </div> 
+     <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      <span class="good-deal">This is a Good Deal!</span>
+      </div>  
+    </div> 
+    </div>
+    <div class="box-sec">
+    <h2>Consumer Deal</h2>
+      <div class="col-md-8 col-sm-8 align-center col-sm-offset-2">
+      <div class="row consumer-deal">
+          <div class="col-md-3 col-sm-3 no-padding">
+            <span>$00</span>
+            <span>Pay</span>
+          </div>
+          <div class="col-md-3 col-sm-3 no-padding">
+            <span>$00</span>
+            <span>Value</span>
+          </div>
+          <div class="col-md-3 col-sm-3 no-padding">
+            <span>$00</span>
+            <span>Save</span>
+          </div>
+          <div class="col-md-3 col-sm-3 no-padding">
+            <span class="red-txt">$00</span>
+            <span>Discount</span>
+          </div>
+
+      </div>
+      <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      <span class="poor-deal">This is a Poor Deal!</span>
+      </div> 
+      </div>
+
+      </div>
+      </div>
+  </div>
+
+
+  <div class="col-md-5 col-sm-5">
+    <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Mobile Views</h2>
+    </div>
+
+    <div class="grey-box first">
+      <div class="mob-pic-block">
+        <!-- <img src="../images/no-preview.jpg" alt="img"> -->
+        <img ng-src="{{file_path}}{{SelectedProductImage}}">
+        <span class="float-logo"><img src="../images/float-logo.png" alt="img"></span>
+      </div>
+    </div>
+    <div class="grey-box second">
+      <div class="row">
+      <div class="col-md-6 col-sm-6 no-padding mob-pic-block">
+      <img src="../images/second-pic.png" alt="img">
+      <span class="float-logo2"><img src="../images/float-logo2.png" alt="img"></span>
+      </div>
+      <div class="col-md-6 col-sm-6">
+      &nbsp;
+      </div>  
+      </div>  
+    </div>
+    <div class="grey-box third">
+      <div class="mob-pic-block">
+        <img src="../images/no-preview.jpg" alt="img">
+        <span class="float-logo"><img src="../images/float-logo.png" alt="img"></span>
+        <span class="pic-caption"><!-- Partner's Address -->&nbsp;</span>
+      </div>
+      <div class="partner-offer">
+        <!-- Get 00 % Off on a liter of Soda with the 
+purchase of a Family Style Spagetti & 
+Meatball  --> &nbsp;
+      </div>
+      <div class="partner-description">
+        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco -->
+        &nbsp;
+      </div> 
+
+      <div class="row vps-whole">
+        <div class="col-md-6 col-sm-6 col-sm-offset-3">
+          <div class="row">
+          <div class="col-md-4 col-sm-4 no-padding">
+            <div class="vps">Value</div>
+            <div class="vps-amount"><!-- $00 --> &nbsp;</div>
+          </div>
+          <div class="col-md-4 col-sm-4 no-padding">
+            <div class="vps">Pay</div>
+            <div class="vps-amount"><!-- $00 --> &nbsp;</div>
+          </div>
+          <div class="col-md-4 col-sm-4 no-padding">
+            <div class="vps">Services</div>
+            <div class="vps-amount"><!-- $00 --> &nbsp;</div>
+          </div>
+
+          </div>
+        </div>  
+      </div>
+
+      <div class="row vps-btns">
+        <div class="col-md-6 col-sm-6 no-padding">
+          <a class="pass-btn" href="#">PASS OFFER</a>
+        </div>
+        <div class="col-md-6 col-sm-6 no-padding">
+          <a class="bank-btn" href="#">BANK OFFER</a>
+        </div>
+      </div>
+
+     
+        <div class="vps-map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d58947.62605460876!2d88.39903685000002!3d22.570625649999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1467788277845" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+        </div>
+
+     
+    </div>
+
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Web View</h2>
+    </div>
+    <div class="grey-box forth">
+      <div class="mob-pic-block">
+        <img src="../images/no-pre-web.jpg" alt="img">
+        <span class="float-logo2"><img src="../images/float-logo2.png" alt="img"></span>
+        <span class="pic-caption"><!-- Partner's Address -->&nbsp;</span>
+      </div>
+      <div class="forth-main">
+        <!-- <div class="web-product-name">
+          Get 00 % Off on a liter of Soda with the 
+purchase of a Family Style Spaghetti & 
+Meatball Dinner
+        </div> -->
+
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+          <div class="green-txt">00% OFF</div>
+          <div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> Location</div>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <div class="previous-price">$140</div>
+            <div class="present-price">$99</div>
+          </div>
+        </div>
+          
+      </div>
+        
+    </div>
+    <div class="publish-btn">
+
+    <a href="#">Publish Offer</a>
+
+    </div>
+
+      
+  </div>
+
+
+  
+  </div>  
+  </div>  
+  </div> 
+  </div>
+  </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+
+  </script>
+
+
+
+
+
+<script type="text/javascript">
+//   document.getElementById("uploadBtn").onchange = function () {
+//     document.getElementById("uploadFile").value = this.value;
+// };
+
+</script>
+
+
+<script type="text/javascript"> 
+$(document).ready(function(){
+
+    $( "#accordion" ).accordion();
+
+    $(".selectbox").click(function(){
+        $(this).toggleClass("toggleCaret");
+        $(".selectbox-option").toggleClass("openSelect");
+        $(".ui-accordion .ui-accordion-content").css("height","auto");
+        
+    });
+    $(document).mouseup(function (e)
+    {
+      var container = $(".selectbox").parent('.form-group');
+  
+      if (!container.is(e.target)  && container.has(e.target).length === 0)
+      {
+          $('.selectbox').removeClass("toggleCaret");
+          $(".selectbox-option").removeClass("openSelect");
+          $(".ui-accordion .ui-accordion-content").css("height","auto");
+      }
+    });
+    
+    var c = 1;
+
+    //$('.check_class').change(function(){
+    //
+    //
+    //    if(this.checked){
+    //
+    //        $(this).attr("id","chk"+c);
+    //
+    //        $('.selected-value').append('<div class="valuecontent" data-value="'+this.value+'">'+this.value+'<i class="fa fa-times-circle-o remove-btn" aria-hidden="true"></i></div>');
+    //    }
+    //    else {
+    //         $('.valuecontent').filter('[data-value="'+this.value+'"]').remove();
+    //    }
+    //
+    //
+    //    $('.remove-btn').click(function(){
+    //        
+    //        $(this).parent().remove();
+    //
+    //        var parent_val =  $(this).parent().attr('data-value');
+    //
+    //        $('.check_class[value='+parent_val+']').attr("checked",false);
+    //    });
+    //
+    //    c++;
+    //}); 
+});
+</script>
+
+

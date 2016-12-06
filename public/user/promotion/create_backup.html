@@ -1,0 +1,799 @@
+<style>
+.relative{position: relative;}
+.help{position: absolute; right: 10px; top: 0}
+</style>
+
+
+<section class="text-fields off-page" ng-controller="PromotionController" >
+  <!-- <div class=" ml-header relative clear">
+    <div class="p-20">
+      <h3 class=" m-t-20 m-b-5">Add Offer</h3>
+      <h4 class="mdl-color-text--amber-100 m-b-20 no-m-t w100">&nbsp;</h4>
+    </div>
+  </div> -->
+
+  <div class="mdl-grid off-build-page">    
+
+    <div class=" mdl-cell--7-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
+      <div class="p-5 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Step 1 : Design</h2>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+            <div id="success_div" class="alert alert-success">
+                
+            </div>
+             <div id="error_div" class="alert alert-danger">
+                
+            </div>
+          </div>
+          <form name="promotionForm"  novalidate>
+          <div class="p-5 separate-sec">
+              <div class="col-sm-12 relative">
+                <div class="form-group">               
+                  Offer Details
+                  <hr />
+                </div>
+              </div> 
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                      <div  title="Select Campaign from this list.">
+                      <div class="form-group">
+                        <select title="Here you can descri"  required ng-model="campaign_id" class="form-control" id="campaign_id" ng-options="obj.id as obj.campaign_name for obj in campaign_list"></select>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                       <!--  <input type="text" ng-model="camp_min_date" name="camp_min_date" id="camp_min_date" value="" /> -->
+
+                       <select class="form-control">
+                       <option>Sub Catagory</option>
+                       <option>Sub Catagory1</option>
+                       <option>Sub Catagory2</option>
+                       <option>Sub Catagory3</option>
+                       </select>
+
+                      </div>
+                      <div class="form-group">
+                        <!-- <input type="text" ng-model="camp_max_date" name="camp_min_date" id="camp_max_date" value="" /> -->
+
+                        <select class="form-control">
+                       <option>Sub Catagory</option>
+                       <option>Sub Catagory1</option>
+                       <option>Sub Catagory2</option>
+                       <option>Sub Catagory3</option>
+                       </select>
+
+                      </div>
+
+                      <div class="row">
+                      <div class="col-sm-6" title="Select start date of your current offer.">
+                        <div class="form-group">                   
+                          <input ng-model="promotion.c_s_date" class="mdl-textfield__input cal" type="text" id="c_s_date" placeholder="Start Date"  />                     
+                        </div>
+                      </div> 
+                      <div class="col-sm-6 " title="Select End date of your current offer.">
+                        <div class="form-group custom-margin">                   
+                          <input ng-model="promotion.c_e_date" class="mdl-textfield__input cal" type="text" id="c_e_date" placeholder="End Date"  />
+                          <span class="red-txt">Default 24 hour</span>
+                        </div>
+
+                      </div>  
+
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                      <div class="form-group" title="Write number of Reedemer you want to add.">                   
+                      <input required type="text" ng-model="promotion.total_redeemar" id="total_redeemar" placeholder="No. redeemars" class="form-control" >
+                      </div>
+
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                      <a class="offer-val-btn" href="#">Offer Validation</a>
+
+                      <div class="on-demand">
+                      <input type="checkbox"> Offer On Demand 
+                      </div>
+                    </div>
+                    </div> 
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Meta Tags"  />
+                        </div>  
+                    </div>    
+                    </div>
+
+
+
+
+
+                  </div> 
+                  <div class="col-md-6 col-sm-6">
+                  <div class="row">
+                  <div class="col-md-4 col-sm-4 no-right-padding">
+                    <div class="form-group" title="Add a new campaign">
+                      <a value="1" class=" various fancybox.iframe put_href" href="../campaign/showaddform"> 
+                       <span class="choose choose-btn choose-btn-new">Add new</span>
+                     </a>
+                    </div>
+                  </div> 
+                  <div class="col-md-7 col-sm-7 no-padding">
+                    <div class="camp-date green">MM/DD/YY - MM/DD/YY</div>
+                    <div class="camp-date">Campaign Date</div>
+                  </div>
+
+                  </div>  
+                    <div class="form-group off-descrip" title="Write Offer Description in short."> 
+                    <label>Offer Description</label>                   
+                    <textarea title="Here you can put some text" required class="form-control"  ng-model="offer_description" placeholder="Offer Description" rows="2" id="offer_description" maxlength="60"  ng-Trim="false"  ></textarea>
+                    </div>
+
+                    <div class="form-group" title="Write brief description of your current offer.">  
+                    <label>Full Description</label>                  
+                    <textarea class="form-control full-descrip" ng-model="what_you_get" placeholder="What You Get" rows="2" id="what_you_get" maxlength="100" ng-Trim="false"></textarea>
+                    </div>
+
+
+
+                  </div>  
+
+
+
+
+
+
+                  
+                  <div class="col-sm-4" >
+                    
+                  </div>
+                
+                </div>
+                  
+              </div>
+              
+
+              
+             
+              <div class="col-sm-12 nopadding"> 
+                <div class="row" >
+                <div class="col-sm-12">
+                  
+                </div>
+              
+                
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 nopadding">
+                  <div class="col-sm-3 nopadding-right" style="padding-left:0; padding:0" >
+                    
+                  </div>
+                  <div class="col-sm-3" title="Write the price amount they can Reedem.">
+                    <div class="form-group">
+                      <!-- <input type="text" ng-model="promotion.total_redeemar_price" id="total_redeemar_price" placeholder="Price" class="form-control"  > -->
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                      
+                  </div>  
+                </div>
+                </div>  
+              </div>
+              <div class="col-sm-12 nopadding"> 
+                <!-- <div class="row">
+                <div class="col-sm-6 ">
+                  <div class="row">
+                  <div class="col-sm-6 nopadding">
+                    <div class="form-group">                   
+                      <input ng-model="promotion.c_s_date" class="mdl-textfield__input" type="text" id="c_s_date" placeholder="Start Date"  />                     
+                    </div>
+                  </div>
+                  <div class="col-sm-6 nopadding-right">
+                    <div class="form-group">                   
+                      <input ng-model="promotion.c_e_date" class="mdl-textfield__input" type="text" id="c_e_date" placeholder="End Date"  />
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div> -->
+                <!-- <div class="col-sm-6">
+                  <div class="col-sm-6 nopadding">
+                    <div class="form-group">                   
+                      <input value="0.65" type="radio" name="total_payment" id="checkbox-2" class="mdl-checkbox__input" checked />
+                      <span class="mdl-checkbox__label">PrePay .65</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 nopadding">
+                    <div class="form-group">                   
+                      <input value="1.05" type="radio" name="total_payment" id="checkbox-3" class="mdl-checkbox__input" />
+                      <span class="mdl-checkbox__label">Pay on validation 1.05</span>
+                    </div>
+                  </div>
+                </div> -->
+                <div style="display:none">
+                  <input value="1" type="radio" name="total_payment" id="checkbox-2" class="mdl-checkbox__input" checked />
+                </div>
+                <div class="row">
+                <div class="col-sm-6" >
+                  
+                </div>
+
+                <div class="col-sm-6" title="Write more information for your current offer.">
+                  <div class="form-group">                    
+                    <!-- <textarea class="form-control" ng-model="promotion.more_information" placeholder="More Information About the Deal" rows="2" id="more_information"></textarea> -->
+                  </div>
+                </div>
+                  </div>
+              </div>
+          </div> 
+          
+          <div class="p-5 separate-sec">
+              <div class="col-sm-12 relative">
+                <div class="form-group">               
+                  OFFER IMAGE
+                  <hr />
+                </div>
+              </div> 
+              <div class="col-sm-12"> 
+                <div class="row">
+                <div class="col-sm-6"> 
+                  <div class="nopadding">
+                  <input value="2" type="radio" name="choose_image" id="checkbox-8" class="mdl-checkbox__input" title="Select your current company logo" /> <span class="choose"  title="Select your current company logo">Use My logo</span> <br>
+                  <input value="1" type="radio" name="choose_image" id="checkbox-7" class="mdl-checkbox__input" checked  title="Choose image from your Image Repository. Or upload an Image."/> <span class="choose" title="Choose image from your Image Repository. Or upload an Image.">Choose Image From Repository</span>
+                  </div>
+                  <br>
+                  <div class="image_chooser">
+                      <div class="get_val_rel"></div>
+                      <a value="1" class=" various fancybox.iframe put_href" href="{{file_path}}../../filemanager" title="Choose image from your Image Repository. Or upload an Image."> 
+                          <button  type="button" class="choose-btn">Import Image</button>
+                      </a>
+
+                  </div>
+                  <br>
+                  <a value="1" class=" various fancybox.iframe put_href choose-btn" href="{{file_path}}../../admin/public/index.php/directory/uploadrepoform" title="Upload new image by clicking on this button from your computer"> 
+                        Upload Image
+                      </a>
+
+                </div>
+
+                 <div class="col-sm-6 align-center"> 
+                    <div class="border-image">
+                    <img class="campaign_image_show" ng-src="{{file_path}}../uploads/no-image-found.gif" width="150" />
+                    </div>
+                  <input type="hidden" name="camp_img_id" id="camp_img_id" value="" />
+                  <!-- <input type="text" name="user_folder_id_first" id="user_folder_id_first" value="60" /> -->
+                </div>
+                  </div>
+                  <br>
+              </div>
+              
+          </div>
+
+          <div class="p-5 separate-sec">
+            <div class="col-sm-12 relative">
+              <div class="form-group">               
+                OFFER ASSETS
+                <hr />
+              </div>
+            </div>              
+            <div class="col-sm-12">
+              <div class="row">
+              <div class="col-sm-12">
+
+                 <input class="choose-btn" type='button' ng-click="addNewChoice()" value='Add More Inventory{{choices.id}}' id='saddButton' title="Add another option to select Inventory">
+
+                  <a value="1" class=" various fancybox.iframe put_href" href="../inventory/showaddform" title="Add new Inventory."> 
+                 <span class="choose choose-btn">Add New Inventory Item</span>
+               </a>
+              </div>
+
+              
+              </div>
+              <br>
+            </div>
+            <div class="col-sm-12 nopadding" data-ng-repeat="choice in choices">
+              <div class="row repeat-row relative">
+              <div class="col-sm-7 nopadding">
+                <div class="row">
+                <div class="col-sm-12 " title="Choose an Inventory from the drop down list">
+                  <div class="nopadding">  
+                     <select ng-model="inventory_id" ng-change="get_inventory(inventory_id, choice.id)" id="inventory_list{{choice.id}}" class="inventory_class" >
+                        <option value="">-- Choose an option --</option>
+                        <option value="{{inventory.id}}" ng-repeat="inventory in inventory_list" >{{inventory.inventory_name}}</option>
+                    </select> 
+                  </div>
+                </div>
+              </div>
+              <br>
+                <div class="row">
+                <div class="col-sm-12 ">
+                  <div class="row">
+                  <div class="col-sm-5 nopadding margin-right-5" title="Here you are getting total Inventory cost">
+                    <input type="text" ng-model="promotion.cost" id="cost{{choice.id}}" placeholder="Cost" class="form-control inventory_cost"   title="Here you are getting total Inventory cost">
+                  </div>
+                  <div class="col-sm-6 nopadding" title="Here you are getting total Selling price.">
+                    <input type="text" name="selling_price" ng-model="promotion.selling_price" id="selling_price{{choice.id}}" placeholder="Selling Price" class="form-control selling_price_class" title="Here you are getting total Selling price.">
+                  </div>
+                  </div>
+                </div>
+                  </div>
+                  <div class="row">
+                <div class="col-sm-12 ">
+                 <!--  <button class="remove" ng-show="$last" ng-click="removeChoice()" ng-if="choices.length > 1">-</button> -->
+                  
+                </div>
+              </div>
+              </div>
+              
+              <div class="col-sm-5 ">
+                 <div class="border-image"> 
+                 <img class="inventory_image_class" ng-src="{{file_path}}../uploads/no-image-found.gif" id="inventory_image{{choice.id}}" width="150" /> 
+                </div>
+              </div>
+              <span class="remove-icon" title="Remove this Inventory.">
+                  <i class="fa fa-trash remove" aria-hidden="true" ng-show="$last" ng-click="removeChoice()" ng-if="choices.length > 1" title="Remove this Inventory."></i>
+                  </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 ">
+              <div class="">
+              <div class="col-sm-12 relative">
+                <div class="form-group">               
+                  OFFER MARGIN
+                  <hr />
+                </div>
+              </div>             
+              </div>
+
+              <div class="col-sm-12">              
+                <div id="margin_up" class="alert alert-success" ng-if="margin_markup >15">
+                    This offer is above your desire margin.
+                </div>
+                <div id="margin_down" class="alert alert-danger" ng-if="margin_markup <=15">
+                    This offer is below your desire margin.
+                </div>              
+              </div>
+
+
+
+              <div class="">
+              <div class="col-sm-12">
+                <div class="row">
+                <div class="col-sm-3" title="Here you will get the margin of cost.">     
+                  <div class=""> 
+                             
+                    <input type="text" readonly ng-model="margin_cost" id="margin_cost" placeholder="Cost($)" class="form-control" title="Here you will get the margin of cost.">      
+                  </div>
+                </div>
+                <div class="col-sm-3 " title="Here you can set the Gross Margin of cost. You can also modify it if needed.">               
+                  <div class="">  
+                    
+                    <!-- <div ng-bind="calculate_margin_val"></div> -->
+                    <input type="text" ng-keyup="new_price_calculate()" ng-model="gross_margin" id="gross_margin" placeholder="Gross Margin($)" class="form-control" title="Here you can set the Gross Margin of cost. You can also modify it if needed.">       
+                  </div>    
+                </div>
+                <div class="col-sm-3 " title="Here you can get the Markup of cost."> 
+                  <input type="text" ng-keyup="new_price_markup()" ng-model="margin_markup" id="margin_markup" placeholder="Markup(%)" class="form-control"> 
+
+                </div>
+                <div class="col-sm-3 " title="Here you can get the New Offer Price. You can modify it if needed."> 
+                  <input type="text" ng-keyup="offer_new_price()" ng-model="margin_price" id="margin_price" placeholder="New Price($)" class="form-control" title="Here you can get the New Offer Price. You can modify it if needed."> 
+
+                </div>  
+
+
+                <br><br>
+                </div>
+              </div>
+
+              </div>
+
+             
+              
+          </div>
+
+          <div class="p-5 separate-sec">
+              <div class="col-sm-12 relative">
+                <div class="form-group">               
+                  OFFER VALUE
+                  <hr />
+                </div>
+              </div>
+              <div class="col-sm-12 nopadding">
+                <div class="row">
+                <div class="col-sm-4" title="Here you can get the New Offer Price.">               
+                   <input type="text" ng-model="pay_value" ng-change="retails_value_change()" id="pay_value" placeholder="$ Pay" class="form-control"  title="Here you can get the New Offer Price.">
+                </div>
+                <div class="col-sm-4" title="Here you can get the New Retail Price.">               
+                   <input type="text" id="retails_value" placeholder="$ Retail Value" class="form-control retail_value_class" ng-model="retail_value" ng-change="retails_value_change()" title="Here you can get the New Retail Price.">
+                </div>
+                <div class="col-sm-4 no-padding" title="By selecting this you will add the price of the product.">               
+                   <input ng-click="include_price(choice.id)" value="1" type="checkbox" name="include_product_value" id="include_product_value" class="mdl-checkbox__input"  title="By selecting this you will add the price of the product."/>
+                      <span class="mdl-checkbox__label"><span class="choose">Include Product Value</span></span>
+                </div>
+                </div>
+                <br>
+              </div>
+            
+              <div class="col-sm-12 nopadding">
+                <div class="row">
+                <div class="col-sm-4" title="It'll show the offer as 50% OFF or $50 OFF for your offer.">
+                   <div class="col-sm-12" style="mardin:0; padding:0" title="It'll show the offer as 50% OFF or $50 OFF for your offer.">    
+                    <input type="text" ng-model="off_value" id="off_value" placeholder="" class="form-control" >
+                  </div>
+                  <div class="col-sm-6" style="mardin:0; padding:0">    
+                    <input type="radio" ng-click="set_discount()" name="value_calculate" value="1" checked="checked" ng-model="value_calculate"/> %
+                  </div>
+                  <div class="col-sm-6" style="mardin:0; padding:0" >    
+                    <input type="radio" ng-click="set_discount()" name="value_calculate" value="2" ng-model="value_calculate"/> $
+                  </div>
+                </div>
+                <div class="col-sm-4" title="It'll show the offer as 50% Discount or $50 Discount for your offer.">  
+                   <div class="col-sm-12" style="mardin:0; padding:0" title="It'll show the offer as 50% DISCOUNT or $50 DISCOUNT for your offer.">    
+                   <input type="text" ng-model="discount_value" id="discount_value" placeholder="" class="form-control">
+                  </div>
+                  <div class="col-sm-6" style="mardin:0; padding:0">    
+                    <input type="radio" ng-click="set_discount()" name="value_calculate" value="3" ng-model="value_calculate"/> %
+                  </div>
+                  <div class="col-sm-6" style="mardin:0; padding:0" >    
+                    <input type="radio" ng-click="set_discount()" name="value_calculate" value="4" ng-model="value_calculate" /> $
+                  </div>
+                </div>
+                <div class="col-sm-4 nopadding" title="It'll show the offer as 50% SAVING or $50 SAVING for your offer.">               
+                  <div class="col-sm-12" style="mardin:0; padding:0">    
+                    <input type="text" ng-model="saving_value" id="saving_value" placeholder="" class="form-control">
+                  </div>
+                  <div class="col-sm-6" style="mardin:0; padding:0">    
+                    <input type="radio" ng-click="set_discount()" name="value_calculate" value="5" ng-model="value_calculate" /> %
+                  </div>
+                  <div class="col-sm-6" style="mardin:0; padding:0" >    
+                    <input type="radio" ng-click="set_discount()" name="value_calculate" value="6" ng-model="value_calculate" /> $
+                  </div>
+                </div>
+                </div>
+                <br>
+              </div>
+          </div>
+
+          <div class="p-5 separate-sec">
+            <div class="col-sm-12 relative">
+              <div class="form-group">               
+                OFFER VALIDATION
+                <hr />
+              </div>
+            </div> 
+            <div class="col-sm-12">
+              <div class="row">
+              <div class="col-sm-6" title="set after how many hours offer will be valid.">
+                <label>Validate After</label>
+                <input type="text" ng-model="validate_after" id="validate_after" placeholder="Hour" class="form-control input-80"  title="Set after how many hours, this offer will be valid." >
+                
+              </div>
+              <div class="col-sm-6" title="set the hour value still when this offer will be valid.">
+                 <label>Validate within</label>  
+                 <input type="text" ng-model="validate_within" id="validate_within" placeholder="Hour" class="form-control input-80"  title="Set the hour, till when this offer will be valid." >
+                     
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-6">
+                <article class="val-slide">
+                  <label>Select hours</label>
+                  <rzslider
+                    rz-slider-model="validate_after_hour.value"
+                    rz-slider-options="validate_after_hour.options"
+                  ></rzslider>
+                  <br><br>
+                  <label>Select Days</label>
+                  <rzslider
+                    rz-slider-model="validate_after_days.value"
+                    rz-slider-options="validate_after_days.options"
+                  ></rzslider>
+                </article>
+
+
+              </div> 
+              <div class="col-md-6">
+                <article class="val-slide">
+                  <label>Select hours</label>
+                  <rzslider
+                    rz-slider-model="validate_within_hour.value"
+                    rz-slider-options="validate_within_hour.options"
+                  ></rzslider>
+                  <br><br>
+                  <label>Select Days</label>
+                  <rzslider
+                    rz-slider-model="validate_within_days.value"
+                    rz-slider-options="validate_within_days.options"
+                  ></rzslider>
+                </article>
+
+
+              </div>  
+
+
+
+            </div>  
+            
+            <!-- <div class="row">
+              <div class="col-sm-6">
+                               
+              </div>
+              <div class="col-sm-6">
+                               
+              </div> 
+              </div> -->
+              <br>            
+            </div>
+            <br>
+          </div>
+
+          <div class="p-5 separate-sec ">
+              <div class="col-sm-12">
+                <div class="form-group" title="Save this offer by clicking on this button after giving all the details.">               
+                  <button id="add_offer" ng-disabled="promotionForm.$invalid" ng-click="add_offer()"   class="choose choose-btn" style="cursor: pointer !important;">
+                  Save
+                  </button>  
+                </div>
+              </div>              
+          </div>
+        </form>
+        </div>
+      </div>
+      <div class="p-40 p-r-20 p-20--small">
+        <div class=" mdl-color-text--blue-grey-400">
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>          
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div class=" mdl-cell--5-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-color--grey-100 right-panel">
+      <div class="p-5 ml-card-holder ml-card-holder-first">
+        <div class="mdl-card">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Preview</h2>
+            </div>
+            <div class="mdl-tabs mdl-js-tabs">
+                <div class="mdl-tabs__tab-bar">
+                  <a href="#mobile" class="mdl-tabs__tab is-active">Mobile</a>
+                  <a href="#web" class="mdl-tabs__tab">Web</a>                  
+                </div>
+
+                <div class="mdl-tabs__panel is-active" id="mobile">
+                  <div class="p-20">
+                    <!--<div class="col-sm-12 image_box">
+                      
+                       <img class="campaign_image_show" ng-src="{{file_path}}../uploads/no-image-found.gif" width="265" />
+                      <div class="logo_img_box" style="opacity:0.8">                       
+                        <img ng-src="{{site_path}}../uploads/original/{{ReedemerDetails.logo_image}}" class="demo-avatar img-responsive" width="100"  />
+                      </div> 
+                    </div>-->
+                    <!-- <div class="col-sm-12 small-text" style="margin:0; padding:0">
+                      <div class="row">
+                      <div class="col-sm-6 break_work green_text" ng-bind="offer_description" style="margin:0; padding:0"  >
+
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row">
+                        <div class="col-sm-6 green_text">
+                          <span>Pay</span>
+                          $<span id="pay_value_show">{{pay_value}}</span>
+                        </div>
+                        <div class="col-sm-6 green_text">
+                          <span id="save_text_show"></span>
+                          <span id="save_value_show"></span>
+                        </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div> -->
+
+                   <!--  <div class="col-sm-12 small-text">
+                      <div class="col-sm-6"   >
+                        &nbsp;
+                      </div>
+                      <div class="col-sm-6" style="margin:0; padding:0">
+                        <div class="col-sm-6" style="margin:0; padding:0">
+                          <span class="small_text" id="value_show">
+                           
+                          </span> 
+                        </div>
+                        <div class="col-sm-6" style="margin:0; padding:0">
+                          <span class="small_text " id="expire_in_show">
+                            Expires in <span class="expires_in">0</span> Days
+                          </span>                          
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="scroll-height">
+                    <div class="col-sm-12 product-box">
+                      <div class="row">
+                        <div class="col-md-5">
+                          <div class="product-pic">                           
+
+                            <img class="campaign_image_show" ng-src="{{file_path}}../uploads/no-image-found.gif" width="150" />
+                            <div class="logo_img_box" style="opacity:0.8">                       
+                              <img ng-src="{{site_path}}../uploads/original/{{ReedemerDetails.logo_image}}" class="demo-avatar img-responsive" width="100"  />
+                            </div>  
+                          </div>  
+                        </div>
+                        <div class="col-md-7">
+                          <div class="product-title" ng-bind="offer_description">Get 20% OFF on all Canon Camera </div>
+                          <div class="product-savings">
+                            <p ng-bind="reedemar_price_range">$$$</p>
+                            <p>
+                              <i aria-hidden="true" class="fa fa-star"></i>
+                              <i aria-hidden="true" class="fa fa-star"></i>
+                              <i aria-hidden="true" class="fa fa-star"></i>
+                              <i aria-hidden="true" class="fa fa-star"></i>
+                              <i aria-hidden="true" class="fa fa-star"></i>
+                            </p> 
+                            <p class="savings">
+                              <span class="save_value_show"></span>
+                              <span class="save_text_show"></span>
+                            </p> 
+                            
+                            <p class="expire-time expire_in_show">*Expire in 20 Days</p>
+
+                          </div>  
+
+
+                        </div>  
+
+                      </div>  
+                    </div> 
+
+                    <div class="col-sm-12 product-box">
+                      <div class="product-pic1">
+                            <img class="campaign_image_show" ng-src="{{file_path}}../uploads/no-image-found.gif" width="150" />
+                            <div class="logo_img_box" style="opacity:0.8">                       
+                              <img ng-src="{{site_path}}../uploads/original/{{ReedemerDetails.logo_image}}" class="demo-avatar img-responsive" width="100"  />
+                            </div>   
+
+                        <div class="p-add">DN10, Salt Lake</div>  
+                        <div class="flash-offer">
+                          Get 20% OFF on all Canon Camera
+                        </div>  
+                        <div class="product-savings align-center">
+                          <div class="p-offer ">
+                              <span class="save_value_show"></span>
+                              <span class="save_text_show"></span>
+                          </div>
+                          <p ng-bind="reedemar_price_range">$$$</p>
+                          <p>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                          </p>
+                          <div class="p-cat">Camera</div>
+                          <div class="row p-data">
+                            <div class="col-md-4 col-sm-4">
+                              Value
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                              Pay
+                            </div> 
+                            <div class="col-md-4 col-sm-4">
+                              Save
+                            </div> 
+                              
+
+                          </div>
+                          <div class="row p-data">
+                            <div class="col-md-4 col-sm-4">
+                              $1770
+                            </div> 
+                            <div class="col-md-4 col-sm-4">
+                              $1699.2
+                            </div> 
+                            <div class="col-md-4 col-sm-4">
+                              4%
+                            </div> 
+                             
+
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-4 no-padding">
+                              <a class="pass-btn">Pass</a>
+                            </div>
+                            <div class="col-md-8 ">
+                              <a class="bank-btn">Bank</a>
+                            </div>  
+
+
+                          </div>
+                          <br>  
+                          <div class="add-frame">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7368.089126612789!2d88.42761294422279!3d22.577436547050986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275a560a57ce9%3A0x63162e87b4dbfe20!2sDN+Block%2C+Sector+V%2C+Salt+Lake+City%2C+Kolkata%2C+West+Bengal+700091!5e0!3m2!1sen!2sin!4v1465220278540" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                          </div>
+                          <br>
+                          <div class="row"> 
+                            <div class="col-md-12">
+                              <div class="expire-section">
+                              *Expires in 83 days
+                              </div>
+                            </div>
+                          </div>  
+                        </div>  
+
+                      </div> 
+
+                      <div class="row">
+
+
+
+
+                      </div>
+                    </div> 
+                    </div>
+
+
+                  </div>
+                </div>
+                <div class="mdl-tabs__panel" id="web">
+                  <div class="p-20">
+                      <div class="img-column"> 
+                      <div class="align-center">                     
+                      <img class="campaign_image_show" ng-src="{{file_path}}../uploads/no-image-found.gif" width="150" />
+                      </div>
+                            <div class="logo_img_box" style="opacity:0.8">
+                              <img ng-src="{{site_path}}../uploads/original/{{ReedemerDetails.logo_image}}" class="demo-avatar img-responsive" width="265"  />
+                            </div>  
+
+
+                      <div class="tab-product">
+                                <!-- <div class="product-title" ng-bind="offer_description">this is a demo offer with original image </div> -->
+                                <div class="product-title" ng-bind="offer_description"> </div>
+                                <div class="product-savings">
+                                <p ng-bind="reedemar_price_range"></p>
+                                <i aria-hidden="true" class="fa fa-star"></i>
+                                <i aria-hidden="true" class="fa fa-star"></i>
+                                <i aria-hidden="true" class="fa fa-star"></i>
+                                <i aria-hidden="true" class="fa fa-star-o"></i>
+                                <span class="savings">
+                                  <span class="save_value_show"></span>
+                                  <span class="saving-text save_text_show">
+                                  </span>
+                                </span>
+                                </div>
+                                <div class="col-expires expire_in_show">
+                                </div>
+                            </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="mdl-tabs__panel" id="targaryens-panel">
+                  <div class="p-20">
+                    <div class="col-sm-12 ">
+                      <img class="campaign_image_show" ng-src="{{file_path}}../uploads/no-image-found.gif" width="265" />
+                    </div>
+                    <div class="col-sm-12 green_text break_work_80" ng-bind="offer_description"   >
+
+                    </div>
+                    <div class="col-sm-12 " ng-bind="what_you_get"   >
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- //Preview Section --> 
+
+  </div> 
+
+</section>

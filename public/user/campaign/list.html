@@ -1,0 +1,425 @@
+
+<style>
+  .m-l {
+    margin-left: 5px;
+  }
+  .carousel-control {
+    padding-top:10%;
+    width:5%;
+  }
+
+.default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 166px; width: 344px;
+position: fixed; margin: 0 auto; top: 35%; left: 0; right: 0; 
+bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+
+.default-pop1{background: #fff; /*width: calc(100% - 350px);*/ max-height: 240px; width: 406px; position: fixed; margin: 0 auto; top: 27%; left: 0; right: 0; bottom: 0; z-index: 9999; }
+
+
+/*.default-pop {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid #ccc;
+  bottom: 0;
+  left: 50%;
+  margin-left: -172px;
+  margin-top: -172px;
+  max-height: 166px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 344px;
+  z-index: 9999;
+}*/
+
+
+
+
+.default-pop1-main{padding: 10px 10px 29px;}
+.black-bg{position: absolute; top: 0; display: block;}
+/*.campaign-page{position: relative;}*/
+</style>
+
+<script>
+
+ $(document).ready(function(){
+     $("#hide").click(function(){
+         $(".black-bg").hide();
+         enableScroll();
+     });
+     $("#show").click(function(){
+         $(".black-bg").show();
+         disableScroll();
+     });
+     //$("#hide1").click(function(){
+     //    $(".off-pop").hide();
+     //    enableScroll();
+     //});
+     //$(document).on('click','.show-ofr-popup',function(){
+     //    $(".off-pop").show();
+     //    disableScroll();
+     //});
+     //
+ });
+
+ 
+     
+     
+
+
+ // left: 37, up: 38, right: 39, down: 40,
+// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+  e.returnValue = false;  
+}
+
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+
+function enableScroll() {
+  $(".black-bg").hide();
+    if (window.removeEventListener)
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.onmousewheel = document.onmousewheel = null; 
+    window.onwheel = null; 
+    window.ontouchmove = null;  
+    document.onkeydown = null;  
+}
+</script>
+
+<section ng-controller="CampaignAddController">
+    <div class="campaign-page">
+      <div class="black-bg" ng-if="showCampaignEditPopup">
+          <div class="default-pop">
+
+                          
+            <span class="cross-default-pop" id="hide" data-ng-click="redirect_edit(campaign.id, currentPageChanged);"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+            
+            <div class="invent-pop">
+              <div class="container">
+                <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                    <input class="form-control" type="text" placeholder="Campaign Name" ng-model="campaign.campaign_name" id="c_e_name">
+                  </div>
+                </div>
+                </div>
+                <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 camp-cal">
+                    <input ng-model="c_s_e_date" class="form-control cal" type="text" id="c_s_e_date" placeholder="Start Date" />
+                  </div>
+                  <div class="col-md-6 col-sm-6 ">
+                    <input ng-model="c_e_e_date" class="form-control cal" type="text" id="c_e_e_date" placeholder="End Date" />
+                  </div>
+                  
+                </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                      <a class="done-btn" href="" ng-click = "editCampaignDone()">Done</a>
+                                              
+                    </div>
+                    
+                  </div>  
+                </div>
+              </div>
+            </div>  
+          </div>
+      </div>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="page-heading">
+                <h3>Campaign List</h3>
+              </div>
+              <div class="m-b-30">
+                <table class="mdl-data-table ml-table-bordered mdl-js-data-table pointer-table">
+                    <colgroup>
+                      <col class="auto-cell-size p-r-20">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Campaign Name</th>
+                        <th class="mdl-data-table__cell--non-numeric">Start date</th>
+                        <th class="mdl-data-table__cell--non-numeric">End date</th>
+                        <th class="mdl-data-table__cell--non-numeric">Campaign Offers</th>
+                        <th class="mdl-data-table__cell--non-numeric">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-if="campaign_details.length" dir-paginate="campaign in campaign_details|itemsPerPage:10 track by $index" current-page="pagination.current">              
+                      <tr>
+                        <td ng-click="showOrHideAllOffer(campaign.id)">{{campaign.campaign_name}}</td>                
+                        <td ng-click="showOrHideAllOffer(campaign.id)">
+                          {{campaign.start_date.split('-')[1]+'/'+campaign.start_date.split('-')[2]+'/'+campaign.start_date.split('-')[0] }}   
+
+                        </td>
+                        <td ng-click="showOrHideAllOffer(campaign.id)">                  
+                          {{campaign.end_date.split('-')[1]+'/'+campaign.end_date.split('-')[2]+'/'+campaign.end_date.split('-')[0] }} 
+                        </td>
+                        <td ng-click="showOrHideAllOffer(campaign.id)">{{campaign.total_offer}}<i class="fa fa-angle-down m-l" ng-if="campaignItemIndex == campaign.id" ></i><i class="fa fa-angle-up m-l" ng-if="campaignItemIndex != campaign.id"></i>
+                        </td>
+                        <td>
+                          <img class="delete_row" id="show" width="20" ng-src="{{file_path}}images/edit.png" title="Edit Campaign" data-ng-click="redirect_edit(campaign.id, currentPageChanged);">
+
+                          <img title="Delete Campaign" class="delete_row" ng-src="{{file_path}}images/delete.png" width="16" style="cursor:pointer" data-ng-click="delete_campaign(campaign.id);"/>
+
+                          <img title="Add Offer to this Campaign" class="delete_row" ng-src="{{file_path}}images/add_new.png" width="20" style="cursor:pointer" ng-click="addNewOffer(campaign.id)" />
+
+                        </td>
+                      </tr>
+                    </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div> 
+                      <tr ng-if="campaignItemIndex == campaign.id" style="border-top: 0px !important;">
+                        <td colspan="8">
+                          <div class="">
+                              <div class="col-xs-12 col-sm-12 camp-tr">
+                                 <div class="row">
+                                    
+                                   
+                                    <div class="col-md-9 col-sm-9 no-padding" ng-if="allOfferList.length">
+                                        <div id="myCarousel-{{campaign.id}}" data-interval="false" data-type="multiple"  class="carousel slide multi-item-carousel" data-ride="carousel">
+                                        <div class="carousel-inner" >
+                                        
+                                          <div class="item {{$first?'active':''}}" ng-repeat="offer in allOfferList"  ng-if="$index % 3 == 0"  ng-init="minIndex=$index">
+                                            <div class="show-ofr-popup col-md-4 col-sm-4 col-xs-4 no-padding1" data-ng-repeat="i in [0,1,2]" ng-init="key=minIndex+i"   >
+                                                <div class="camp-dev" ng-if="allOfferList[key]" >
+                                                <!--<a value="1" class=" various fancybox.iframe put_href" href="campaign/index1.html" title=""></a>-->
+                                                <div class="camp-img-height">
+                                                <img ng-if="allOfferList[key].is_file_exist" alt="{{allOfferList[key].offer_description}}" src="{{root_base_url}}{{allOfferList[key].offer_image_path}}">
+                                                <img ng-if="!allOfferList[key].is_file_exist" alt="{{allOfferList[key].offer_description}}" src="{{file_path}}images/no-image.png">
+                                                </div>
+                                                <div class="campaign-offer-logo">
+                                                  <img ng-src="{{file_path}}../uploads/original/{{default_logo_image.replace('jpg','png')}}" alt="img">
+                                                </div>
+                                                  <div class="campaign-heading">
+                                                    {{(allOfferList[key].offer_description).substring(0,30)}}
+                                                  </div>
+                                                  
+                                                  <div class="row">
+                                                            <div class="col-md-7 col-sm-7">
+                                                               <div class="off-percentage">
+                                                                <span class="savings">
+                                                                  <span ng-if="allOfferList[key].value_calculate == 1">${{ allOfferList[key].discountvalue}}</span>
+                                                                  <span ng-if="allOfferList[key].value_calculate == 2"> {{ allOfferList[key].discountvalue}}%</span>
+                                                                  <span ng-if="allOfferList[key].value_text == 1">Off</span>
+                                                                  <span ng-if="allOfferList[key].value_text == 2">Discount</span>
+                                                                  <span ng-if="allOfferList[key].value_text == 3">Saving</span>
+                                                                </span>
+                                                              </div>
+                                                              <div class="camp-location">
+                                                                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                  {{allOfferList[key].location}}
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-md-5 col-sm-5 no-padding-left">
+                                                               <div class="before-price">${{allOfferList[key].retails_value}}</div>
+                                                               <div class="after-price">${{allOfferList[key].pay_value}}</div>
+                                                            </div>
+                                                  </div>
+                                                  <div class="blacky-glass">
+                                                    <div class="blacky-glass-main">
+                                                    <ul>
+                                                      <li>
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit offer details" data-ng-click=" editOffer(allOfferList[key])"></i>
+
+                                                      </li>
+                                                      <li>
+                                                        <i data-ng-click="setStatOffer(allOfferList[key])" class="fa fa-search" aria-hidden="true" title="View offer details"></i>
+
+                                                      </li>
+                                                      <li ng-if="allOfferList[key].published != 'true'">
+                                                        <i class="fa fa-trash" aria-hidden="true" ng-click="deleteDraftOffer(allOfferList[key].id)"></i>
+                                                      </li>
+                                                    </ul>
+                                                    </div>  
+                                                  </div>
+                                                  <div class="on-demand-tag1" ng-if="allOfferList[key].published != 'true'">
+                                                    Draft Offers
+                                                  </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          
+                                        </div>
+
+                                        <div  ng-show="allOfferList.length>3">
+                                          <a class="left carousel-control" data-target="#myCarousel-0" ng-non-bindable data-slide="prev"></a>
+                                          <a class="right carousel-control" data-target="#myCarousel-0" ng-non-bindable data-slide="next"></a>
+                                        </div>
+
+                                        
+                                     </div>  
+
+
+                       <!-- This is static carosal  -->                           
+                       
+                          </div>
+                                    <div class="col-md-3 col-sm-3">
+                                      <div class="campaign-main">
+                                        <ul>                      
+                                          <li>
+                                            <div class="single-campaign">
+                                            <div class="add-more">
+                                              <a ng-click="addNewOffer(campaign.id)">Add new offer </br>to this Campaign</a>
+                                            </div> 
+                                            </div> 
+                                          </li>
+                                        
+                                        </ul>  
+                                      </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </td>
+                      </tr>
+                    </tbody>      
+                    <tbody ng-if="campaign_details.length > 10">
+                      <tr>
+                        <td colspan="6" class="text-center">
+                          <dir-pagination-controls
+                            max-size="7"
+                            direction-links="true"
+                            boundary-links="true" >
+                          </dir-pagination-controls>
+                        </td>
+                      </tr> 
+                    </tbody>         
+                    <tbody ng-if="!campaign_details.length">
+                      <tr>
+                        <td class="center" colspan="5">No data present</td>                
+                      </tr>
+                    </tbody> 
+                              
+                </table>
+
+                </div>
+
+                <div class="tags m-t-20 ">
+                  <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn" ng-click="showAddCampaign()">Add Campaign</a>
+                </div>
+
+               
+                
+                <div class="bottom-div">
+                  <div class="campaign-adding" ng-if="showAddCampaignDiv">
+                     <div class="row">
+                        <div class="col-md-8 col-sm-8">
+                           <input class="form-control" type="text" placeholder="Campaign Name" ng-model="Campaign.c_name" id="c_name">
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                           <input ng-model="Campaign.c_s_date" class="form-control cal" type="text" id="c_s_date" placeholder="Start Date" />
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                           <input ng-model="Campaign.c_e_date"  class="form-control cal" type="text" id="c_e_date" placeholder="End Date" />
+                        </div>
+                     </div>
+                     <div class="tags m-t-20 ">
+                        <a class="done-btn" href="" ng-click = "addCampaign()">Done</a>
+                     </div>
+                  </div>
+                </div>
+                
+                
+              </div>
+          </div>
+        </div>
+
+    </div>
+    
+    <!---------- TEST -------------------------->
+    
+    <!-----------END TEST ---------------------->
+    
+    <div class="off-pop" style="display:{{statOffer.id?'block':'none'}}">
+     
+      <div class="default-pop1">
+      
+      <span class="cross-default-pop" ng-click="unsetStatOffer();">
+        <img src="{{file_path}}images/cross-btn.png" alt="x">
+      </span>
+        <div class="default-pop1-main">
+        <div class="invent-pop no-padding">
+          <div class="container">
+            <div class="default-pop1-heading">  
+              <h2>OFFER STATISTICS ON {{CurDate}}</h2>
+            </div>
+            <div class="row">
+            <div class="col-md-6 col-sm-6 statistic no-padding">  
+            <table class="table">
+              <tr>
+                <td><span class="green-txt">Profit</span></td>
+                <td>:</td>
+                <td>${{statOffer.totalProfit}}</td>
+              </tr>
+              <tr>
+                <td><span class="green-txt">Total offer</span></td>
+                <td>:</td>
+                <td>{{statOffer.max_redeemar}}</td>
+              </tr>
+              <tr>
+                <td><span class="green-txt">Saved</span></td>
+                <td>:</td>
+                <td>{{statOffer.redeepmtcount}}</td>
+              </tr>  
+            </table>
+            </div> 
+            <div class="col-md-6 col-sm-6 statistic no-padding">  
+            <table class="table">
+              <tr>
+                <td><span class="green-txt">Total Value</span></td>
+                <td>:</td>
+                <td>${{statOffer.totalPayValue}}</td>
+              </tr>
+              <tr>
+                <td><span class="green-txt">Scans</span></td>
+                <td>:</td>
+                <td>{{statOffer.scanCount}}</td>
+              </tr>
+              <tr>
+                <td><span class="green-txt">Validated</span></td>
+                <td>:</td>
+                <td>{{statOffer.validatedcount}}</td>
+              </tr>  
+            </table>
+            </div>  
+            </div>
+          </div>
+          
+        </div>
+        </div>
+        <div class="stats-footer">
+          <div class="stats-footer-heading">
+            <h2>Coach Comments</h2> 
+          </div> 
+          <p>
+            This offer continues to be a staple for partner. I have recomended adding
+      one more products to increase the total value and bring in more interest
+          </p>
+        </div>
+      </div>
+  </div>
+</section>

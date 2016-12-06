@@ -1,0 +1,316 @@
+<style type="text/css">
+  .relative{position: relative;}
+  .help{position: absolute; right: 10px; top: 0}
+  #accordion.ui-accordion .ui-accordion-content{width: 100%;}
+  #accordion h3{padding-left: 25px;}
+
+
+  .default-pop{background: #fff; /*width: calc(100% - 350px);*/ max-height: 325px;
+  position: absolute; margin: 0 auto; top: 15%; left: 0; right: 0; 
+  bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 607px;}
+  .cross-default-pop{/*float: right; */cursor: pointer;}
+  .black-bg{background: rgba(0,0,0,0.7); position: absolute; width: 100%; height: 100% !important; display: block; z-index: 9999; overflow-x: none;}
+
+  .import-img-popup .container{width: 100%;}
+  .import-img-single img {border: 1px solid #b7b7b7; max-width: 100%;}
+  .sigle-row {padding-bottom: 25px;}
+  .floate-btn {background: #fff none repeat scroll 0 0; bottom: 0;
+  width: 100%;}
+  /*.import-img-popup {padding: 40px 0; position: relative;}*/
+
+  .import-img-single img{border:1px solid #B7B7B7;}
+  .import-img-single img:hover{border:1px solid #73BF21;}
+  .import-img-single img:focus{border:1px solid #73BF21;}
+  .import-img-single img.active{border:1px solid #73BF21;}
+  .off-build-page .container{max-width: 901px;}
+
+
+  .addnew-pop{background: #fff; max-height: 166px;
+  position: absolute; margin: 0 auto; top: 5%; left: 0; right: 0; 
+  bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc; max-width: 426px;}
+
+
+</style>
+
+
+<script>
+
+ 
+$(document).ready(function(){
+
+$(".offermaker-pop").hide();
+
+$("#hide-offer").click(function(){
+  $(".offermaker-pop").hide();
+  enableScroll();
+});
+$("#show-offer").click(function(){
+
+  $(".offermaker-pop").show();
+  disableScroll();
+});
+
+});
+
+ // left: 37, up: 38, right: 39, down: 40,
+// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+  e.returnValue = false;  
+}
+
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+
+function enableScroll() {
+  $(".black-bg").hide();
+    if (window.removeEventListener)
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.onmousewheel = document.onmousewheel = null; 
+    window.onwheel = null; 
+    window.ontouchmove = null;  
+    document.onkeydown = null;  
+}
+</script>
+
+
+
+
+
+
+<!-- <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script> -->
+
+  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+<!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">-->
+
+
+<section class="text-fields off-page"  >
+
+<span id="show-offer">Show Folder1</span>
+  <div class="offermaker-pop">
+      <div class="offermaker-main">
+        <div class="relative">
+            <span class="cross-default-pop" id="hide-offer" style="cursor: pointer;"><img src="../images/cross-btn.png" alt="x"></span>
+            <div class="offermaker-main-content">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4 col-sm-4 no-padding">
+                    <div class="left-portion">
+                       <div class="folder-cat">
+                          <span><img src="../images/small-folder.jpg" alt="img"></span> deal_details
+                          <div class="sub-folder">
+                          <ul>
+                          <li><span class="img-icon"><img src="../images/image-icon.jpg" alt="img"></span>Large pizza.jpg</li>
+                          <li><span class="img-icon"><img src="../images/image-icon.jpg" alt="img"></span>Large pizza.jpg</li>  
+                          </ul> 
+                          </div>
+                       </div>
+                       <div class="folder-cat">
+                          <span><img src="../images/small-folder.jpg" alt="img"></span> deal_details_thumb
+                       </div>
+                       <div class="folder-cat">
+                          <span><img src="../images/small-folder.jpg" alt="img"></span> deal_details_image
+                       </div> 
+                       <div class="folder-cat">
+                          <span><img src="../images/small-folder.jpg" alt="img"></span> deal_details_thumb
+                       </div> 
+                       <div class="folder-cat">
+                          <span><img src="../images/small-folder.jpg" alt="img"></span> inventory
+                       </div> 
+                       <div class="folder-cat">
+                          <span><img src="../images/small-folder.jpg" alt="img"></span> offer
+                       </div> 
+                       <div class="folder-cat">
+                          <span><img src="../images/small-folder.jpg" alt="img"></span> product
+                       </div> 
+                       <div class="folder-cat">
+                          <span><img src="../images/small-folder.jpg" alt="img"></span> vxzzxv
+                       </div> 
+                    </div>   
+                  </div>
+                  <div class="col-md-8 col-sm-8">
+                    <div class="bigfolder-main">
+                      <div class="row">  
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                        <div class="big-folder">
+                          <img src="../images/large-pizza-new.jpg" alt="img">
+                        </div> 
+                        <div class="big-folder-txt">
+                        deal_details
+                        </div> 
+                        </div> 
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                          <div class="big-folder">
+                            <img src="../images/large-pizza-new.jpg" alt="img">
+                          </div>
+                          <div class="big-folder-txt">
+                          deal_details_thumb
+                          </div> 
+                        </div> 
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                          <div class="big-folder">
+                            <img src="../images/large-pizza-new.jpg" alt="img">
+                          </div>
+                          <div class="big-folder-txt">
+                          home_page_image
+                          </div> 
+                        </div>  
+                      </div>
+                      <div class="row">  
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                        <div class="big-folder">
+                          <img src="../images/large-pizza-new.jpg" alt="img">
+                        </div> 
+                        <div class="big-folder-txt">
+                        deal_details
+                        </div> 
+                        </div> 
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                          <div class="big-folder">
+                            <img src="../images/large-pizza-new.jpg" alt="img">
+                          </div>
+                          <div class="big-folder-txt">
+                          deal_details_thumb
+                          </div> 
+                        </div> 
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                          <div class="big-folder">
+                            <img src="../images/large-pizza-new.jpg" alt="img">
+                          </div>
+                          <div class="big-folder-txt">
+                          home_page_image
+                          </div> 
+                        </div>  
+                      </div>
+                      <div class="row">  
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                        <div class="big-folder">
+                          <img src="../images/large-pizza-new.jpg" alt="img">
+                        </div> 
+                        <div class="big-folder-txt">
+                        deal_details
+                        </div> 
+                        </div> 
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                          <div class="big-folder">
+                            <img src="../images/large-pizza-new.jpg" alt="img">
+                          </div>
+                          <div class="big-folder-txt">
+                          deal_details_thumb
+                          </div> 
+                        </div> 
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                          <div class="big-folder">
+                            <img src="../images/large-pizza-new.jpg" alt="img">
+                          </div>
+                          <div class="big-folder-txt">
+                          home_page_image
+                          </div> 
+                        </div>  
+                      </div>
+                      <div class="row">  
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                        <div class="big-folder">
+                          <img src="../images/large-pizza-new.jpg" alt="img">
+                        </div> 
+                        <div class="big-folder-txt">
+                        deal_details
+                        </div> 
+                        </div> 
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                          <div class="big-folder">
+                            <img src="../images/large-pizza-new.jpg" alt="img">
+                          </div>
+                          <div class="big-folder-txt">
+                          deal_details_thumb
+                          </div> 
+                        </div> 
+                        <div class="col-md-4 col-sm-4 big-folder-padding">
+                          <div class="big-folder">
+                            <img src="../images/large-pizza-new.jpg" alt="img">
+                          </div>
+                          <div class="big-folder-txt">
+                          home_page_image
+                          </div> 
+                        </div>  
+                      </div>
+
+                    </div>  
+                  </div>
+                
+                </div>
+                <div class="row">
+                      <div class="col-md-7 col-sm-7 col-sm-offset-4">
+                        <div class="off-pagination">
+                          <ul>
+                            <li><a class="active" href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>  
+              </div>
+            </div> 
+            <div class="offer-maker-footer">
+            <button class="done-btn">Done</button>
+
+            </div> 
+        </div>
+      </div>  
+  </div>  
+
+</section>
+
+
+
+
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>-->
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+
+  </script>
+
+
+
+
+
+<script type="text/javascript">
+//   document.getElementById("uploadBtn").onchange = function () {
+//     document.getElementById("uploadFile").value = this.value;
+// };
+
+</script>
+
+
+
+

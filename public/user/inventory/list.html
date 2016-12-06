@@ -1,0 +1,415 @@
+  <style>
+     .invent-pop {
+  height: 150px;
+  overflow-y: auto;
+  padding-top: 10px;
+} 
+    .relative{position: relative;}
+    .default-pop{background: #fff;  max-height: 166px; width: 426px; position: fixed; margin: 0 auto; top: 35%; left: 0; right: 0; bottom: 0; z-index: 9999;  padding: 10px; border: 1px solid #ccc;}
+    .cropArea {
+      background: #E4E4E4;
+      margin: auto;
+      overflow: hidden;
+    }
+    .cropArea.big {
+      width:800px;
+      height:600px;
+    }
+    .cropArea.medium {
+      width:500px;
+      height:350px;
+    }
+    .cropArea.small {
+      width:300px;
+      height:200px;
+    }
+    .inventory-page .e-campaingn{top: 169px;}
+    .inventory-page .top-arrow{right: 3% !important;}
+    .inventory-page .hide-cross{z-index: 99999; font-size: 13px;}
+    a.done-btn{color: #fff !important;}
+
+    /*.black-bg {
+  display: block;
+  position: absolute;
+  top: 0; display: block;
+  
+}*/
+
+  
+
+  .video-pop{background: #fff;  max-height: 350px; width: 600px;
+  position: absolute; margin: 0 auto; top: 15%; left: 0; right: 0; 
+  bottom: 0; z-index: 9999; border: 1px solid #ccc;}
+  
+  
+  .black-bg{background: rgba(0,0,0,0.7); position: fixed; width: 100%; height: 100% !important; display: block; z-index: 9999; overflow-x: none;}
+
+
+  .cross-default-pop{/*float: right; */cursor: pointer;}
+  .import-img-popup .container{width: 100%;}
+  /*.import-img-popup {padding: 40px 0; position: relative;}*/
+  .offermaker-pop{ background: rgba(0, 0, 0, 0.7) none repeat scroll 0 0; display: block; height: 100% !important; position: fixed; top: 0; width: 100%; z-index: 9999;}
+  .offermaker-main{ background: #fff none repeat scroll 0 0; border: 1px solid #ccc;  bottom: 0; left: 0;  margin: 0 auto; max-height: 395px;  max-width: 666px;
+    position: fixed;  right: 0; top: 30%;  z-index: 9999;}
+
+.mdl-data-table tbody tr, .mdl-data-table td{position: initial;}
+
+
+
+</style>
+<style>
+
+  
+</style>  
+  
+  
+  
+
+<script>
+
+ $(document).ready(function(){
+     $("#hide").click(function(){
+         $(".black-bg").hide();
+         enableScroll();
+     });
+     $("#show").click(function(){
+         $(".black-bg").show();
+         disableScroll();
+     });
+     
+ });
+
+ // left: 37, up: 38, right: 39, down: 40,
+// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+  e.returnValue = false;  
+}
+
+function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+}
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+
+function enableScroll() {
+  $(".black-bg").hide();
+    if (window.removeEventListener)
+        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+    window.onmousewheel = document.onmousewheel = null; 
+    window.onwheel = null; 
+    window.ontouchmove = null;  
+    document.onkeydown = null;  
+}
+</script>
+
+<section ng-controller="InventoryController">
+  <div class="black-bg" ng-if="showInventoryPopup">
+    <div class="default-pop">
+      <span class="cross-default-pop" id="hide" data-ng-click="redirect_edit(product.id);"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+    
+      <div class="invent-pop">
+        <div class="container">
+           <div id="popup_show_message" style="display:none">
+                <div id="popup_success_div" class="alert alert-success"></div>
+                <div id="popup_error_div" class="alert alert-danger"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                  <input ng-model="edit_inventory_details.inventory_name" class="form-control" allowpattern="[^a-zA-Z0-9-' -]" type="text" placeholder="Inventory Name" id="inventory_name">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-md-3 col-sm-3">
+                <div class="form-group">
+                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.cost" class="mdl-textfield__input" type="text" id="cost" placeholder="Cost($)" />
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <div class="form-group">
+                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.sell_price" type="text" id="sell_price" placeholder="Sell Price($)" />
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <div class="form-group">
+                  <input allowpattern="[^0-9.]" class="form-control" ng-model="edit_inventory_details.retail_price" type="text" id="retail_price" placeholder="Retail Price($)" />
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <div class="form-group">
+                  <input class="form-control" ng-model="edit_inventory_details.sku_number" type="text" id="sku_number" placeholder="SKU" />
+                </div>
+              </div>
+
+            </div>  
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <a class="done-btn" href="" ng-click = "updateInventory()">Done</a>
+              </div>                        
+            </div>
+        </div>
+
+      </div>
+        
+    </div>
+  
+  </div>
+    <!-- <span id="show">Show</span> -->
+    <div class="mdl-grid mdl-grid--no-spacing inventory-page">
+    <div class="container">
+    <div class="row">
+    <div class="col-md-12 col-md-12">
+      
+    </div>  
+    </div>  
+    </div>  
+      <div class="container">
+      <div class="row">  
+      <div class=" mdl-cell--12-col  mdl-cell--12-col-tablet mdl-cell--12-col-phone"> <!-- mdl-cell -->
+
+        <div><!-- class="p-20 ml-card-holder" -->
+        <div class="page-heading">  
+        <h3>Inventory List</h3>
+        </div>
+          <div class="mdl-card mdl-shadow--1dp m-b-30">
+            
+            <table class="mdl-data-table ml-table-bordered mdl-js-data-table ">
+              <colgroup>
+                <col class="auto-cell-size p-r-20">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric">Inventory Name</th>
+                  <th class="mdl-data-table__cell--non-numeric">Image</th>
+                  <th class="mdl-data-table__cell--non-numeric">Cost($)</th>
+                  <th class="mdl-data-table__cell--non-numeric">Sell Price($)</th>
+                  <th class="mdl-data-table__cell--non-numeric">Retail Price($)</th>
+                  <th class="mdl-data-table__cell--non-numeric">SKU</th>
+                  <th class="mdl-data-table__cell--non-numeric">Action</th>
+                </tr>
+              </thead>
+
+              <tbody ng-if="inventory_details.length">
+                <tr dir-paginate="inventory in inventory_details|itemsPerPage:10 track by $index">
+                  <td>{{inventory.inventory_name}}</td>
+                  <td>
+                    <img ng-if="inventory.is_file_exist" ng-src="{{file_path}}{{inventory.inventory_image}}" width="80"  title="Change This Image" />
+                    <img data-ng-if="!inventory.is_file_exist" alt="img" src="{{file_path}}images/no-image.png"  title="Change This Image">
+                  </td>
+                  <td>
+                    {{inventory.cost}}
+                  </td>
+                  <td>
+                    {{inventory.sell_price}}
+                  </td>
+
+                  <td>
+                    {{inventory.retail_price}}
+                  </td>
+                  <td>
+                  {{inventory.sku_number}}
+                  </td>
+                  <td>
+
+                    <img class="delete_row" ng-src="{{file_path}}images/add_Image_icon.png" width="16"  style="cursor:pointer" ng-click="showRepoModal(inventory.id)" title="Change Product Image"/>
+
+                    <img class="delete_row" ng-src="{{file_path}}images/edit.png" width="16" style="cursor:pointer" data-ng-click="redirect_edit(inventory.id);" />
+
+                    <img class="delete_row" ng-src="{{file_path}}images/delete.png" width="16" style="cursor:pointer" data-ng-click="delete_inventory(inventory.id);" />
+                  </td>
+                </tr>
+                <tr ng-if="inventory_details.length > 10">
+                  <td colspan="6" class="text-center">
+                    <dir-pagination-controls
+                      max-size="7"
+                      direction-links="true"
+                      boundary-links="true" >
+                    </dir-pagination-controls>
+                  </td>
+                </tr>      
+              </tbody>    
+              <tbody ng-if="!inventory_details.length">
+                <tr>
+                  <td class="center" colspan="12">No data present</td>                
+                </tr>  
+              </tbody>                    
+            </table>
+          </div>
+          <div class="tags m-t-20 ">
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent blue-btn ref" ng-click="showOrHideAddInventoryDiv()">
+            Add Inventory</a>
+          </div>
+
+          <div ng-if="showOrHideMe">
+            <div class="row">
+              <div class="col-md-12 col-sm-12"> <!-- class="col-md-12 col-sm-12" -->
+                <div class="bottom-div"  ng-if="showOrHideMe"> <!-- class="p-20 ml-card-holder " -->
+
+                  <div class="p-l-20 p-r-20 p-b-20" id="show_message" style="display:none">
+                    <div id="success_div" class="alert alert-success"></div>
+                    <div id="error_div" class="alert alert-danger"></div>
+                  </div>
+                            
+
+                  <div class="inventory-adding">
+                    <div class="row">
+                      <div class="col-md-7 col-sm-7">
+                          <div class="form-group">
+                            <input ng-model="Inventory.inventory_name" class="form-control" type="text" placeholder="Inventory Name" allowpattern="[^a-zA-Z0-9-' -]" id="inventory_name">
+                            
+                          </div> 
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-3 col-sm-3">
+                              <input allowpattern="[^0-9.]" ng-model="Inventory.cost" id="cost" class="form-control" type="text" placeholder="">
+                              <label>Cost($)</label>
+                              </div>
+                              <div class="col-md-3 col-sm-3">
+                                <input allowpattern="[^0-9.]" ng-model="Inventory.sell_price" class="form-control" type="text" id="sell_price" placeholder="">
+                                <label>Selling Price($)</label>
+                              </div>
+                              <div class="col-md-3 col-sm-3">
+                                <input allowpattern="[^0-9.]" ng-model="Inventory.retail_price" class="form-control" type="text" id="retail_price"  placeholder="" >
+                                <label>Retail Price($)</label>
+                              </div>
+                              <div class="col-md-3 col-sm-3">
+                                <input ng-model="Inventory.sku_number" id="sku_number" class="form-control" type="text" placeholder="">
+                                <label>SKU</label>
+                              </div>
+                            
+                            </div>  
+                          </div> 
+                          <div class="form-group">
+                            <button class="done-btn" type="submit" ng-click = "addInventory()" id="add_inventory" >Save</button>
+                          </div>
+                          <input type="hidden" value="{{selectedRepo.id}}" name="image_id" id="image_id" /> 
+                      </div>
+                      <div class="col-md-2 col-sm-2">
+                        
+                        <button ng-click="showRepoModal();getRepoImagesbyDirId(lftPnlSelectedDir);" class="green-btn margintop25" value="Import Image">Import Image</button>
+                        
+                      </div>
+                      <div class="col-md-3 col-sm-3">
+                        <div class="inventory-adding-pic">
+                          <img data-ng-if="!selectedRepoWhenAdding.directory_base_path" class="border_container prod_image" src="{{file_path}}images/no-image.png" alt="img">
+                          
+                          <img data-ng-if="selectedRepoWhenAdding.directory_base_path" class="border_container prod_image" src="{{file_path}}{{selectedRepoWhenAdding.directory_base_path}}" alt="img">
+                          
+                        </div>
+                        
+                      </div>
+
+                    </div>  
+                  </div>  
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      
+      
+    <div class="offermaker-pop" ng-if="popupShowing">
+      <input type="hidden" id="product_id" value="{{SelectedEditImagePid}}" name="product_id">
+      <input type="hidden" id="imp_image_type" value="{{SelectedImpType}}" name="imp_image_type">
+      <div class="offermaker-main">
+        <div class="relative">
+            <span class="cross-default-pop" style="cursor: pointer;" ng-click="hidePopup()"><img src="{{file_path}}images/cross-btn.png" alt="x"></span>
+            <div class="offermaker-main-content">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4 col-sm-4 no-padding">
+                    <div class="left-portion">
+                      
+                       <div class="folder-cat"  >
+                        <span  data-ng-click="getRepoImagesbyDirId(0);setleftOpenDir(0)"><img src="{{file_path}}images/small-folder.jpg" alt="img"  >Root Directory</span> 
+                          <div class="sub-folder"  data-ng-if="!lftPnlSelectedDir">
+                            <ul>
+                            <li data-ng-repeat="rootRepo in repoDirTree track by $index"   ng-if="rootRepo.directory==0"><span class="img-icon"><img src="{{file_path}}images/image-icon.jpg" alt="img"></span>{{rootRepo.original_name}}</li>
+                             
+                            </ul> 
+                          </div>
+                       </div>
+                       <div class="folder-cat" data-ng-repeat="dirRepo in repoDirTree track by $index" ng-if="dirRepo.directory==1">
+                          <span data-ng-click="getRepoImagesbyDirId(dirRepo.id);setleftOpenDir(dirRepo.id);" ><img src="{{file_path}}images/small-folder.jpg" alt="img"> {{dirRepo.original_name}} </span>
+                          <div class="sub-folder" ng-if="lftPnlSelectedDir==dirRepo.id  && dirRepo.files.length">
+                          <ul>
+                            <li data-ng-repeat="file in dirRepo.files"><span class="img-icon"><img src="{{file_path}}images/image-icon.jpg" alt="img"></span>{{file.original_name}}</li>
+                          </ul> 
+                          </div>
+                       </div>
+                       
+                    </div>   
+                  </div>
+                  <div class="col-md-8 col-sm-8">
+                    <div class="bigfolder-main">
+                      <div class="row">
+                        
+                        <div class="col-md-4 col-sm-4 big-folder-padding {{selectedRepo.id==file.id?'selected':''}}" dir-paginate="file in repos |itemsPerPage:10" >
+                        <div class="big-folder" style="cursor: pointer;" ng-click="doSelectedRepo(file) ">
+                          <img src="{{file_path}}{{file.directory_base_path}}" alt="img">
+                        </div> 
+                        <div class="big-folder-txt">
+                          {{file.original_name}}
+                        </div> 
+                        </div>
+                        
+                        
+                         <center data-ng-if="repos.length==0">
+                            <h2 class="add_image-repo">
+                              Epmty
+                            </h2>
+                        </center>
+                        
+
+                    </div>  
+                  </div>
+                
+                </div>
+                <div class="row">
+                      <div class="col-md-7 col-sm-7 col-sm-offset-4">
+                        <div class="off-pagination">
+                           <dir-pagination-controls ng-if="repos.length > 1"
+                              max-size="1"
+                              direction-links="true"
+                              boundary-links="true" >
+                            </dir-pagination-controls>
+                        </div>
+                      </div>
+                    </div>  
+              </div>
+            </div> 
+            <div class="">
+            <button class="done-btn" data-ng-click="hidePopup()" ng-if="!SelectedEditImagePid">Done</button>
+            <button class="done-btn" data-ng-click="editImagePopup()" ng-if="SelectedEditImagePid">{{dtext}}</button>
+
+            </div> 
+        </div>
+      </div>  
+  </div>
+  </div>
+
+
+
+  </section>

@@ -1,0 +1,664 @@
+<style>
+.relative{position: relative;}
+.help{position: absolute; right: 10px; top: 0}
+</style>
+<!-- <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script> -->
+
+  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+  
+
+<script>
+
+$(document).ready(function(){
+    $("#hide").click(function(){
+        $(".my").hide();
+    });
+    $("#show").click(function(){
+        $(".my").show();
+    });
+});
+</script>
+
+
+<section class="text-fields off-page" ng-controller="PromotionController" >
+
+  <div class="off-build-page"> 
+
+  <div class="container">
+  <div class="row">
+  <div class="">
+  
+  <div class="row">
+  <div class="col-md-7 col-sm-7">
+  <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">STEP 1 : Design</h2>
+  </div>
+    <div class="box-sec">
+       <h2> Offer Details</h2>
+       <div class="row">
+       <div class="col-md-6 col-sm-6">
+       <div class="form-group">       
+       <select class="form-control" ng-model="campaign_id" id="campaign_id" ng-change="get_campaign_details()">
+         <option value="">--Select Campaign--</option>      
+          <option value="{{camp.id}}" ng-repeat="camp in campaign_list">{{camp.campaign_name}}</option>          
+       </select>
+       </div>
+       <div class="form-group">
+
+
+
+        <div class="selectbox">
+                select category<i class="fa fa-caret-down caret-down " aria-hidden="true"></i><i class="fa fa-caret-up caret-up" aria-hidden="true"></i>
+            </div>
+            <div class="selectbox-option">
+                <div id="accordion">
+                  <h3>Restaurant</h3>
+                  <div>
+                    <ul>
+                      <li>Fine dining<input type="checkbox" value="Fine-dining" class="check_class"></li>
+                      <li>Pizza<input type="checkbox" value="Pizza" class="check_class"></li>
+                      <li>Chinese<input type="checkbox" value="Chinese" class="check_class"></li>
+                      <li>Italian<input type="checkbox" value="Italian" class="check_class"></li>
+                    </ul>
+                  </div>
+                  <h3>Cafe</h3>
+                  <div>
+                    <ul>
+                      <li>List item 4<input type="checkbox" value="Listitem-4" class="check_class"></li>
+                      <li>List item 5<input type="checkbox" value="Listitem-5" class="check_class"></li>
+                      <li>List item 6<input type="checkbox" value="Listitem-6" class="check_class"></li>
+                    </ul>
+                  </div>
+                  <h3>Ice-cream Parlour</h3>
+                  <div>
+                    <ul>
+                      <li>List item 7<input type="checkbox" value="Listitem-7" class="check_class"></li>
+                      <li>List item 8<input type="checkbox" value="Listitem-8" class="check_class"></li>
+                      <li>List item 9<input type="checkbox" value="Listitem-9" class="check_class"></li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="selected-value">
+            </div>
+
+
+
+
+
+
+
+
+
+
+      </div>  
+
+
+       <!-- <div class="form-group">
+          <select class="form-control">
+          <option>Sub Catagory</option>
+          <option>Sub Catagory1</option>
+          <option>Sub Catagory2</option>
+          </select>
+       </div> -->
+       <div class="form-group custom-margin">
+       <div class="row">
+       <div class="col-md-6 col-sm-6">
+        <div class="form-group custom-margin">
+          <input type="text" placeholder="Start Date" id="c_s_date" class="mdl-textfield__input cal ng-pristine ng-untouched ng-valid " ng-model="promotion.c_s_date">
+        </div>
+       </div>
+       <div class="col-md-6 col-sm-6">
+        <div class="form-group custom-margin">
+          <input type="text" placeholder="End Date" id="c_e_date" class="mdl-textfield__input cal ng-pristine ng-untouched ng-valid " ng-model="promotion.c_e_date">
+          <span class="red-txt">Default 24 hour</span>
+        </div>
+       </div>
+
+       </div> 
+       </div>
+       <div class="form-group">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <input type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" placeholder="No. redeemars" id="total_redeemar" ng-model="promotion.total_redeemar" required="">
+          </div>
+          <div class="col-md-6 col-sm-6 offer-full">
+            <a href="" class="offer-val-btn" id="show">Offer Validation</a>
+            <div class="on-demand">
+              <input type="checkbox"> Offer On Demand 
+            </div>
+            <div class="my">
+            <div class="my-main">
+            <p>Validate After <input type="text"> </p>
+
+            <span class="pop-arrow"><img src="../images/pop-arrow.jpg" alt="img"></span>
+
+            <div class="rz-slide">
+            <img src="../images/rz-slide.jpg" alt="img">
+            </div>
+
+            <div class="pull-left">Select Hour</div>
+            <div class="pull-right"><a class="validate-btn" href="#">Validate</a></div>
+            </div>
+            </div>
+          </div>
+
+        </div>  
+       </div>
+       <div class="form-group">
+        <!-- <input type="text" placeholder="Meta Tags" class="form-control"> -->
+        <input name="tags" class="form-control" id="more_information" value="">
+       </div> 
+       </div>
+
+       <div class="col-md-6 col-sm-6">
+          <div class="row">
+                  <div class="col-md-4 col-sm-4 no-right-padding">
+                    <div title="Add a new campaign" class="form-group">
+                      <a href="../campaign/showaddform" class=" various fancybox.iframe put_href" value="1"> 
+                       <span class="choose choose-btn choose-btn-new">Add new</span>
+                     </a>
+                    </div>
+                  </div> 
+                  <div class="col-md-7 col-sm-7 no-padding">
+                    <div class="camp-date green" ng-bind="show_camp_date">MM/DD/YY - MM/DD/YY</div>
+                    <div class="camp-date">Campaign Date</div>
+                  </div>
+
+                  </div>
+
+           <div title="Write Offer Description in short." class="form-group off-descrip"> 
+                    <label>Offer Description</label>                   
+                    <textarea ng-trim="false" maxlength="60" id="offer_description" rows="2" placeholder="Offer Description" ng-model="offer_description" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" required="" title="Here you can put some text"></textarea>
+            </div>
+            <div title="Write brief description of your current offer." class="form-group">  
+                    <label>Full Description</label>                  
+                    <textarea ng-trim="false" maxlength="100" id="what_you_get" rows="2" placeholder="What You Get" ng-model="what_you_get" class="form-control full-descrip ng-pristine ng-untouched ng-valid ng-valid-maxlength"></textarea>
+            </div>
+
+        </div>
+
+
+
+       </div> 
+    </div>
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">STEP 2 : Financing</h2>
+    </div>
+    <div class="box-sec">
+    <h2>Product Offers</h2>
+    <div class="relative">
+    <span class="red-info">* Match your offer product with the correct image</span>
+    </div>
+      <div class="single-product single-product-first">
+            <div class="row">
+              <div class="col-md-3 col-sm-3">
+              <a value="1" class=" various fancybox.iframe put_href" href="{{file_path}}../../filemanager/index2.html" title="Choose image from your Image Repository. Or upload an Image."> 
+              <button  type="button" class="green-btn green-import-btn2">Import Product</button>
+              </a>
+
+              <a class="red-btn" href="#">Remove Product</a>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="row">
+                <div class="form-group">
+                  <div class="row">
+                  <div class="col-md-8 col-sm-8"><input type="text" class="form-control"></div>
+                  <div class="col-md-4 col-sm-4 no-padding-left"><a class="green-btn" href="">Import Image</a></div>
+                  </div>
+                  </div>
+                  
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 no-padding">
+                      <input class="form-control" type="number">
+                    </div>
+                    <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                      <!-- <span class="green-big-txt">$00</span> -->
+                      <span class="small-txt">Cost</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                      <!-- <span class="green-big-txt">$00</span> -->
+                      <span class="small-txt">Seling Price</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                       <!-- <span class="green-big-txt">$00</span>  -->
+                      <span class="small-txt">Retail Value</span>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                      <input type="radio">
+                    </div>
+
+                </div>
+                  
+
+
+
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <div class="off-page-pic">
+
+                </div>
+                <div class="off-page-pic-info">Spaghetti with Meat Ball</div>
+              </div>
+
+            </div> 
+            <div class="row off-total">
+                <div class="col-md-6 col-sm-6 align-right">
+                  Markup 00%
+                </div>
+                <div class="col-md-6 col-sm-6 align-left">
+                  Gross Margin $00
+                </div>
+            </div> 
+            <div class="row add_more">
+            <a href="#">  
+            Add More Product
+            </a>
+            </div>
+
+
+      </div>
+      <h2>Inventory Items</h2>
+        <div class="relative">
+        <span class="red-info">* Match your offer product with the correct image</span>
+        </div>
+      <div class="single-product">
+            <div class="row">
+              <div class="col-md-3 col-sm-3">
+              <a value="1" class=" various fancybox.iframe put_href" href="{{file_path}}../../filemanager/index3.html" title="Choose image from your Image Repository. Or upload an Image."> 
+                          <button  type="button" class="green-btn green-import-btn2">Import Inventory</button>
+              </a>
+              <a class="red-btn" href="#">Remove Inventory</a>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="row">
+                <div class="form-group">
+                  <!-- <input class="form-control" id="uploadFile" placeholder="Choose File" disabled="disabled" /> -->
+                  <!-- <div class="fileUpload upload-btn">
+                      <span>Import Image</span>
+                      <input id="uploadBtn" type="file" class="upload" />
+                  </div> -->
+                  <div class="row">
+                  <div class="col-md-8 col-sm-8"><input type="text" class="form-control"></div>
+                  <div class="col-md-4 col-sm-4 no-padding-left"><a class="green-btn" href="">Import Image</a></div>
+                  </div>  
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 no-padding">
+                      <input class="form-control" type="number">
+                    </div>
+                    <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                      <!-- <span class="green-big-txt">$00</span> -->
+                      <span class="small-txt">Cost</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                      <!-- <span class="green-big-txt">$00</span> -->
+                      <span class="small-txt">Seling Price</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2 center-txt no-padding min-width">
+                       <!-- <span class="green-big-txt">$00</span>  -->
+                      <span class="small-txt">Retail Value</span>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                      <input type="radio">
+                    </div>
+
+                </div>
+                  
+              </div>
+              <div class="col-md-3 col-sm-3">
+                <div class="off-page-pic">
+
+                </div>
+                 <div class="off-page-pic-info">&nbsp;</div> 
+              </div>
+
+            </div> 
+            <div class="row off-total">
+                <div class="col-md-6 col-sm-6 align-right">
+                  Markup 00%
+                </div>
+                <div class="col-md-6 col-sm-6 align-left">
+                  Gross Margin $00
+                </div>
+            </div> 
+            <div class="row add_more">
+            <a href="#">  
+            Add More Product
+            </a>
+            </div>
+      </div>
+    </div>
+
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">STEP 3 : Installation</h2>
+    </div>
+    <div class="box-sec">
+    <h2>Offer Calculator</h2>
+    <div class="relative">
+        <span class="red-info">* Calculation includes Redeemar cost</span>
+    </div>
+
+    <div class="row">
+    <div class="col-md-12 col-sm-12 align-center total-retail">
+    <h4>Total Retail Value:</h4>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      <span class="red">Optional</span> Choose a minimum profit margin <input class="form-control width58" type="text"> or profit mark up <input class="form-control width58" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+        <span class="choose-discount">Choose a discount </span> 
+        <input type="checkbox"> On Inventory Item Only
+      </div>  
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-3 align-center">
+
+          <label>Off</label>
+          <input class="form-control width87" type="text">
+          <div class="row">
+          <div class="col-md-6 col-sm-6">
+          $ <input type="radio">
+          </div>
+          <div class="col-md-6 col-sm-6">
+          % <input type="radio">
+          </div>
+          </div>
+
+      </div>
+      <div class="col-md-3 col-sm-3 align-center">
+
+          <label>Off</label>
+          <input class="form-control width87" type="text">
+          <div class="row">
+          <div class="col-md-6 col-sm-6">
+          $ <input type="radio">
+          </div>
+          <div class="col-md-6 col-sm-6">
+          % <input type="radio">
+          </div>
+          </div>
+
+      </div>
+      <div class="col-md-3 col-sm-3 align-center">
+
+          <label>Off</label>
+          <input class="form-control width87" type="text">
+          <div class="row">
+          <div class="col-md-6 col-sm-6">
+          $ <input type="radio">
+          </div>
+          <div class="col-md-6 col-sm-6">
+          % <input type="radio">
+          </div>
+          </div>
+
+      </div>
+      <div class="col-md-3 col-sm-3 align-center">
+
+          <label>Off</label>
+          <input class="form-control width87" type="text">
+          <div class="row">
+          <div class="col-md-6 col-sm-6">
+          $ <input type="radio">
+          </div>
+          <div class="col-md-6 col-sm-6">
+          % <input type="radio">
+          </div>
+          </div>
+
+      </div>
+
+
+    </div>
+    <div class="row last-offer-calc">
+      <div class="col-md-4 col-sm-4 col-sm-offset-4">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+          <!-- <span class="last-green">$00</span> -->
+          <span class="last-offer">Profit</span>
+          </div>
+          <div class="col-md-6 col-sm-6">
+          <!-- <span class="last-green">$00</span> -->
+          <span class="last-offer">Markup</span> 
+          </div>
+        </div>  
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      This offer is above your desired profit
+      </div>  
+    </div> -->
+    <!-- <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      <span class="good-deal">This is a Good Deal!</span>
+      </div>  
+    </div> -->
+    </div>
+    <div class="box-sec">
+    <h2>Consumer Deal</h2>
+      <div class="col-md-8 col-sm-8 align-center col-sm-offset-2">
+      <div class="row consumer-deal">
+          <div class="col-md-3 col-sm-3 no-padding">
+            <!-- <span>$00</span> -->
+            <span>Pay</span>
+          </div>
+          <div class="col-md-3 col-sm-3 no-padding">
+            <!-- <span>$00</span> -->
+            <span>Value</span>
+          </div>
+          <div class="col-md-3 col-sm-3 no-padding">
+            <!-- <span>$00</span> -->
+            <span>Save</span>
+          </div>
+          <div class="col-md-3 col-sm-3 no-padding">
+            <!-- <span class="red-txt">$00</span> -->
+            <span>Discount</span>
+          </div>
+
+      </div>
+      <!-- <div class="row">
+      <div class="col-md-12 col-sm-12 align-center">
+      <span class="poor-deal">This is a Poor Deal!</span>
+      </div> 
+      </div> -->
+
+      </div>
+      </div>
+  </div>
+
+
+  <div class="col-md-5 col-sm-5">
+    <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Mobile Views</h2>
+    </div>
+
+    <div class="grey-box first">
+      <div class="mob-pic-block">
+      <img src="../images/no-preview.jpg" alt="img">
+      <span class="float-logo"><img src="../images/float-logo.png" alt="img"></span>
+      </div>
+    </div>
+    <div class="grey-box second">
+      <div class="row">
+      <div class="col-md-6 col-sm-6 no-padding mob-pic-block">
+      <img src="../images/second-pic.png" alt="img">
+      <span class="float-logo2"><img src="../images/float-logo2.png" alt="img"></span>
+      </div>
+      <div class="col-md-6 col-sm-6">
+      &nbsp;
+      </div>  
+      </div>  
+    </div>
+    <div class="grey-box third">
+      <div class="mob-pic-block">
+        <img src="../images/no-preview.jpg" alt="img">
+        <span class="float-logo"><img src="../images/float-logo.png" alt="img"></span>
+        <span class="pic-caption"><!-- Partner's Address -->&nbsp;</span>
+      </div>
+      <div class="partner-offer">
+        <!-- Get 00 % Off on a liter of Soda with the 
+purchase of a Family Style Spagetti & 
+Meatball  --> &nbsp;
+      </div>
+      <div class="partner-description">
+        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco -->
+        &nbsp;
+      </div> 
+
+      <div class="row vps-whole">
+        <div class="col-md-6 col-sm-6 col-sm-offset-3">
+          <div class="row">
+          <div class="col-md-4 col-sm-4 no-padding">
+            <div class="vps">Value</div>
+            <div class="vps-amount"><!-- $00 --> &nbsp;</div>
+          </div>
+          <div class="col-md-4 col-sm-4 no-padding">
+            <div class="vps">Pay</div>
+            <div class="vps-amount"><!-- $00 --> &nbsp;</div>
+          </div>
+          <div class="col-md-4 col-sm-4 no-padding">
+            <div class="vps">Services</div>
+            <div class="vps-amount"><!-- $00 --> &nbsp;</div>
+          </div>
+
+          </div>
+        </div>  
+      </div>
+
+      <div class="row vps-btns">
+        <div class="col-md-6 col-sm-6 no-padding">
+          <a class="pass-btn" href="#">PASS OFFER</a>
+        </div>
+        <div class="col-md-6 col-sm-6 no-padding">
+          <a class="bank-btn" href="#">BANK OFFER</a>
+        </div>
+      </div>
+
+     
+        <div class="vps-map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d58947.62605460876!2d88.39903685000002!3d22.570625649999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1467788277845" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+        </div>
+
+     
+    </div>
+
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Web View</h2>
+    </div>
+    <div class="grey-box forth">
+      <div class="mob-pic-block">
+        <img src="../images/no-pre-web.jpg" alt="img">
+        <span class="float-logo2"><img src="../images/float-logo2.png" alt="img"></span>
+        <span class="pic-caption"><!-- Partner's Address -->&nbsp;</span>
+      </div>
+      <div class="forth-main">
+        <!-- <div class="web-product-name">
+          Get 00 % Off on a liter of Soda with the 
+purchase of a Family Style Spaghetti & 
+Meatball Dinner
+        </div> -->
+
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+          <div class="green-txt">00% OFF</div>
+          <div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> Location</div>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <div class="previous-price">$140</div>
+            <div class="present-price">$99</div>
+          </div>
+        </div>
+          
+      </div>
+        
+    </div>
+    <div class="publish-btn">
+
+    <a href="#">Publish Offer</a>
+
+    </div>
+
+      
+  </div>
+
+
+  
+  </div>  
+  </div>  
+  </div> 
+  </div>
+
+
+
+    
+
+  </div> 
+
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+//   document.getElementById("uploadBtn").onchange = function () {
+//     document.getElementById("uploadFile").value = this.value;
+// };
+
+</script>
+
+
+<script type="text/javascript"> 
+$(document).ready(function(){
+
+    $( "#accordion" ).accordion();
+
+    $(".selectbox").click(function(){
+        $(this).toggleClass("toggleCaret");
+        $(".selectbox-option").toggleClass("openSelect");
+        $(".ui-accordion .ui-accordion-content").css("height","auto");
+        
+    });
+    var c = 1;
+
+    $('.check_class').change(function(){
+
+
+        if(this.checked){
+
+            $(this).attr("id","chk"+c);
+
+            $('.selected-value').append('<div class="valuecontent" data-value="'+this.value+'">'+this.value+'<i class="fa fa-times-circle-o remove-btn" aria-hidden="true"></i></div>');
+        }
+        else {
+             $('.valuecontent').filter('[data-value="'+this.value+'"]').remove();
+        }
+
+
+        $('.remove-btn').click(function(){
+            
+            $(this).parent().remove();
+
+            var parent_val =  $(this).parent().attr('data-value');
+
+            $('.check_class[value='+parent_val+']').attr("checked",false);
+        });
+
+        c++;
+    });
+
+
+    
+});
+</script>
+
+
