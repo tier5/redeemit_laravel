@@ -1636,6 +1636,86 @@ class BridgeController extends Controller {
 
 	}
 
+	
+
+	// User Offer Redeemption
+	public function postBeaconredeemption(Request $request)
+	{
+
+		$user_id = 0; $offer_id = 0; $redeemar_id = 0; 
+		$data=json_decode($request->get('data'));
+
+		if(isset($data->user_id) && $data->user_id != "")
+			$user_id = $data->user_id;
+
+		if(isset($data->offer_id) && $data->offer_id != "")
+			$offer_id = $data->offer_id;
+
+		if(isset($data->redeemar_id) && $data->redeemar_id != "")
+			$redeemar_id = $data->redeemar_id;
+
+
+		// If all 3 parameters are passed, viz, User Id, Redeemar Id and Offer Id then proceed 
+		if($user_id != 0 && $offer_id != 0 && $redeemar_id != 0)
+		{
+
+
+    		$offer_detail = Offer::where('id', $offer_id)->where('created_by', $redeemar_id)->where('max_redeemar','>','0')->whereNotIn('status',array(2,4))->first();
+
+			/*$offer_detail = UserBankOffer::where('user_id', $user_id)->where('redeemar_id', $redeemar_id)->where('offer_id', $offer_id)->first();   */
+			
+			//dd($offer_detail);
+
+			// TODO: Check whether the user has already banked this offer.
+			// Same checking should also exists in postRedeemption()
+
+			if(count($offer_detail) > 0) {
+
+				// Check whether the user can redeem the offer
+				// NOTE: THIS OPTION HAS NOW BEEN DISABLED, BECAUSE USERS ARE ALLOWED
+				// TO BANK SAME OFFERS MULTIPLE TIMES, HENCE THEY SHOULD BE ALLOWED TO 
+				// VALIDATE THE SAME MULTIPLE TIMES
+				$redeemed = RedeemptionOffer::where('user_id', $user_id)->where('offer_id', $offer_id)->first();
+
+
+				//  Reduce max redeemar by 1
+				$max_redeemar=$offer_detail['max_redeemar'] - 1;
+
+				// Increment redeem offer by 1
+				$redeem_offer=$offer_detail['redeem_offer'] + 1;
+
+				$updateOffer = Offer::where('id', $offer_id)->update(array('max_redeemar'=> $max_redeemar, 'redeem_offer'=> $redeem_offer));
+
+				// Add a new row in the redemption offer table
+				$datalist = RedeemptionOffer::create(['user_id' => $user_id, 'offer_id' => $offer_id, 'source'=> 1]);
+
+				// Finally, remove the row from user bank
+				if(count($datalist) > 0) {
+					$affectedRows = UserBankOffer::where('user_id', $user_id)->where('offer_id', $offer_id)->delete();
+					$datalist['messageCode']="R01001";
+				}
+
+			}
+			else
+			{
+				// You are trying to redeem an different offer
+	         	$datalist['messageCode']="R01002";
+
+			}
+
+
+    	}
+    	else {
+    		// Offer or redeemer id is not found
+    		$datalist['messageCode']="R01005";
+    	}
+
+    	return $datalist;
+		
+
+	}
+
+
 
 
 	// Show User Passed Offer
