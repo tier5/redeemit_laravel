@@ -1332,8 +1332,8 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
             err = true;
         }
         selectedCatIds = a.getSelectedCatIds();
-     
-        if(!selectedCatIds.length ){
+        
+        if(angular.element('.check_class').length && !selectedCatIds.length ){
             err = true;
             angular.element('.selectbox').parent('.form-group').append('<span class="err red">Select sub category</span>');
              
