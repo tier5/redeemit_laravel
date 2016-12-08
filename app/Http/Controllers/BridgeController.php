@@ -850,7 +850,7 @@ class BridgeController extends Controller {
 					->whereIn('zipcode',$zipval)->whereNotIn('status',array(2,4))->where('end_date','>=',$today)->whereNotIn('id',$banked_offer_list)
 					->where('published', 'true')->whereNotIn('id',$passed_offer_list)
 					->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails')
-					->orderBy('created_by','asc')->orderBy('created_at','desc')->get();
+					->groupBy('created_by')->orderBy('created_by','asc')->orderBy('created_at','desc')->get();
 
 
 
