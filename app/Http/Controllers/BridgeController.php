@@ -898,14 +898,13 @@ class BridgeController extends Controller {
 					        $query->orWhere('more_information', 'LIKE', '%'.$keyword.'%');
 					        $query->orWhere('what_you_get', 'LIKE', '%'.$keyword.'%');
 					    })
-					->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails', ['offerCategory' => function($query) {
-						    $query->where('cat_id', $category_id);
-						}])->orderBy('created_at','desc')->distinct('created_by')->groupBy('created_by')->get();
+					->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails','offerCategory')
+					->orderBy('created_at','desc')->distinct('created_by')->groupBy('created_by')->get();
 
 					
 				}
 				else {
-					$offer_list = Offer::select(array('*', DB::raw('DATEDIFF(CAST(end_date as char), NOW()) AS expires')))->where('subcat_id', $category_id)->where('max_redeemar','>',0)->whereIn('zipcode',$zipval)->where('published', 'true')->whereNotIn('status',array(2,4))->where('end_date','>=',$now)->whereNotIn('id',$banked_offer_list)->whereNotIn('id',$passed_offer_list)->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails')->orderBy('created_at','desc')->distinct('created_by')->groupBy('created_by')->get();					
+					$offer_list = Offer::select(array('*', DB::raw('DATEDIFF(CAST(end_date as char), NOW()) AS expires')))->where('subcat_id', $category_id)->where('max_redeemar','>',0)->whereIn('zipcode',$zipval)->where('published', 'true')->whereNotIn('status',array(2,4))->where('end_date','>=',$now)->whereNotIn('id',$banked_offer_list)->whereNotIn('id',$passed_offer_list)->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails','offerCategory')->orderBy('created_at','desc')->distinct('created_by')->groupBy('created_by')->get();					
 				}
 			}
 			// On Demand Offers
