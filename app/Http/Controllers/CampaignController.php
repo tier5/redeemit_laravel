@@ -337,7 +337,7 @@ class CampaignController extends Controller {
 		if($offer){
 			foreach($offer as $key=>$ofr){
 				$ofr->location = $user->location;
-				$image_path = rtrim(base_path(),'admin'). $ofr->offer_image_path; 
+				$image_path = rtrim(base_path(),'admin').'/'. $ofr->offer_image_path;
 				$ofr->is_file_exist = $ofr->offer_image_path && file_exists($image_path)?true:false;
 				
 				$ofr->validatedcount = $ofr->myofferDetails()->count();

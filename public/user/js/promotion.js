@@ -585,86 +585,92 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
 
     
     angular.element(document).on('change','.choiceRadio',function(){
-      var choiceRadioIdArr = angular.element('.choiceRadio').filter(':checked').attr('id').split('-');
-     
-      var choiceRadioId = choiceRadioIdArr[1];
-      if(ra.EditOfferData.published == "true"){
-        a.offerSelectedImagePath = a.root_base_url+ra.EditOfferData.offer_large_image_path;
-        a.published = true;
-        a.disableIt = true;
-      } else {
-        a.offerSelectedImagePath = angular.element('#product_image_id'+choiceRadioId).attr('src');
-        a.disableIt = false;
-        a.published = false;
-      }
-
-      if(choiceRadioId){
-          angular.forEach(a.inventorychoice,function(c,k){
-            a.inventorychoice[k].selectedImage = false;
-          });
-          angular.forEach(a.choices,function(c,k){
-              if(c.choiceid == choiceRadioId){
-                  a.choices[k].selectedImage = true;
-              }else{
-                  a.choices[k].selectedImage = false;
-              }
-          });
-          
-         
-      }else{
-          console.log('No choiceRadioId' + choiceRadioId);
-      }
-      
-      
-      if (a.$root && a.$root.$$phase != '$apply' && a.$root.$$phase != '$digest') {
-      a.$apply();
-      }else{
-          //setTimeout(function(){
-          //    angular.element('.choiceRadio:eq(0)').trigger('change');
-          //},200);
+      console.log('change prod radio');
+      if(angular.element('.choiceRadio').filter(':checked').length){
+        var choiceRadioIdArr = angular.element('.choiceRadio').filter(':checked').attr('id').split('-');
+       
+        var choiceRadioId = choiceRadioIdArr[1];
+        if(ra.EditOfferData.published == "true"){
+          a.offerSelectedImagePath = a.root_base_url+ra.EditOfferData.offer_large_image_path;
+          a.published = true;
+          a.disableIt = true;
+        } else {
+          a.offerSelectedImagePath = angular.element('#product_image_id'+choiceRadioId).attr('src');
+          a.disableIt = false;
+          a.published = false;
+        }
+  
+        if(choiceRadioId){
+            angular.forEach(a.inventorychoices,function(c,k){
+              a.inventorychoices[k].selectedImage = false;
+            });
+            angular.forEach(a.choices,function(c,k){
+                if(c.choiceid == choiceRadioId){
+                    a.choices[k].selectedImage = true;
+                }else{
+                    a.choices[k].selectedImage = false;
+                }
+            });
+            
+           
+        }else{
+            console.log('No choiceRadioId' + choiceRadioId);
+        }
+        
+        
+        if (a.$root && a.$root.$$phase != '$apply' && a.$root.$$phase != '$digest') {
+        a.$apply();
+        }else{
+            //setTimeout(function(){
+            //    angular.element('.choiceRadio:eq(0)').trigger('change');
+            //},200);
+        }
       }
             
     });
 
     angular.element(document).on('change','.inventoryRadio',function(){
-      var inventoryRadioIdArr = angular.element('.inventoryRadio').filter(':checked').attr('id').split('-');
-      var inventoryRadioId = inventoryRadioIdArr[1];
-      if(ra.EditOfferData.published == "true"){
-        a.offerSelectedImagePath = a.root_base_url+ra.EditOfferData.offer_large_image_path;
-        a.published = true;
-        a.disableIt = true;
-      } else {
-        a.offerSelectedImagePath = angular.element('#inventory_image_id'+inventoryRadioId).attr('src');
-        a.disableIt = false;
-        a.published = false;
-      }
-
-      if(inventoryRadioId){
-
-          angular.forEach(a.choices,function(c,k){
-            a.choices[k].selectedImage = false;
-          });
-
-          angular.forEach(a.inventorychoice,function(c,k){
-              if(c.inventorychoiceid == inventoryRadioId){
-                  a.inventorychoice[k].selectedImage = true;
-              }else{
-                  a.inventorychoice[k].selectedImage = false;
-              }
-          });
-          
-         
-      }else{
-          console.log('No inventoryRadioId' + inventoryRadioId);
-      }
       
-      
-      if (a.$root && a.$root.$$phase != '$apply' && a.$root.$$phase != '$digest') {
-      a.$apply();
-      }else{
-          //setTimeout(function(){
-          //    angular.element('.choiceRadio:eq(0)').trigger('change');
-          //},200);
+      if(angular.element('.inventoryRadio').filter(':checked').length){
+        var inventoryRadioIdArr = angular.element('.inventoryRadio').filter(':checked').attr('id').split('-');
+        var inventoryRadioId = inventoryRadioIdArr[1];
+        if(ra.EditOfferData.published == "true"){
+          a.offerSelectedImagePath = a.root_base_url+ra.EditOfferData.offer_large_image_path;
+          a.published = true;
+          a.disableIt = true;
+        } else {
+          a.offerSelectedImagePath = angular.element('#inventory_image_id'+inventoryRadioId).attr('src');
+          a.disableIt = false;
+          a.published = false;
+        }
+  
+        if(inventoryRadioId){
+  
+            angular.forEach(a.choices,function(c,k){
+              a.choices[k].selectedImage = false;
+            });
+  
+            angular.forEach(a.inventorychoices,function(c,k){
+                if(c.inventorychoiceid == inventoryRadioId){
+                    a.inventorychoices[k].selectedImage = true;
+                }else{
+                    a.inventorychoices[k].selectedImage = false;
+                }
+            });
+            
+           
+        }else{
+            console.log('No inventoryRadioId' + inventoryRadioId);
+        }
+        
+        
+        if (a.$root && a.$root.$$phase != '$apply' && a.$root.$$phase != '$digest') {
+        a.$apply();
+        }else{
+            //setTimeout(function(){
+            //    angular.element('.choiceRadio:eq(0)').trigger('change');
+            //},200);
+        }
       }
             
     });
@@ -1216,9 +1222,44 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
                            };
      
       //Product data
+      if(angular.element('.choiceRadio').filter(':checked').length){
+      var choiceRadioIdArr = angular.element('.choiceRadio').filter(':checked').attr('id').split('-');     
+      var choiceRadioId = choiceRadioIdArr[1];
+      if(choiceRadioId){
+        angular.forEach(a.inventorychoice,function(c,k){
+          a.inventorychoices[k].selectedImage = false;
+        });
+        angular.forEach(a.choices,function(c,k){
+            if(c.choiceid == choiceRadioId){
+                a.choices[k].selectedImage = true;
+            }else{
+                a.choices[k].selectedImage = false;
+            }
+        });
+       }
+      }
       var product_data = a.choices;
       
+      
       //Inventory Data
+      if(angular.element('.inventoryRadio').filter(':checked').length){
+      var inventoryRadioIdArr = angular.element('.inventoryRadio').filter(':checked').attr('id').split('-');
+      var inventoryRadioId = inventoryRadioIdArr[1];
+      
+      if(inventoryRadioId){
+          angular.forEach(a.choices,function(c,k){
+            a.choices[k].selectedImage = false;
+          });
+
+          angular.forEach(a.inventorychoices,function(c,k){
+              if(c.inventorychoiceid == inventoryRadioId){
+                  a.inventorychoices[k].selectedImage = true;
+              }else{
+                  a.inventorychoices[k].selectedImage = false;
+              }
+          });
+      }
+      }
       var inventory_data = a.inventorychoices;
         
       //offer calculation
@@ -1250,7 +1291,8 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
        if(btype == 'publish'){
         offerDetailsData.published = 'true';
        }
-       
+       console.log(offerDetailsData);
+              
         x.post('../promotion/createoffer',offerDetailsData).success(function(res){
             a.offerResponse = res;
             
@@ -1289,13 +1331,13 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
             angular.element('#campaign_id').parent('.form-group').append('<span class="err red">Select campaign</span>');
             err = true;
         }
-        //selectedCatIds = a.getSelectedCatIds();
+        selectedCatIds = a.getSelectedCatIds();
      
-        //if(!selectedCatIds.length ){
-        //    err = true;
-        //    angular.element('.selectbox').parent('.form-group').append('<span class="err red">Select sub category</span>');
-        //     
-        //}
+        if(!selectedCatIds.length ){
+            err = true;
+            angular.element('.selectbox').parent('.form-group').append('<span class="err red">Select sub category</span>');
+             
+        }
         if(!a.offer_description && (!field || field=='offer_description')){
              angular.element('#offer_description').parent('.form-group').append('<span class="err red">Enter offer description</span>');
             err = true;
@@ -1339,7 +1381,7 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
     if(ra.EditOfferData.id != undefined){
       // console.log("ra.EditOfferData :: "+JSON.stringify(ra.EditOfferData, null, 4));
       setTimeout(function(){
-        ra.campaignId = a.campaign_id = Number(ra.EditOfferData.campaign_id);
+        ra.campaignId = a.campaign_id = ra.EditOfferData.campaign_id;
       },200);
       a.promotion.c_s_date = ra.EditOfferData.c_s_date;
       a.promotion.c_e_date = ra.EditOfferData.c_e_date;
@@ -1360,7 +1402,8 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
         a.promotion.on_demand = false;
       }
       a.selectedDiscountText = ra.EditOfferData.value_text;
-      if(ra.EditOfferData.published){
+      console.log(ra.EditOfferData);
+      if(!ra.EditOfferData.published && ra.EditOfferData.published != 'false' ){
         a.offerSelectedImagePath = "";
         if(ra.EditOfferData.offer_medium_image_path != null) {
           a.offerSelectedImagePath = a.root_base_url+ra.EditOfferData.offer_large_image_path;
@@ -1398,6 +1441,10 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
               "retail_price": productDetails.retail_price,
               "is_file_exist": true
           }];
+          
+          if(productDetails.selectedImage === true || productDetails.selectedImage === 'true'){
+            a.offerSelectedImagePath = a.root_base_url + productDetails.image_path;
+          }
 
           var total_cost = Math.round(parseFloat(productDetails.quantity)*parseFloat(productData[0].cost));
           var total_selling_price = Math.round(parseFloat(productDetails.quantity)*parseFloat(productData[0].sell_price));
@@ -1442,6 +1489,12 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
           var total_selling_price = Math.round(parseFloat(inventoryDetails.quantity)*parseFloat(inventoryData[0].sell_price));
           var total_retail_price = Math.round(parseFloat(inventoryDetails.quantity)*parseFloat(inventoryData[0].retail_price));
           
+          
+          if(inventoryDetails.selectedImage === true || inventoryDetails.selectedImage === 'true'){
+            console.log(inventoryDetails.image_path);
+            a.offerSelectedImagePath = a.root_base_url + inventoryDetails.image_path;
+          }
+          
           var idata = {
             'inventorychoiceid': inventorychoiceid,
             'InventoryData':inventoryData,
@@ -1483,7 +1536,7 @@ MyApp.controller('PromotionController',["$scope", "$rootScope", "$sce","Placehol
           a.categorryList = a.categorryList;
           setTimeout(function(){
             a.getSelected();
-          },200);
+          },1000);
         });
         a.changeOnDiscountvalue();
       }, 300);

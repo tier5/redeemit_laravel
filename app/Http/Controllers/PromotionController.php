@@ -74,7 +74,7 @@ class PromotionController extends Controller {
 		$offer_calculation = $request->offer_calculation;
 		$product_data = $request->product_data;
 		$inventory_data = $request->inventory_data;
-		$msg = "";
+		$msg = $offerSelectedImgPath = "";
 		
 		if($offer_details['offer_description'] == '' || $offer_details['offer_full_description'] == ''
 		   || $offer_details['start_date'] == '' || $offer_details['end_date'] == ''
@@ -162,7 +162,7 @@ class PromotionController extends Controller {
 					
 					if(isset($product['productData'][0]['product_image']) && isset($product['productData'][0]['is_file_exist']) && $product['productData'][0]['product_image'] && $product['productData'][0]['is_file_exist']){
 						
-						$offerSelectedImgPath = str_replace('uploads','filemanager/userfiles/', ltrim($product['productData'][0]['product_image'],'././'));
+						$offerSelectedImgPath = str_replace('uploads','filemanager/userfiles', ltrim($product['productData'][0]['product_image'],'././'));
 		
 					}//isset
 					
@@ -187,7 +187,7 @@ class PromotionController extends Controller {
 				if($inventory['selectedImage']){
 					if(isset($inventory['InventoryData'][0]['inventory_image']) && isset($inventory['InventoryData'][0]['is_file_exist']) && $inventory['InventoryData'][0]['inventory_image'] && $inventory['InventoryData'][0]['is_file_exist']){
 							
-						$offerSelectedImgPath = str_replace('uploads','filemanager/userfiles/', ltrim($inventory['InventoryData'][0]['inventory_image'],'././'));
+						$offerSelectedImgPath = str_replace('uploads','filemanager/userfiles', ltrim($inventory['InventoryData'][0]['inventory_image'],'././'));
 		
 					}//isset
 				}
@@ -202,7 +202,7 @@ class PromotionController extends Controller {
 		// dd($logo_image_path);
 		$newFilename = rand(0,9999). time().'.jpg';
 		$offer->offer_image = $newFilename;
-		$offer->offer_image_path        = 'filemanager/userfiles/'. $user->id .'/offer_small_image/'. $newFilename;
+		$offer->offer_image_path        = 'filemanager/userfiles/'. $user->id .'/offer_small_image/'. $newFilename;$offerSelectedImgPath;
 		$offer->offer_medium_image_path = 'filemanager/userfiles/'. $user->id .'/offer_medium_image/'. $newFilename;
 		$offer->offer_large_image_path  = 'filemanager/userfiles/'. $user->id .'/offer_large_image/'. $newFilename;
 		
@@ -224,15 +224,15 @@ class PromotionController extends Controller {
 		if(!is_dir($fileMngrBasePath.'/offer_large_image/')){ helpers::createDir($fileMngrBasePath.'/offer_large_image/', 0777);}
 		if(!is_dir($uploadsBasePath.'/offer_medium_image/')){ helpers::createDir($uploadsBasePath.'/offer_medium_image/', 0777); }
 		
-		copy($uploadSmallSoucePath, $fileMngrBasePath.'/offer_small_image/'.$newFilename);
-		copy($uploadMediumSoucePath, $fileMngrBasePath.'/offer_medium_image/'.$newFilename);
-		copy($uploadLargeSoucePath, $fileMngrBasePath.'/offer_large_image/'.$newFilename);
-		copy($uploadMediumSoucePath, $uploadsBasePath.'/offer_medium_image/'.$newFilename);
+		@copy($uploadSmallSoucePath, $fileMngrBasePath.'/offer_small_image/'.$newFilename);
+		@copy($uploadMediumSoucePath, $fileMngrBasePath.'/offer_medium_image/'.$newFilename);
+		@copy($uploadLargeSoucePath, $fileMngrBasePath.'/offer_large_image/'.$newFilename);
+		@copy($uploadMediumSoucePath, $uploadsBasePath.'/offer_medium_image/'.$newFilename);
 		
-		chmod($fileMngrBasePath.'/offer_small_image/'.$newFilename,0777);
-		chmod($fileMngrBasePath.'/offer_medium_image/'.$newFilename,0777);
-		chmod($fileMngrBasePath.'/offer_large_image/'.$newFilename,0777);
-		chmod($uploadsBasePath.'/offer_medium_image/'.$newFilename,0777);
+		@chmod($fileMngrBasePath.'/offer_small_image/'.$newFilename,0777);
+		@chmod($fileMngrBasePath.'/offer_medium_image/'.$newFilename,0777);
+		@chmod($fileMngrBasePath.'/offer_large_image/'.$newFilename,0777);
+		@chmod($uploadsBasePath.'/offer_medium_image/'.$newFilename,0777);
 		
 		$offer->save();
 		
@@ -628,7 +628,12 @@ class PromotionController extends Controller {
 	}
 	
 	
-	public function getCategories(){
+	
+  public function postOffercategories(Request $request){
+    if(!$request->offer_id) return false;
+    return $offer_cats = OfferCategory::where('offer_id',$request->offer_id)->get();
+  }
+  public function getCategories(){
 		
 		$cat_id=Auth::User()->subcat_id;
 		$categories = Category::where('id',$cat_id)->where('status',1)->where('visibility',1)->get();
