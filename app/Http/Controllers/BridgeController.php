@@ -843,14 +843,17 @@ class BridgeController extends Controller {
 						        $query->orWhere('what_you_get', 'LIKE', '%'.$keyword.'%');
 						    })
 						->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails')->distinct('created_by')->groupBy('created_by')
-						->orderBy('created_at','desc')->get();
+						->orderBy('created_at','asc')->get();
 					}
 				else {
 					$offer_list = Offer::select(array('*', DB::raw('DATEDIFF(CAST(end_date as char), NOW()) AS expires')))->where('max_redeemar','>',0)
 					->whereIn('zipcode',$zipval)->whereNotIn('status',array(2,4))->where('end_date','>=',$today)->whereNotIn('id',$banked_offer_list)
 					->where('published', 'true')->whereNotIn('id',$passed_offer_list)
 					->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails')
-					->orderBy('created_at','desc')->distinct('created_by')->groupBy('created_by')->get();
+					->orderBy('created_by','asc')->orderBy('created_at','desc')->get();
+
+
+
 				}
 			}
 			// Redeemar Id
@@ -881,6 +884,7 @@ class BridgeController extends Controller {
 					->where(function($query) use ($category_id) {
 				        $query->where('cat_id', $category_id);
 				        $query->orWhere('subcat_id', $category_id);
+
 				    })
 					->where('max_redeemar','>',0)
 					->whereIn('zipcode',$zipval)
@@ -894,7 +898,11 @@ class BridgeController extends Controller {
 					        $query->orWhere('more_information', 'LIKE', '%'.$keyword.'%');
 					        $query->orWhere('what_you_get', 'LIKE', '%'.$keyword.'%');
 					    })
-					->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails')->orderBy('created_at','desc')->distinct('created_by')->groupBy('created_by')->get();
+					->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails', ['offerCategory' => function($query) {
+						    $query->where('cat_id', $category_id);
+						}])->orderBy('created_at','desc')->distinct('created_by')->groupBy('created_by')->get();
+
+					
 				}
 				else {
 					$offer_list = Offer::select(array('*', DB::raw('DATEDIFF(CAST(end_date as char), NOW()) AS expires')))->where('subcat_id', $category_id)->where('max_redeemar','>',0)->whereIn('zipcode',$zipval)->where('published', 'true')->whereNotIn('status',array(2,4))->where('end_date','>=',$now)->whereNotIn('id',$banked_offer_list)->whereNotIn('id',$passed_offer_list)->with('categoryDetails','subCategoryDetails','partnerSettings','companyDetail','logoDetails')->orderBy('created_at','desc')->distinct('created_by')->groupBy('created_by')->get();					
@@ -1636,7 +1644,7 @@ class BridgeController extends Controller {
 
 	}
 
-	
+
 
 	// User Offer Redeemption
 	public function postBeaconredeemption(Request $request)

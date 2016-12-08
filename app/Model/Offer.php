@@ -35,6 +35,11 @@ class Offer extends Model  {
         return $this->hasOne('App\Model\Category','id','cat_id')->select(array('id', 'cat_name'));
     }
 
+    public function offerCategory()
+    {
+        return $this->hasMany('App\Model\OfferCategory','id','offer_id')->select(array('offer_id', 'cat_id'));
+    }
+
     public function subCategoryDetails()
     {
         return $this->hasOne('App\Model\Category','id','subcat_id')->select(array('id', 'cat_name'));
